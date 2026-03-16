@@ -1,3 +1,4 @@
+aid: microsoft-teams
 name: Microsoft Teams
 description: Microsoft Teams is a collaboration platform that combines workplace chat, meetings, file storage, and application integration. It provides APIs for building custom integrations and extending Teams functionality.
 image: https://www.microsoft.com/en-us/microsoft-365/blog/wp-content/uploads/sites/2/2020/01/Microsoft-Teams-icon.png
@@ -8,8 +9,9 @@ tags:
 - Video Conferencing
 - Productivity
 created: '2024'
-modified: '2024'
-url: https://www.microsoft.com/en-us/microsoft-teams/group-chat-software
+modified: '2026-03-16'
+specificationVersion: '0.19'
+url: https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/apis.yml
 apis:
 - name: Microsoft Graph Teams API
   description: Core API for accessing Teams data including teams, channels, messages, tabs, and apps through Microsoft Graph
@@ -121,6 +123,5 @@ common:
 - type: Privacy Policy
   url: https://privacy.microsoft.com/en-us/privacystatement
 maintainers:
-- FN: Microsoft Corporation
-  email: teamssupport@microsoft.com
-  url: https://www.microsoft.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
