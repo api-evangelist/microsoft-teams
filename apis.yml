@@ -1,21 +1,17 @@
 aid: microsoft-teams
 name: Microsoft Teams
-description: Microsoft Teams is a collaboration platform that combines workplace
-  chat, meetings, file storage, and application integration. It provides APIs 
-  for building custom integrations and extending Teams functionality.
-image: 
-  https://www.microsoft.com/en-us/microsoft-365/blog/wp-content/uploads/sites/2/2020/01/Microsoft-Teams-icon.png
+description: Microsoft Teams is a collaboration platform that combines workplace chat, meetings, file storage, and application integration. It provides APIs for building custom integrations and extending Teams functionality.
+image: https://www.microsoft.com/en-us/microsoft-365/blog/wp-content/uploads/sites/2/2020/01/Microsoft-Teams-icon.png
 tags:
+  - Chat
   - Collaboration
   - Communication
-  - Chat
-  - Video Conferencing
   - Productivity
+  - Video Conferencing
 created: '2024'
 modified: '2026-03-16'
 specificationVersion: '0.19'
-url: 
-  https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/apis.yml
 apis:
   - name: Microsoft Graph Teams API
     description: >-
@@ -25,18 +21,16 @@ apis:
     humanURL: https://docs.microsoft.com/en-us/graph/teams-concept-overview
     baseURL: https://graph.microsoft.com/v1.0
     tags:
-      - REST API
-      - Microsoft Graph
-      - Teams
       - Channels
       - Messages
+      - Microsoft Graph
+      - REST API
+      - Teams
     properties:
       - type: Documentation
-        url: 
-          https://docs.microsoft.com/en-us/graph/api/resources/teams-api-overview
+        url: https://docs.microsoft.com/en-us/graph/api/resources/teams-api-overview
       - type: OpenAPI
-        url: 
-          https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml
+        url: https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml
       - type: Authentication
         url: https://docs.microsoft.com/en-us/graph/auth/
       - type: SDKs
@@ -46,64 +40,55 @@ apis:
   - name: Microsoft Teams Bot Framework API
     description: >-
       API for building conversational bots that interact with users in Microsoft Teams.
-    humanURL: 
-      https://docs.microsoft.com/en-us/microsoftteams/platform/bots/what-are-bots
+    humanURL: https://docs.microsoft.com/en-us/microsoftteams/platform/bots/what-are-bots
     baseURL: https://smba.trafficmanager.net/teams/
     tags:
+      - Bot Framework
       - Bots
       - Conversational AI
       - Messaging
-      - Bot Framework
     properties:
       - type: Documentation
-        url: 
-          https://docs.microsoft.com/en-us/microsoftteams/platform/bots/how-to/conversations/conversation-basics
+        url: https://docs.microsoft.com/en-us/microsoftteams/platform/bots/how-to/conversations/conversation-basics
       - type: Quickstart
-        url: 
-          https://docs.microsoft.com/en-us/microsoftteams/platform/build-your-first-app/build-bot
+        url: https://docs.microsoft.com/en-us/microsoftteams/platform/build-your-first-app/build-bot
       - type: Samples
         url: https://github.com/microsoft/BotBuilder-Samples
       - type: Schema
-        url: 
-          https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-connector-api-reference
+        url: https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-connector-api-reference
   - name: Microsoft Teams Webhook and Connector API
     description: >-
       APIs for creating incoming webhooks and Office 365 connectors to post messages
       to Teams channels.
-    humanURL: 
-      https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/what-are-webhooks-and-connectors
+    humanURL: https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/what-are-webhooks-and-connectors
     baseURL: https://outlook.office.com/webhook/
     tags:
-      - Webhooks
       - Connectors
       - Incoming Webhooks
       - Notifications
+      - Webhooks
     properties:
       - type: Documentation
-        url: 
-          https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook
+        url: https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook
       - type: Message Card Reference
-        url: 
-          https://docs.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/cards-reference
+        url: https://docs.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/cards-reference
       - type: Adaptive Cards
         url: https://adaptivecards.io/
   - name: Microsoft Teams Real-time Communication APIs
     description: >-
       APIs for building calling and meeting experiences in Teams using Azure Communication
       Services.
-    humanURL: 
-      https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/calls-and-meetings/calls-meetings-bots-overview
+    humanURL: https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/calls-and-meetings/calls-meetings-bots-overview
     baseURL: https://graph.microsoft.com/v1.0
     tags:
+      - Audio
       - Calling
       - Meetings
-      - Real-time
+      - Real-Time
       - Video
-      - Audio
     properties:
       - type: Documentation
-        url: 
-          https://docs.microsoft.com/en-us/graph/api/resources/communications-api-overview
+        url: https://docs.microsoft.com/en-us/graph/api/resources/communications-api-overview
       - type: Cloud Communications API
         url: https://docs.microsoft.com/en-us/graph/api/resources/call
       - type: Meeting API
@@ -111,8 +96,7 @@ apis:
   - name: Microsoft Teams App Manifest API
     description: >-
       Schema and APIs for Teams app manifest configuration and deployment.
-    humanURL: 
-      https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema
+    humanURL: https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema
     tags:
       - App Manifest
       - Configuration
@@ -120,28 +104,22 @@ apis:
       - Schema
     properties:
       - type: Schema Documentation
-        url: 
-          https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema
+        url: https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema
       - type: App Submission
-        url: 
-          https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/deploy-and-publish/appsource/prepare/submission-checklist
+        url: https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/deploy-and-publish/appsource/prepare/submission-checklist
       - type: Developer Portal
         url: https://dev.teams.microsoft.com/
 common:
   - type: Developer Portal
     url: https://developer.microsoft.com/en-us/microsoft-teams
   - type: Getting Started
-    url: 
-      https://docs.microsoft.com/en-us/microsoftteams/platform/get-started/get-started-overview
+    url: https://docs.microsoft.com/en-us/microsoftteams/platform/get-started/get-started-overview
   - type: SDK Downloads
-    url: 
-      https://docs.microsoft.com/en-us/microsoftteams/platform/toolkit/teams-toolkit-fundamentals
+    url: https://docs.microsoft.com/en-us/microsoftteams/platform/toolkit/teams-toolkit-fundamentals
   - type: Blog
-    url: 
-      https://techcommunity.microsoft.com/t5/microsoft-teams-blog/bg-p/MicrosoftTeamsBlog
+    url: https://techcommunity.microsoft.com/t5/microsoft-teams-blog/bg-p/MicrosoftTeamsBlog
   - type: Community
-    url: 
-      https://techcommunity.microsoft.com/t5/microsoft-teams/ct-p/MicrosoftTeams
+    url: https://techcommunity.microsoft.com/t5/microsoft-teams/ct-p/MicrosoftTeams
   - type: Support
     url: https://docs.microsoft.com/en-us/answers/products/office-teams
   - type: GitHub Organization
