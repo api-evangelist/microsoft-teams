@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/json-schema/teams-graph-api-team-schema.json",
+  "title": "Team",
+  "description": "Represents a Microsoft Teams team.",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "description": "Unique identifier for the team." },
+    "displayName": { "type": "string", "description": "The display name of the team." },
+    "description": { "type": "string", "description": "Description of the team." },
+    "visibility": { "type": "string", "enum": ["public", "private"], "description": "Team visibility." },
+    "isArchived": { "type": "boolean", "description": "Whether the team is archived." },
+    "createdDateTime": { "type": "string", "format": "date-time", "description": "When the team was created." },
+    "webUrl": { "type": "string", "format": "uri", "description": "URL to the team in Microsoft Teams." }
+  }
+}

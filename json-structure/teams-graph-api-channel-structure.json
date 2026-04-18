@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/json-structure/teams-graph-api-channel-structure.json",
+  "name": "Channel",
+  "description": "Represents a channel in a team.",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "description": "Unique identifier for the channel." },
+    "displayName": { "type": "string", "description": "The display name of the channel." },
+    "description": { "type": "string", "description": "Description of the channel." },
+    "membershipType": { "type": "string", "enum": ["standard", "private", "shared"], "description": "Type of membership." },
+    "createdDateTime": { "type": "datetime", "description": "When the channel was created." },
+    "webUrl": { "type": "uri", "description": "URL to the channel in Teams." }
+  }
+}

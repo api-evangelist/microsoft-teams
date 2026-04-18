@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/json-schema/teams-graph-api-call-schema.json",
+  "title": "Call",
+  "description": "Represents a call in Teams.",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "description": "Unique identifier for the call." },
+    "state": { "type": "string", "enum": ["incoming", "establishing", "ringing", "established", "hold", "transferring", "transferAccepted", "redirecting", "terminating", "terminated"], "description": "Current call state." },
+    "direction": { "type": "string", "enum": ["incoming", "outgoing"], "description": "Direction of the call." },
+    "subject": { "type": "string", "description": "Subject of the call." },
+    "callbackUri": { "type": "string", "format": "uri", "description": "Callback URL for call notifications." },
+    "requestedModalities": { "type": "array", "items": { "type": "string", "enum": ["audio", "video", "videoBasedScreenSharing"] }, "description": "Requested communication modalities." }
+  }
+}

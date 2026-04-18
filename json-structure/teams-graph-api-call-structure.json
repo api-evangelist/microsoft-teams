@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/json-structure/teams-graph-api-call-structure.json",
+  "name": "Call",
+  "description": "Represents a call in Teams.",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "description": "Unique identifier for the call." },
+    "state": { "type": "string", "description": "Current call state." },
+    "direction": { "type": "string", "description": "Direction of the call." },
+    "subject": { "type": "string", "description": "Subject of the call." },
+    "callbackUri": { "type": "uri", "description": "Callback URL for call notifications." },
+    "requestedModalities": { "type": "array", "items": { "type": "string" }, "description": "Requested communication modalities." }
+  }
+}

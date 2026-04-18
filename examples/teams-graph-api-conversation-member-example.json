@@ -1,0 +1,7 @@
+{
+  "id": "membership-001",
+  "displayName": "Jane Smith",
+  "roles": ["owner"],
+  "userId": "user-abc123",
+  "email": "jsmith@contoso.com"
+}

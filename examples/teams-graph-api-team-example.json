@@ -1,0 +1,9 @@
+{
+  "id": "team-a1b2c3d4",
+  "displayName": "Engineering Team",
+  "description": "Core engineering team for product development.",
+  "visibility": "private",
+  "isArchived": false,
+  "createdDateTime": "2025-06-15T08:00:00Z",
+  "webUrl": "https://teams.microsoft.com/l/team/19%3abc123/"
+}

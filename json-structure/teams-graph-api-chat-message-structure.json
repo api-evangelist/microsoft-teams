@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/json-structure/teams-graph-api-chat-message-structure.json",
+  "name": "ChatMessage",
+  "description": "Represents a message in a channel or chat.",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "description": "Unique identifier for the message." },
+    "createdDateTime": { "type": "datetime", "description": "When the message was created." },
+    "lastModifiedDateTime": { "type": "datetime", "description": "When the message was last modified." },
+    "messageType": { "type": "string", "description": "The type of message." },
+    "importance": { "type": "string", "description": "Message importance." },
+    "subject": { "type": "string", "description": "Subject of the message." },
+    "body": { "type": "object", "description": "Message body content." },
+    "from": { "type": "object", "description": "Sender information." }
+  }
+}

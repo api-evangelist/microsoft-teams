@@ -1,0 +1,8 @@
+{
+  "id": "call-abc123",
+  "state": "established",
+  "direction": "outgoing",
+  "subject": "Quick sync",
+  "callbackUri": "https://contoso.com/callback",
+  "requestedModalities": ["audio"]
+}

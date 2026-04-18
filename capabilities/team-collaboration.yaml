@@ -1,0 +1,195 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Microsoft Teams Collaboration"
+  description: "Workflow capability for team collaboration including managing teams, channels, messaging, members, meetings, and calls. Used by IT administrators, team leads, and developers building Teams integrations."
+  tags:
+    - Microsoft Teams
+    - Collaboration
+    - Communication
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      MICROSOFT_GRAPH_TOKEN: MICROSOFT_GRAPH_TOKEN
+
+capability:
+  consumes:
+    - import: teams-graph
+      location: ./shared/teams-graph-api.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: team-collaboration-api
+      description: "Unified REST API for Teams collaboration workflows."
+      resources:
+        - path: /v1/teams
+          name: teams
+          description: "Team management."
+          operations:
+            - method: GET
+              name: list-joined-teams
+              description: "List joined teams."
+              call: "teams-graph.list-joined-teams"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-team
+              description: "Create a team."
+              call: "teams-graph.create-team"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/channels
+          name: channels
+          description: "Channel management."
+          operations:
+            - method: GET
+              name: list-channels
+              description: "List channels."
+              call: "teams-graph.list-channels"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-channel
+              description: "Create a channel."
+              call: "teams-graph.create-channel"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/messages
+          name: messages
+          description: "Messaging."
+          operations:
+            - method: GET
+              name: list-channel-messages
+              description: "List messages."
+              call: "teams-graph.list-channel-messages"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: send-channel-message
+              description: "Send a message."
+              call: "teams-graph.send-channel-message"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/members
+          name: members
+          description: "Member management."
+          operations:
+            - method: GET
+              name: list-team-members
+              description: "List members."
+              call: "teams-graph.list-team-members"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/meetings
+          name: meetings
+          description: "Meeting management."
+          operations:
+            - method: POST
+              name: create-online-meeting
+              description: "Create a meeting."
+              call: "teams-graph.create-online-meeting"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: team-collaboration-mcp
+      transport: http
+      description: "MCP server for AI-assisted Teams collaboration."
+      tools:
+        - name: list-joined-teams
+          description: "List all teams the user has joined."
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "teams-graph.list-joined-teams"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-team
+          description: "Create a new team."
+          hints:
+            readOnly: false
+          call: "teams-graph.create-team"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-channels
+          description: "List channels in a team."
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "teams-graph.list-channels"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-channel
+          description: "Create a new channel."
+          hints:
+            readOnly: false
+          call: "teams-graph.create-channel"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-channel-messages
+          description: "List messages from a channel."
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "teams-graph.list-channel-messages"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: send-channel-message
+          description: "Send a message to a channel."
+          hints:
+            readOnly: false
+          call: "teams-graph.send-channel-message"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-team-members
+          description: "List all members of a team."
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "teams-graph.list-team-members"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: add-team-member
+          description: "Add a member to a team."
+          hints:
+            readOnly: false
+          call: "teams-graph.add-team-member"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-online-meeting
+          description: "Create an online meeting."
+          hints:
+            readOnly: false
+          call: "teams-graph.create-online-meeting"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-call
+          description: "Initiate a call."
+          hints:
+            readOnly: false
+          call: "teams-graph.create-call"
+          outputParameters:
+            - type: object
+              mapping: "$."

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/json-structure/teams-graph-api-online-meeting-structure.json",
+  "name": "OnlineMeeting",
+  "description": "Represents an online meeting in Teams.",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "description": "Unique identifier for the meeting." },
+    "subject": { "type": "string", "description": "Subject of the meeting." },
+    "startDateTime": { "type": "datetime", "description": "Start time of the meeting." },
+    "endDateTime": { "type": "datetime", "description": "End time of the meeting." },
+    "joinWebUrl": { "type": "uri", "description": "URL to join the meeting." }
+  }
+}

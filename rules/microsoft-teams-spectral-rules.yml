@@ -1,0 +1,193 @@
+rules:
+  # INFO / METADATA
+  info-title-must-contain-microsoft-teams:
+    description: Info title must contain 'Microsoft' or 'Teams'
+    given: $.info.title
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: (Microsoft|Teams)
+  info-description-required:
+    description: Info description is required and must be at least 20 characters
+    given: $.info
+    severity: error
+    then:
+      field: description
+      function: truthy
+  info-version-required:
+    description: Info version is required
+    given: $.info
+    severity: error
+    then:
+      field: version
+      function: truthy
+
+  # OPENAPI VERSION
+  openapi-version-3:
+    description: Must use OpenAPI 3.x
+    given: $.openapi
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "^3\\."
+
+  # SERVERS
+  servers-must-be-defined:
+    description: Servers array must be defined
+    given: $
+    severity: error
+    then:
+      field: servers
+      function: truthy
+  servers-https-required:
+    description: All server URLs must use HTTPS
+    given: $.servers[*].url
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  # OPERATIONS
+  operation-operationid-required:
+    description: Every operation must have an operationId
+    given: $.paths[*][get,post,put,patch,delete]
+    severity: error
+    then:
+      field: operationId
+      function: truthy
+  operation-summary-required:
+    description: Every operation must have a summary
+    given: $.paths[*][get,post,put,patch,delete]
+    severity: error
+    then:
+      field: summary
+      function: truthy
+  operation-summary-prefix:
+    description: Operation summaries should start with 'Microsoft Teams'
+    given: $.paths[*][get,post,put,patch,delete].summary
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "^Microsoft Teams"
+  operation-description-required:
+    description: Every operation must have a description
+    given: $.paths[*][get,post,put,patch,delete]
+    severity: warn
+    then:
+      field: description
+      function: truthy
+  operation-tags-required:
+    description: Every operation must have at least one tag
+    given: $.paths[*][get,post,put,patch,delete]
+    severity: error
+    then:
+      field: tags
+      function: truthy
+  operation-operationid-camel-case:
+    description: operationId should use camelCase
+    given: $.paths[*][get,post,put,patch,delete].operationId
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  # TAGS
+  tag-description-required:
+    description: Global tags should have descriptions
+    given: $.tags[*]
+    severity: info
+    then:
+      field: description
+      function: truthy
+
+  # PARAMETERS
+  parameter-description-required:
+    description: Parameters must have a description
+    given: $.paths[*][get,post,put,patch,delete].parameters[*]
+    severity: warn
+    then:
+      field: description
+      function: truthy
+  parameter-schema-required:
+    description: Parameters must have a schema
+    given: $.paths[*][get,post,put,patch,delete].parameters[*]
+    severity: error
+    then:
+      field: schema
+      function: truthy
+
+  # RESPONSES
+  response-success-required:
+    description: Every operation must define a success response (2xx)
+    given: $.paths[*][get,post,put,patch,delete].responses
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ["200"]
+            - required: ["201"]
+            - required: ["202"]
+            - required: ["204"]
+  response-401-recommended:
+    description: Operations should define a 401 Unauthorized response
+    given: $.paths[*][get,post,put,patch,delete].responses
+    severity: warn
+    then:
+      field: "401"
+      function: truthy
+
+  # SCHEMAS
+  schema-properties-description:
+    description: Schema properties should have descriptions
+    given: $.components.schemas[*].properties[*]
+    severity: info
+    then:
+      field: description
+      function: truthy
+
+  # SECURITY
+  security-global-defined:
+    description: Global security must be defined
+    given: $
+    severity: error
+    then:
+      field: security
+      function: truthy
+  security-schemes-defined:
+    description: Security schemes must be defined
+    given: $.components
+    severity: error
+    then:
+      field: securitySchemes
+      function: truthy
+
+  # HTTP METHOD CONVENTIONS
+  get-no-request-body:
+    description: GET operations must not have a request body
+    given: $.paths[*].get
+    severity: error
+    then:
+      field: requestBody
+      function: falsy
+  delete-no-request-body:
+    description: DELETE operations must not have a request body
+    given: $.paths[*].delete
+    severity: warn
+    then:
+      field: requestBody
+      function: falsy
+
+  # GENERAL QUALITY
+  no-empty-descriptions:
+    description: Descriptions must not be empty strings
+    given: $.paths[*][get,post,put,patch,delete].description
+    severity: error
+    then:
+      function: truthy

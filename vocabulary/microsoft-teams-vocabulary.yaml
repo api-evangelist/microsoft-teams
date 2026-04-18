@@ -1,0 +1,159 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "Microsoft Teams"
+  description: "Vocabulary mapping operational (OpenAPI) and capability (Naftiko) dimensions for Microsoft Teams APIs."
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+operational:
+  apis:
+    - name: Microsoft Graph Teams API
+      namespace: teams-graph
+      version: "1.0.0"
+      baseUrl: https://graph.microsoft.com/v1.0
+      status: active
+
+  resources:
+    - name: Teams
+      api: teams-graph
+      actions: [list, get, create, update, delete, archive]
+    - name: Channels
+      api: teams-graph
+      actions: [list, create]
+    - name: Messages
+      api: teams-graph
+      actions: [list, send]
+    - name: Members
+      api: teams-graph
+      actions: [list, add, remove, update]
+    - name: Tabs
+      api: teams-graph
+      actions: [list]
+    - name: Apps
+      api: teams-graph
+      actions: [list]
+    - name: Online Meetings
+      api: teams-graph
+      actions: [create, get]
+    - name: Calls
+      api: teams-graph
+      actions: [create, get, answer, reject, transfer, hang-up]
+
+  actions:
+    - name: list
+      methods: [GET]
+      pattern: read
+    - name: get
+      methods: [GET]
+      pattern: read
+    - name: create
+      methods: [POST]
+      pattern: write
+    - name: update
+      methods: [PATCH]
+      pattern: write
+    - name: delete
+      methods: [DELETE]
+      pattern: destructive
+    - name: send
+      methods: [POST]
+      pattern: write
+    - name: add
+      methods: [POST]
+      pattern: write
+    - name: remove
+      methods: [DELETE]
+      pattern: destructive
+    - name: archive
+      methods: [POST]
+      pattern: write
+    - name: answer
+      methods: [POST]
+      pattern: write
+    - name: reject
+      methods: [POST]
+      pattern: write
+    - name: transfer
+      methods: [POST]
+      pattern: write
+    - name: hang-up
+      methods: [DELETE]
+      pattern: destructive
+
+  schemas:
+    core:
+      - name: Team
+        properties: [id, displayName, description, visibility, isArchived, createdDateTime, webUrl]
+      - name: Channel
+        properties: [id, displayName, description, membershipType, createdDateTime, webUrl]
+      - name: ChatMessage
+        properties: [id, createdDateTime, messageType, importance, subject, body, from]
+      - name: ConversationMember
+        properties: [id, displayName, roles, userId, email]
+      - name: OnlineMeeting
+        properties: [id, subject, startDateTime, endDateTime, joinWebUrl]
+      - name: Call
+        properties: [id, state, direction, subject, callbackUri, requestedModalities]
+
+  authentication:
+    schemes:
+      - type: oauth2
+        flow: authorizationCode
+        scopes: [Team.ReadBasic.All, Channel.ReadBasic.All, ChatMessage.Read, ChatMessage.Send, Calls.Initiate.All, OnlineMeetings.ReadWrite.All]
+
+capability:
+  workflows:
+    - name: Team Collaboration
+      file: capabilities/team-collaboration.yaml
+      description: "Manage Teams collaboration workflows."
+      apis: [teams-graph]
+      tools: 10
+      personas: [IT Administrator, Team Lead, Developer]
+      domains: [Collaboration, Communication]
+
+  personas:
+    - id: it-admin
+      name: IT Administrator
+      description: "IT admins managing Teams infrastructure and policies."
+      workflows: [Team Collaboration]
+    - id: team-lead
+      name: Team Lead
+      description: "Team leads managing channels, members, and communication."
+      workflows: [Team Collaboration]
+    - id: developer
+      name: Developer
+      description: "Developers building Teams integrations and bots."
+      workflows: [Team Collaboration]
+
+  domains:
+    - name: Collaboration
+      resources: [Teams, Channels, Messages, Members, Tabs, Apps]
+    - name: Communication
+      resources: [Online Meetings, Calls]
+
+crossReference:
+  - resource: Teams
+    operations: [listJoinedTeams, getTeam, createTeam, updateTeam, deleteTeam, archiveTeam]
+    workflows: [Team Collaboration]
+    personas: [IT Administrator, Team Lead]
+  - resource: Channels
+    operations: [listChannels, createChannel]
+    workflows: [Team Collaboration]
+    personas: [Team Lead, Developer]
+  - resource: Messages
+    operations: [listChannelMessages, sendChannelMessage]
+    workflows: [Team Collaboration]
+    personas: [Team Lead, Developer]
+  - resource: Members
+    operations: [listTeamMembers, addTeamMember, removeTeamMember, updateTeamMember]
+    workflows: [Team Collaboration]
+    personas: [IT Administrator, Team Lead]
+  - resource: Online Meetings
+    operations: [createOnlineMeeting, getOnlineMeeting]
+    workflows: [Team Collaboration]
+    personas: [Team Lead]
+  - resource: Calls
+    operations: [createCall, getCall, hangUpCall, answerCall, rejectCall, transferCall]
+    workflows: [Team Collaboration]
+    personas: [Developer]

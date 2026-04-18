@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/json-schema/teams-graph-api-conversation-member-schema.json",
+  "title": "ConversationMember",
+  "description": "Represents a member of a team or channel.",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "description": "Unique membership ID." },
+    "displayName": { "type": "string", "description": "Display name of the member." },
+    "roles": { "type": "array", "items": { "type": "string" }, "description": "Roles of the member." },
+    "userId": { "type": "string", "description": "The Azure AD user ID." },
+    "email": { "type": "string", "format": "email", "description": "Email address of the member." }
+  }
+}

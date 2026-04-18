@@ -1,0 +1,7 @@
+{
+  "id": "meeting-abc123",
+  "subject": "Weekly Standup",
+  "startDateTime": "2026-04-19T09:00:00Z",
+  "endDateTime": "2026-04-19T09:30:00Z",
+  "joinWebUrl": "https://teams.microsoft.com/l/meetup-join/19:meeting_abc123/"
+}
