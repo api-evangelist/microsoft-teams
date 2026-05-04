@@ -1,15 +1,13 @@
 aid: microsoft-teams
 name: Microsoft Teams
-description: >-
-  Microsoft Teams is a collaboration platform that combines workplace chat,
-  meetings, file storage, and application integration. It provides APIs for
-  building custom integrations, managing teams and channels, sending messages,
-  scheduling meetings, and initiating calls through Microsoft Graph.
+description: Microsoft Teams is a collaboration platform that combines workplace chat, meetings, file
+  storage, and application integration. It provides APIs for building custom integrations, managing teams
+  and channels, sending messages, scheduling meetings, and initiating calls through Microsoft Graph.
 image: https://learn.microsoft.com/en-us/graph/images/teams-logo.png
 url: https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/apis.yml
 humanURL: https://www.microsoft.com/en-us/microsoft-teams
 created: '2024'
-modified: '2026-04-18'
+modified: '2026-05-04'
 specificationVersion: '0.19'
 type: Index
 tags:
@@ -21,9 +19,8 @@ tags:
   - Video Conferencing
 apis:
   - name: Microsoft Graph Teams API
-    description: >-
-      Core REST API for accessing Teams data including teams, channels, messages,
-      tabs, apps, members, online meetings, and calls through Microsoft Graph.
+    description: Core REST API for accessing Teams data including teams, channels, messages, tabs, apps,
+      members, online meetings, and calls through Microsoft Graph.
     humanURL: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
     baseURL: https://graph.microsoft.com/v1.0
     tags:
@@ -66,9 +63,8 @@ apis:
       - type: Example
         url: examples/teams-graph-api-chat-message-example.json
   - name: Microsoft Teams Bot Framework API
-    description: >-
-      API for building conversational bots that interact with users in
-      Microsoft Teams through the Bot Framework.
+    description: API for building conversational bots that interact with users in Microsoft Teams through
+      the Bot Framework.
     humanURL: https://learn.microsoft.com/en-us/microsoftteams/platform/bots/what-are-bots
     baseURL: https://smba.trafficmanager.net/teams/
     tags:
@@ -87,9 +83,8 @@ apis:
       - type: APIReference
         url: https://learn.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-connector-api-reference
   - name: Microsoft Teams Webhook and Connector API
-    description: >-
-      APIs for creating incoming webhooks and Office 365 connectors to post
-      messages and notifications to Teams channels.
+    description: APIs for creating incoming webhooks and Office 365 connectors to post messages and notifications
+      to Teams channels.
     humanURL: https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/what-are-webhooks-and-connectors
     baseURL: https://outlook.office.com/webhook/
     tags:
@@ -101,9 +96,8 @@ apis:
       - type: Documentation
         url: https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook
   - name: Microsoft Teams Real-Time Communication APIs
-    description: >-
-      APIs for building calling and meeting experiences in Teams including
-      VoIP calls, group calls, IVR flows, and online meetings.
+    description: APIs for building calling and meeting experiences in Teams including VoIP calls, group
+      calls, IVR flows, and online meetings.
     humanURL: https://learn.microsoft.com/en-us/graph/api/resources/communications-api-overview
     baseURL: https://graph.microsoft.com/v1.0
     tags:
@@ -145,22 +139,21 @@ common:
     url: vocabulary/microsoft-teams-vocabulary.yaml
   - type: Features
     data:
-      - name: Team Lifecycle Management
-        description: Create, archive, and delete teams programmatically.
-      - name: Channel Management
-        description: Create and manage standard, private, and shared channels.
-      - name: Messaging
-        description: Send and receive chat messages in channels and chats.
-      - name: Member Management
-        description: Add, remove, and update team members and roles.
-      - name: Online Meetings
-        description: Create and manage online meetings with join URLs.
-      - name: Calling
-        description: Initiate calls, answer, reject, transfer, and manage IVR flows.
-      - name: App Installation
-        description: Install and manage apps in teams and channels.
-      - name: Activity Feed Notifications
-        description: Send activity feed notifications to engage users.
+      - 'Microsoft Teams: hundreds of services across Collaboration'
+      - 'Detailed pricing: see https://www.microsoft.com/en-us/microsoft-teams/compare-microsoft-teams-options'
+      - 'Service: Microsoft Graph - Teams API'
+      - 'Service: Bot Framework'
+      - 'Service: Adaptive Cards'
+      - 'Service: Teams Toolkit'
+      - 'Service: Teams Meeting API'
+      - 'Service: Teams Webhook API'
+      - 'Service: Teams Communication Services'
+      - 'Service: PSTN Calling'
+      - 'Service: Teams Phone'
+    sources:
+      - https://www.microsoft.com/en-us/microsoft-teams/compare-microsoft-teams-options
+      - https://focus.finops.org/
+    updated: '2026-05-04'
   - type: UseCases
     data:
       - name: Team Provisioning
