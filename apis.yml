@@ -54,7 +54,7 @@ apis:
         url: json-schema/teams-graph-api-call-schema.json
       - type: JSONStructure
         url: json-structure/teams-graph-api-team-structure.json
-      - type: JSON-LD
+      - type: JSONLD
         url: json-ld/microsoft-teams-graph-api-context.jsonld
       - type: Example
         url: examples/teams-graph-api-team-example.json
