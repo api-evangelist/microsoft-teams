@@ -1,0 +1,142 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Microsoft Graph Teams API — Messages
+  description: 'Microsoft Graph Teams API — Messages. 2 operations. Lead operation: Microsoft Teams List Channel Messages.
+    Self-contained Naftiko capability covering one Microsoft Teams business surface.'
+  tags:
+  - Microsoft Teams
+  - Messages
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_TEAMS_API_KEY: MICROSOFT_TEAMS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: graph-messages
+    baseUri: https://graph.microsoft.com/v1.0
+    description: Microsoft Graph Teams API — Messages business capability. Self-contained, no shared references.
+    resources:
+    - name: teams-team-id-channels-channel-id-messages
+      path: /teams/{team-id}/channels/{channel-id}/messages
+      operations:
+      - name: listchannelmessages
+        method: GET
+        description: Microsoft Teams List Channel Messages
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: team-id
+          in: path
+          type: string
+          description: The unique identifier of the team.
+          required: true
+        - name: channel-id
+          in: path
+          type: string
+          description: The unique identifier of the channel.
+          required: true
+        - name: $top
+          in: query
+          type: integer
+          description: Maximum number of messages to return.
+      - name: sendchannelmessage
+        method: POST
+        description: Microsoft Teams Send Channel Message
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: team-id
+          in: path
+          type: string
+          description: The unique identifier of the team.
+          required: true
+        - name: channel-id
+          in: path
+          type: string
+          description: The unique identifier of the channel.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_TEAMS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: graph-messages-rest
+    port: 8080
+    description: REST adapter for Microsoft Graph Teams API — Messages. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/teams/{team-id}/channels/{channel-id}/messages
+      name: teams-team-id-channels-channel-id-messages
+      description: REST surface for teams-team-id-channels-channel-id-messages.
+      operations:
+      - method: GET
+        name: listchannelmessages
+        description: Microsoft Teams List Channel Messages
+        call: graph-messages.listchannelmessages
+        with:
+          team-id: rest.team-id
+          channel-id: rest.channel-id
+          $top: rest.$top
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: sendchannelmessage
+        description: Microsoft Teams Send Channel Message
+        call: graph-messages.sendchannelmessage
+        with:
+          team-id: rest.team-id
+          channel-id: rest.channel-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: graph-messages-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Microsoft Graph Teams API — Messages. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: microsoft-teams-list-channel-messages
+      description: Microsoft Teams List Channel Messages
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: graph-messages.listchannelmessages
+      with:
+        team-id: tools.team-id
+        channel-id: tools.channel-id
+        $top: tools.$top
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-teams-send-channel-message
+      description: Microsoft Teams Send Channel Message
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: graph-messages.sendchannelmessage
+      with:
+        team-id: tools.team-id
+        channel-id: tools.channel-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

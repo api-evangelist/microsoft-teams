@@ -1,0 +1,304 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Microsoft Graph Teams API — Calls
+  description: 'Microsoft Graph Teams API — Calls. 6 operations. Lead operation: Microsoft Teams Create Call. Self-contained
+    Naftiko capability covering one Microsoft Teams business surface.'
+  tags:
+  - Microsoft Teams
+  - Calls
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_TEAMS_API_KEY: MICROSOFT_TEAMS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: graph-calls
+    baseUri: https://graph.microsoft.com/v1.0
+    description: Microsoft Graph Teams API — Calls business capability. Self-contained, no shared references.
+    resources:
+    - name: communications-calls
+      path: /communications/calls
+      operations:
+      - name: createcall
+        method: POST
+        description: Microsoft Teams Create Call
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: communications-calls-call-id
+      path: /communications/calls/{call-id}
+      operations:
+      - name: getcall
+        method: GET
+        description: Microsoft Teams Get Call
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: call-id
+          in: path
+          type: string
+          description: The unique identifier of the call.
+          required: true
+      - name: hangupcall
+        method: DELETE
+        description: Microsoft Teams Hang Up Call
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: call-id
+          in: path
+          type: string
+          description: The unique identifier of the call.
+          required: true
+    - name: communications-calls-call-id-answer
+      path: /communications/calls/{call-id}/answer
+      operations:
+      - name: answercall
+        method: POST
+        description: Microsoft Teams Answer Call
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: call-id
+          in: path
+          type: string
+          description: The unique identifier of the call.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: communications-calls-call-id-reject
+      path: /communications/calls/{call-id}/reject
+      operations:
+      - name: rejectcall
+        method: POST
+        description: Microsoft Teams Reject Call
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: call-id
+          in: path
+          type: string
+          description: The unique identifier of the call.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: communications-calls-call-id-transfer
+      path: /communications/calls/{call-id}/transfer
+      operations:
+      - name: transfercall
+        method: POST
+        description: Microsoft Teams Transfer Call
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: call-id
+          in: path
+          type: string
+          description: The unique identifier of the call.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_TEAMS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: graph-calls-rest
+    port: 8080
+    description: REST adapter for Microsoft Graph Teams API — Calls. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/communications/calls
+      name: communications-calls
+      description: REST surface for communications-calls.
+      operations:
+      - method: POST
+        name: createcall
+        description: Microsoft Teams Create Call
+        call: graph-calls.createcall
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/communications/calls/{call-id}
+      name: communications-calls-call-id
+      description: REST surface for communications-calls-call-id.
+      operations:
+      - method: GET
+        name: getcall
+        description: Microsoft Teams Get Call
+        call: graph-calls.getcall
+        with:
+          call-id: rest.call-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: hangupcall
+        description: Microsoft Teams Hang Up Call
+        call: graph-calls.hangupcall
+        with:
+          call-id: rest.call-id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/communications/calls/{call-id}/answer
+      name: communications-calls-call-id-answer
+      description: REST surface for communications-calls-call-id-answer.
+      operations:
+      - method: POST
+        name: answercall
+        description: Microsoft Teams Answer Call
+        call: graph-calls.answercall
+        with:
+          call-id: rest.call-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/communications/calls/{call-id}/reject
+      name: communications-calls-call-id-reject
+      description: REST surface for communications-calls-call-id-reject.
+      operations:
+      - method: POST
+        name: rejectcall
+        description: Microsoft Teams Reject Call
+        call: graph-calls.rejectcall
+        with:
+          call-id: rest.call-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/communications/calls/{call-id}/transfer
+      name: communications-calls-call-id-transfer
+      description: REST surface for communications-calls-call-id-transfer.
+      operations:
+      - method: POST
+        name: transfercall
+        description: Microsoft Teams Transfer Call
+        call: graph-calls.transfercall
+        with:
+          call-id: rest.call-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: graph-calls-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Microsoft Graph Teams API — Calls. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: microsoft-teams-create-call
+      description: Microsoft Teams Create Call
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: graph-calls.createcall
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-teams-get-call
+      description: Microsoft Teams Get Call
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: graph-calls.getcall
+      with:
+        call-id: tools.call-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-teams-hang-up-call
+      description: Microsoft Teams Hang Up Call
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: graph-calls.hangupcall
+      with:
+        call-id: tools.call-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-teams-answer-call
+      description: Microsoft Teams Answer Call
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: graph-calls.answercall
+      with:
+        call-id: tools.call-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-teams-reject-call
+      description: Microsoft Teams Reject Call
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: graph-calls.rejectcall
+      with:
+        call-id: tools.call-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-teams-transfer-call
+      description: Microsoft Teams Transfer Call
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: graph-calls.transfercall
+      with:
+        call-id: tools.call-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,280 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Microsoft Graph Teams API — Teams
+  description: 'Microsoft Graph Teams API — Teams. 6 operations. Lead operation: Microsoft Teams List Joined Teams. Self-contained
+    Naftiko capability covering one Microsoft Teams business surface.'
+  tags:
+  - Microsoft Teams
+  - Teams
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_TEAMS_API_KEY: MICROSOFT_TEAMS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: graph-teams
+    baseUri: https://graph.microsoft.com/v1.0
+    description: Microsoft Graph Teams API — Teams business capability. Self-contained, no shared references.
+    resources:
+    - name: me-joinedTeams
+      path: /me/joinedTeams
+      operations:
+      - name: listjoinedteams
+        method: GET
+        description: Microsoft Teams List Joined Teams
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: teams
+      path: /teams
+      operations:
+      - name: createteam
+        method: POST
+        description: Microsoft Teams Create Team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: teams-team-id
+      path: /teams/{team-id}
+      operations:
+      - name: getteam
+        method: GET
+        description: Microsoft Teams Get Team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: team-id
+          in: path
+          type: string
+          description: The unique identifier of the team.
+          required: true
+      - name: updateteam
+        method: PATCH
+        description: Microsoft Teams Update Team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: team-id
+          in: path
+          type: string
+          description: The unique identifier of the team.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteteam
+        method: DELETE
+        description: Microsoft Teams Delete Team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: team-id
+          in: path
+          type: string
+          description: The unique identifier of the team.
+          required: true
+    - name: teams-team-id-archive
+      path: /teams/{team-id}/archive
+      operations:
+      - name: archiveteam
+        method: POST
+        description: Microsoft Teams Archive Team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: team-id
+          in: path
+          type: string
+          description: The unique identifier of the team.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_TEAMS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: graph-teams-rest
+    port: 8080
+    description: REST adapter for Microsoft Graph Teams API — Teams. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/me/joinedteams
+      name: me-joinedteams
+      description: REST surface for me-joinedTeams.
+      operations:
+      - method: GET
+        name: listjoinedteams
+        description: Microsoft Teams List Joined Teams
+        call: graph-teams.listjoinedteams
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/teams
+      name: teams
+      description: REST surface for teams.
+      operations:
+      - method: POST
+        name: createteam
+        description: Microsoft Teams Create Team
+        call: graph-teams.createteam
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/teams/{team-id}
+      name: teams-team-id
+      description: REST surface for teams-team-id.
+      operations:
+      - method: GET
+        name: getteam
+        description: Microsoft Teams Get Team
+        call: graph-teams.getteam
+        with:
+          team-id: rest.team-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateteam
+        description: Microsoft Teams Update Team
+        call: graph-teams.updateteam
+        with:
+          team-id: rest.team-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteteam
+        description: Microsoft Teams Delete Team
+        call: graph-teams.deleteteam
+        with:
+          team-id: rest.team-id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/teams/{team-id}/archive
+      name: teams-team-id-archive
+      description: REST surface for teams-team-id-archive.
+      operations:
+      - method: POST
+        name: archiveteam
+        description: Microsoft Teams Archive Team
+        call: graph-teams.archiveteam
+        with:
+          team-id: rest.team-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: graph-teams-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Microsoft Graph Teams API — Teams. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: microsoft-teams-list-joined-teams
+      description: Microsoft Teams List Joined Teams
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: graph-teams.listjoinedteams
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-teams-create-team
+      description: Microsoft Teams Create Team
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: graph-teams.createteam
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-teams-get-team
+      description: Microsoft Teams Get Team
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: graph-teams.getteam
+      with:
+        team-id: tools.team-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-teams-update-team
+      description: Microsoft Teams Update Team
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: graph-teams.updateteam
+      with:
+        team-id: tools.team-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-teams-delete-team
+      description: Microsoft Teams Delete Team
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: graph-teams.deleteteam
+      with:
+        team-id: tools.team-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-teams-archive-team
+      description: Microsoft Teams Archive Team
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: graph-teams.archiveteam
+      with:
+        team-id: tools.team-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

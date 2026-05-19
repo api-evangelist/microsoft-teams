@@ -1,0 +1,87 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Microsoft Graph Teams API — Tabs
+  description: 'Microsoft Graph Teams API — Tabs. 1 operations. Lead operation: Microsoft Teams List Channel Tabs. Self-contained
+    Naftiko capability covering one Microsoft Teams business surface.'
+  tags:
+  - Microsoft Teams
+  - Tabs
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_TEAMS_API_KEY: MICROSOFT_TEAMS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: graph-tabs
+    baseUri: https://graph.microsoft.com/v1.0
+    description: Microsoft Graph Teams API — Tabs business capability. Self-contained, no shared references.
+    resources:
+    - name: teams-team-id-channels-channel-id-tabs
+      path: /teams/{team-id}/channels/{channel-id}/tabs
+      operations:
+      - name: listchanneltabs
+        method: GET
+        description: Microsoft Teams List Channel Tabs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: team-id
+          in: path
+          type: string
+          description: The unique identifier of the team.
+          required: true
+        - name: channel-id
+          in: path
+          type: string
+          description: The unique identifier of the channel.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_TEAMS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: graph-tabs-rest
+    port: 8080
+    description: REST adapter for Microsoft Graph Teams API — Tabs. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/teams/{team-id}/channels/{channel-id}/tabs
+      name: teams-team-id-channels-channel-id-tabs
+      description: REST surface for teams-team-id-channels-channel-id-tabs.
+      operations:
+      - method: GET
+        name: listchanneltabs
+        description: Microsoft Teams List Channel Tabs
+        call: graph-tabs.listchanneltabs
+        with:
+          team-id: rest.team-id
+          channel-id: rest.channel-id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: graph-tabs-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Microsoft Graph Teams API — Tabs. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: microsoft-teams-list-channel-tabs
+      description: Microsoft Teams List Channel Tabs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: graph-tabs.listchanneltabs
+      with:
+        team-id: tools.team-id
+        channel-id: tools.channel-id
+      outputParameters:
+      - type: object
+        mapping: $.
