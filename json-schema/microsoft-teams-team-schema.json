@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Team",
+  "title": "Team",
+  "type": "object",
+  "description": "Represents a Microsoft Teams team.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the team.",
+      "example": "team-a1b2c3d4"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "The display name of the team.",
+      "example": "Engineering Team"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the team.",
+      "example": "Core engineering team for product development."
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "public",
+        "private"
+      ],
+      "description": "Team visibility.",
+      "example": "private"
+    },
+    "isArchived": {
+      "type": "boolean",
+      "description": "Whether the team is archived.",
+      "example": false
+    },
+    "createdDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the team was created.",
+      "example": "2025-06-15T08:00:00Z"
+    },
+    "webUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the team in Microsoft Teams.",
+      "example": "https://teams.microsoft.com/l/team/19%3abc123/"
+    }
+  }
+}

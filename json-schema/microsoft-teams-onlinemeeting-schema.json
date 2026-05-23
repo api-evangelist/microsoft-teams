@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OnlineMeeting",
+  "title": "OnlineMeeting",
+  "type": "object",
+  "description": "Represents an online meeting in Teams.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the meeting.",
+      "example": "meeting-abc123"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject of the meeting.",
+      "example": "Weekly Standup"
+    },
+    "startDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start time of the meeting.",
+      "example": "2026-04-19T09:00:00Z"
+    },
+    "endDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "End time of the meeting.",
+      "example": "2026-04-19T09:30:00Z"
+    },
+    "joinWebUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to join the meeting.",
+      "example": "https://teams.microsoft.com/l/meetup-join/19:meeting_abc123/"
+    },
+    "participants": {
+      "type": "object",
+      "properties": {
+        "organizer": {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "displayName": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

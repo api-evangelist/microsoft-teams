@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TeamsTab",
+  "title": "TeamsTab",
+  "type": "object",
+  "description": "Represents a tab pinned to a channel.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the tab.",
+      "example": "tab-001"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name of the tab.",
+      "example": "Project Wiki"
+    },
+    "webUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the tab content."
+    },
+    "configuration": {
+      "type": "object",
+      "properties": {
+        "entityId": {
+          "type": "string"
+        },
+        "contentUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "removeUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "websiteUrl": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    }
+  }
+}

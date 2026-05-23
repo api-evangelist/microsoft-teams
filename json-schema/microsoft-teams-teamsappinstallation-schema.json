@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TeamsAppInstallation",
+  "title": "TeamsAppInstallation",
+  "type": "object",
+  "description": "Represents an app installed in a team.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier.",
+      "example": "app-install-001"
+    },
+    "teamsApp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "com.contoso.app"
+        },
+        "displayName": {
+          "type": "string",
+          "example": "Contoso App"
+        },
+        "distributionMethod": {
+          "type": "string",
+          "enum": [
+            "store",
+            "organization",
+            "sideloaded"
+          ]
+        }
+      }
+    }
+  }
+}

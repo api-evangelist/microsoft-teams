@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ConversationMember",
+  "title": "ConversationMember",
+  "type": "object",
+  "description": "Represents a member of a team or channel.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique membership ID.",
+      "example": "membership-001"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name of the member.",
+      "example": "Jane Smith"
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Roles of the member.",
+      "example": [
+        "owner"
+      ]
+    },
+    "userId": {
+      "type": "string",
+      "description": "The Azure AD user ID.",
+      "example": "user-abc123"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address of the member.",
+      "example": "jsmith@contoso.com"
+    }
+  }
+}

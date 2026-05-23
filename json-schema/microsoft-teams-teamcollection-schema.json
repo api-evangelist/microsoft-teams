@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TeamCollection",
+  "title": "TeamCollection",
+  "type": "object",
+  "description": "Collection of teams.",
+  "properties": {
+    "value": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Team"
+      }
+    }
+  }
+}

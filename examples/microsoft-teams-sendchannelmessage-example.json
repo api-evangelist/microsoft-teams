@@ -1,0 +1,19 @@
+{
+  "operationId": "sendChannelMessage",
+  "method": "POST",
+  "path": "/teams/{team-id}/channels/{channel-id}/messages",
+  "summary": "Microsoft Teams Send Channel Message",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "SendChannelMessageRequestExample",
+      "example": {
+        "body": {
+          "contentType": "html",
+          "content": "<p>Hello team! Here is an update.</p>"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

@@ -1,0 +1,21 @@
+{
+  "operationId": "getTeam",
+  "method": "GET",
+  "path": "/teams/{team-id}",
+  "summary": "Microsoft Teams Get Team",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "GetTeam200Example",
+      "example": {
+        "id": "team-a1b2c3d4",
+        "displayName": "Engineering Team",
+        "description": "Core engineering team for product development.",
+        "visibility": "private",
+        "isArchived": false
+      }
+    }
+  ]
+}

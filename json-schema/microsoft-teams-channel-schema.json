@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Channel",
+  "title": "Channel",
+  "type": "object",
+  "description": "Represents a channel in a team.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the channel.",
+      "example": "19:abc123@thread.tacv2"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "The display name of the channel.",
+      "example": "General"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the channel.",
+      "example": "General discussion channel."
+    },
+    "membershipType": {
+      "type": "string",
+      "enum": [
+        "standard",
+        "private",
+        "shared"
+      ],
+      "description": "Type of membership for the channel.",
+      "example": "standard"
+    },
+    "createdDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the channel was created.",
+      "example": "2025-06-15T08:00:00Z"
+    },
+    "webUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the channel in Teams."
+    }
+  }
+}

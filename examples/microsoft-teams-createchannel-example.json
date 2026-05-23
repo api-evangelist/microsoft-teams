@@ -1,0 +1,18 @@
+{
+  "operationId": "createChannel",
+  "method": "POST",
+  "path": "/teams/{team-id}/channels",
+  "summary": "Microsoft Teams Create Channel",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreateChannelRequestExample",
+      "example": {
+        "displayName": "Design Review",
+        "description": "Channel for design review discussions",
+        "membershipType": "standard"
+      }
+    }
+  ],
+  "responseExamples": []
+}

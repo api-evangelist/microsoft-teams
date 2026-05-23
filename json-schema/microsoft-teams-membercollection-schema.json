@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/MemberCollection",
+  "title": "MemberCollection",
+  "type": "object",
+  "description": "Collection of members.",
+  "properties": {
+    "value": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ConversationMember"
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "operationId": "listJoinedTeams",
+  "method": "GET",
+  "path": "/me/joinedTeams",
+  "summary": "Microsoft Teams List Joined Teams",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "ListJoinedTeams200Example",
+      "example": {
+        "value": [
+          {
+            "id": "team-a1b2c3d4",
+            "displayName": "Engineering Team",
+            "description": "Core engineering team",
+            "visibility": "private",
+            "isArchived": false
+          }
+        ]
+      }
+    }
+  ]
+}

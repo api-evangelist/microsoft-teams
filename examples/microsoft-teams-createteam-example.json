@@ -1,0 +1,18 @@
+{
+  "operationId": "createTeam",
+  "method": "POST",
+  "path": "/teams",
+  "summary": "Microsoft Teams Create Team",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreateTeamRequestExample",
+      "example": {
+        "displayName": "New Project Team",
+        "description": "Team for the new project initiative",
+        "visibility": "private"
+      }
+    }
+  ],
+  "responseExamples": []
+}

@@ -1,0 +1,17 @@
+{
+  "operationId": "updateTeam",
+  "method": "PATCH",
+  "path": "/teams/{team-id}",
+  "summary": "Microsoft Teams Update Team",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "UpdateTeamRequestExample",
+      "example": {
+        "displayName": "Updated Team Name",
+        "description": "Updated description"
+      }
+    }
+  ],
+  "responseExamples": []
+}

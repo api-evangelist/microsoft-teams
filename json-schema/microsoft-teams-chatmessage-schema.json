@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ChatMessage",
+  "title": "ChatMessage",
+  "type": "object",
+  "description": "Represents a message in a channel or chat.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the message.",
+      "example": "msg-001"
+    },
+    "createdDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the message was created.",
+      "example": "2026-04-18T10:30:00Z"
+    },
+    "lastModifiedDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the message was last modified.",
+      "example": "2026-04-18T10:30:00Z"
+    },
+    "messageType": {
+      "type": "string",
+      "description": "The type of message.",
+      "enum": [
+        "message",
+        "chatEvent",
+        "typing",
+        "unknownFutureValue",
+        "systemEventMessage"
+      ],
+      "example": "message"
+    },
+    "importance": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "high",
+        "urgent"
+      ],
+      "description": "Message importance.",
+      "example": "normal"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject of the message.",
+      "example": "Project Update"
+    },
+    "body": {
+      "type": "object",
+      "properties": {
+        "contentType": {
+          "type": "string",
+          "enum": [
+            "text",
+            "html"
+          ],
+          "example": "html"
+        },
+        "content": {
+          "type": "string",
+          "example": "<p>Here is the latest update on the project.</p>"
+        }
+      }
+    },
+    "from": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "user-123"
+            },
+            "displayName": {
+              "type": "string",
+              "example": "Jane Smith"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "operationId": "addTeamMember",
+  "method": "POST",
+  "path": "/teams/{team-id}/members",
+  "summary": "Microsoft Teams Add Team Member",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "AddTeamMemberRequestExample",
+      "example": {
+        "roles": [
+          "member"
+        ],
+        "userId": "user-def456"
+      }
+    }
+  ],
+  "responseExamples": []
+}

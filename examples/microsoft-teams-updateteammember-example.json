@@ -1,0 +1,18 @@
+{
+  "operationId": "updateTeamMember",
+  "method": "PATCH",
+  "path": "/teams/{team-id}/members/{membership-id}",
+  "summary": "Microsoft Teams Update Team Member",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "UpdateTeamMemberRequestExample",
+      "example": {
+        "roles": [
+          "owner"
+        ]
+      }
+    }
+  ],
+  "responseExamples": []
+}

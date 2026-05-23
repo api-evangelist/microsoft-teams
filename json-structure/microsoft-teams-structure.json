@@ -1,0 +1,318 @@
+{
+  "provider": "Microsoft Teams",
+  "providerId": "microsoft-teams",
+  "kind": "json-structure",
+  "description": "Structural overview of the Microsoft Teams API surface; extracted from openapi/.",
+  "schemaCount": 15,
+  "operationCount": 24,
+  "schemas": [
+    {
+      "name": "Team",
+      "type": "object",
+      "propertyCount": 7,
+      "required": []
+    },
+    {
+      "name": "TeamCollection",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "Channel",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    },
+    {
+      "name": "ChannelCollection",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "ChatMessage",
+      "type": "object",
+      "propertyCount": 8,
+      "required": []
+    },
+    {
+      "name": "ChatMessageCollection",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "TeamsTab",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "TabCollection",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "TeamsAppInstallation",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "AppInstallationCollection",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "ConversationMember",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "MemberCollection",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "OnlineMeeting",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    },
+    {
+      "name": "Call",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    },
+    {
+      "name": "ErrorResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    }
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/me/joinedTeams",
+      "operationId": "listJoinedTeams",
+      "summary": "Microsoft Teams List Joined Teams",
+      "tags": [
+        "Teams"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/teams",
+      "operationId": "createTeam",
+      "summary": "Microsoft Teams Create Team",
+      "tags": [
+        "Teams"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/teams/{team-id}",
+      "operationId": "getTeam",
+      "summary": "Microsoft Teams Get Team",
+      "tags": [
+        "Teams"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/teams/{team-id}",
+      "operationId": "deleteTeam",
+      "summary": "Microsoft Teams Delete Team",
+      "tags": [
+        "Teams"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/teams/{team-id}",
+      "operationId": "updateTeam",
+      "summary": "Microsoft Teams Update Team",
+      "tags": [
+        "Teams"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/teams/{team-id}/archive",
+      "operationId": "archiveTeam",
+      "summary": "Microsoft Teams Archive Team",
+      "tags": [
+        "Teams"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/teams/{team-id}/channels",
+      "operationId": "listChannels",
+      "summary": "Microsoft Teams List Channels",
+      "tags": [
+        "Channels"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/teams/{team-id}/channels",
+      "operationId": "createChannel",
+      "summary": "Microsoft Teams Create Channel",
+      "tags": [
+        "Channels"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/teams/{team-id}/channels/{channel-id}/messages",
+      "operationId": "listChannelMessages",
+      "summary": "Microsoft Teams List Channel Messages",
+      "tags": [
+        "Messages"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/teams/{team-id}/channels/{channel-id}/messages",
+      "operationId": "sendChannelMessage",
+      "summary": "Microsoft Teams Send Channel Message",
+      "tags": [
+        "Messages"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/teams/{team-id}/channels/{channel-id}/tabs",
+      "operationId": "listChannelTabs",
+      "summary": "Microsoft Teams List Channel Tabs",
+      "tags": [
+        "Tabs"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/teams/{team-id}/installedApps",
+      "operationId": "listInstalledApps",
+      "summary": "Microsoft Teams List Installed Apps",
+      "tags": [
+        "Apps"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/teams/{team-id}/members",
+      "operationId": "listTeamMembers",
+      "summary": "Microsoft Teams List Team Members",
+      "tags": [
+        "Members"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/teams/{team-id}/members",
+      "operationId": "addTeamMember",
+      "summary": "Microsoft Teams Add Team Member",
+      "tags": [
+        "Members"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/teams/{team-id}/members/{membership-id}",
+      "operationId": "removeTeamMember",
+      "summary": "Microsoft Teams Remove Team Member",
+      "tags": [
+        "Members"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/teams/{team-id}/members/{membership-id}",
+      "operationId": "updateTeamMember",
+      "summary": "Microsoft Teams Update Team Member",
+      "tags": [
+        "Members"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/communications/onlineMeetings",
+      "operationId": "createOnlineMeeting",
+      "summary": "Microsoft Teams Create Online Meeting",
+      "tags": [
+        "Online Meetings"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/communications/onlineMeetings/{meeting-id}",
+      "operationId": "getOnlineMeeting",
+      "summary": "Microsoft Teams Get Online Meeting",
+      "tags": [
+        "Online Meetings"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/communications/calls",
+      "operationId": "createCall",
+      "summary": "Microsoft Teams Create Call",
+      "tags": [
+        "Calls"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/communications/calls/{call-id}",
+      "operationId": "getCall",
+      "summary": "Microsoft Teams Get Call",
+      "tags": [
+        "Calls"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/communications/calls/{call-id}",
+      "operationId": "hangUpCall",
+      "summary": "Microsoft Teams Hang Up Call",
+      "tags": [
+        "Calls"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/communications/calls/{call-id}/answer",
+      "operationId": "answerCall",
+      "summary": "Microsoft Teams Answer Call",
+      "tags": [
+        "Calls"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/communications/calls/{call-id}/reject",
+      "operationId": "rejectCall",
+      "summary": "Microsoft Teams Reject Call",
+      "tags": [
+        "Calls"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/communications/calls/{call-id}/transfer",
+      "operationId": "transferCall",
+      "summary": "Microsoft Teams Transfer Call",
+      "tags": [
+        "Calls"
+      ]
+    }
+  ]
+}

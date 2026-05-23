@@ -1,0 +1,35 @@
+{
+  "operationId": "listChannelMessages",
+  "method": "GET",
+  "path": "/teams/{team-id}/channels/{channel-id}/messages",
+  "summary": "Microsoft Teams List Channel Messages",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "ListChannelMessages200Example",
+      "example": {
+        "value": [
+          {
+            "id": "msg-001",
+            "createdDateTime": "2026-04-18T10:30:00Z",
+            "messageType": "message",
+            "importance": "normal",
+            "subject": "Project Update",
+            "body": {
+              "contentType": "html",
+              "content": "<p>Here is the latest update.</p>"
+            },
+            "from": {
+              "user": {
+                "id": "user-123",
+                "displayName": "Jane Smith"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

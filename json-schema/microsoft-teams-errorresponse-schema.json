@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ErrorResponse",
+  "title": "ErrorResponse",
+  "type": "object",
+  "description": "Error response from the API.",
+  "properties": {
+    "error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "example": "Forbidden"
+        },
+        "message": {
+          "type": "string",
+          "example": "Insufficient privileges to complete the operation."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Call",
+  "title": "Call",
+  "type": "object",
+  "description": "Represents a call in Teams.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the call.",
+      "example": "call-abc123"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "incoming",
+        "establishing",
+        "ringing",
+        "established",
+        "hold",
+        "transferring",
+        "transferAccepted",
+        "redirecting",
+        "terminating",
+        "terminated"
+      ],
+      "description": "Current call state.",
+      "example": "established"
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "incoming",
+        "outgoing"
+      ],
+      "description": "Direction of the call.",
+      "example": "outgoing"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject of the call.",
+      "example": "Quick sync"
+    },
+    "callbackUri": {
+      "type": "string",
+      "format": "uri",
+      "description": "Callback URL for call notifications."
+    },
+    "requestedModalities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "audio",
+          "video",
+          "videoBasedScreenSharing"
+        ]
+      },
+      "description": "Requested communication modalities."
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "operationId": "createCall",
+  "method": "POST",
+  "path": "/communications/calls",
+  "summary": "Microsoft Teams Create Call",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreateCallRequestExample",
+      "example": {
+        "callbackUri": "https://contoso.com/callback",
+        "requestedModalities": [
+          "audio"
+        ],
+        "subject": "Quick sync"
+      }
+    }
+  ],
+  "responseExamples": []
+}

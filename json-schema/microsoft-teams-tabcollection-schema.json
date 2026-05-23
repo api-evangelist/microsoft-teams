@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TabCollection",
+  "title": "TabCollection",
+  "type": "object",
+  "description": "Collection of tabs.",
+  "properties": {
+    "value": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TeamsTab"
+      }
+    }
+  }
+}

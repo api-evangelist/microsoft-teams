@@ -1,0 +1,22 @@
+{
+  "operationId": "listChannelTabs",
+  "method": "GET",
+  "path": "/teams/{team-id}/channels/{channel-id}/tabs",
+  "summary": "Microsoft Teams List Channel Tabs",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "ListChannelTabs200Example",
+      "example": {
+        "value": [
+          {
+            "id": "tab-001",
+            "displayName": "Project Wiki"
+          }
+        ]
+      }
+    }
+  ]
+}

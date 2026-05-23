@@ -1,0 +1,21 @@
+name: Microsoft Teams Domain Vocabulary
+provider: Microsoft Teams
+providerId: microsoft-teams
+description: Tag-derived vocabulary for the Microsoft Teams API surface; sourced from openapi/ tags.
+terms:
+- term: Teams
+  description: Operations for managing teams.
+- term: Channels
+  description: Operations for managing channels within teams.
+- term: Messages
+  description: Operations for sending and receiving chat messages.
+- term: Tabs
+  description: Operations for managing tabs in channels.
+- term: Apps
+  description: Operations for managing app installations in teams.
+- term: Members
+  description: Operations for managing team and channel members.
+- term: Online Meetings
+  description: Operations for creating and managing online meetings.
+- term: Calls
+  description: Operations for initiating and managing calls.
