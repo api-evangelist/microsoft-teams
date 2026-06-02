@@ -7,7 +7,7 @@ image: https://learn.microsoft.com/en-us/graph/images/teams-logo.png
 url: https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/apis.yml
 humanURL: https://www.microsoft.com/en-us/microsoft-teams
 created: '2024'
-modified: '2026-05-19'
+modified: '2026-05-29'
 specificationVersion: '0.19'
 type: Index
 tags:
@@ -34,6 +34,8 @@ apis:
     url: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
   - type: OpenAPI
     url: openapi/microsoft-teams-graph-api.yaml
+  - type: AsyncAPI
+    url: asyncapi/microsoft-teams-asyncapi.yaml
   - type: Authentication
     url: https://learn.microsoft.com/en-us/graph/auth/
   - type: SDK
@@ -97,6 +99,8 @@ apis:
     title: Bot Builder Samples
   - type: APIReference
     url: https://learn.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-connector-api-reference
+  - type: AsyncAPI
+    url: asyncapi/microsoft-teams-asyncapi.yaml
 - name: Microsoft Teams Webhook and Connector API
   description: APIs for creating incoming webhooks and Office 365 connectors to post messages and notifications to Teams channels.
   humanURL: https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/what-are-webhooks-and-connectors

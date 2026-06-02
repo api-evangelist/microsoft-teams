@@ -1,0 +1,1607 @@
+asyncapi: 2.6.0
+info:
+  title: Microsoft Teams Event Surface
+  version: 1.0.0
+  description: |
+    AsyncAPI 2.6 description of the asynchronous event surface for Microsoft
+    Teams. Two distinct delivery channels are modeled:
+
+      1. Microsoft Graph change notifications - HTTPS webhook deliveries that
+         Microsoft Graph POSTs to a subscriber-owned `notificationUrl` (and an
+         optional `lifecycleNotificationUrl`) when subscribed Teams resources
+         (chats, channels, teams, chat messages, conversation members, call
+         recordings, call transcripts, Teams app installations) change.
+      2. Bot Framework activities - HTTPS deliveries that the Teams channel of
+         the Azure Bot Service POSTs to the bot's messaging endpoint when a
+         user (or Teams itself) triggers a conversation event (message,
+         conversationUpdate, messageReaction, installationUpdate, invoke,
+         event, typing, messageUpdate, messageDelete).
+
+    Resource paths, change types, payload shapes, and bot activity event types
+    are taken from the public Microsoft Learn documentation:
+
+      - https://learn.microsoft.com/en-us/graph/teams-change-notification-in-microsoft-teams-overview
+      - https://learn.microsoft.com/en-us/graph/teams-changenotifications-chatmessage
+      - https://learn.microsoft.com/en-us/graph/change-notifications-lifecycle-events
+      - https://learn.microsoft.com/en-us/microsoftteams/platform/bots/how-to/conversations/subscribe-to-conversation-events
+      - https://learn.microsoft.com/en-us/microsoftteams/platform/bots/how-to/conversations/conversation-basics
+      - https://learn.microsoft.com/en-us/microsoftteams/platform/resources/bot-v3/bots-notifications
+
+    No event types, resource paths, or activity names are invented; everything
+    here is grounded in the source documentation.
+  contact:
+    name: Microsoft Graph / Microsoft Teams Platform
+    url: https://learn.microsoft.com/en-us/graph/teams-concept-overview
+  license:
+    name: Microsoft Learn Terms of Use
+    url: https://learn.microsoft.com/en-us/legal/termsofuse
+  externalDocs:
+    description: Change notifications for Microsoft Teams resources
+    url: https://learn.microsoft.com/en-us/graph/teams-change-notification-in-microsoft-teams-overview
+  tags:
+    - name: microsoft-graph
+    - name: change-notifications
+    - name: webhooks
+    - name: bot-framework
+    - name: teams
+
+defaultContentType: application/json
+
+servers:
+  subscriberWebhook:
+    url: '{notificationUrl}'
+    protocol: https
+    description: |
+      Subscriber-owned HTTPS endpoint registered as `notificationUrl` (and
+      optionally `lifecycleNotificationUrl`) on a Microsoft Graph subscription.
+      Microsoft Graph POSTs change notification batches to this URL.
+    variables:
+      notificationUrl:
+        default: https://webhook.example.com/api/resourceNotifications
+        description: HTTPS endpoint configured on the subscription resource.
+  botMessagingEndpoint:
+    url: '{botEndpoint}'
+    protocol: https
+    description: |
+      Bot messaging endpoint registered with the Azure Bot Service. The Teams
+      channel POSTs Bot Framework Activity objects to this URL.
+    variables:
+      botEndpoint:
+        default: https://bot.example.com/api/messages
+        description: HTTPS endpoint configured on the bot registration.
+
+channels:
+  # ------------------------------------------------------------------
+  # Microsoft Graph change notification channels
+  # ------------------------------------------------------------------
+  graph/teams/getAllMessages:
+    description: |
+      Subscribe to chat messages across all channels in all teams in the
+      tenant. Resource path: `/teams/getAllMessages`. Supports
+      `includeResourceData: true` with encryption.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveTenantChannelMessages
+      summary: All channel messages across the tenant
+      tags:
+        - name: chatMessage
+        - name: tenant-scope
+      message:
+        $ref: '#/components/messages/ChatMessageNotification'
+
+  graph/chats/getAllMessages:
+    description: |
+      Subscribe to chat messages across all chats in the tenant. Resource
+      path: `/chats/getAllMessages`.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveTenantChatMessages
+      summary: All chat messages across the tenant
+      tags:
+        - name: chatMessage
+        - name: tenant-scope
+      message:
+        $ref: '#/components/messages/ChatMessageNotification'
+
+  graph/teams/{teamId}/channels/{channelId}/messages:
+    description: |
+      Subscribe to messages and replies in a specific channel. Resource
+      path: `/teams/{team-id}/channels/{channel-id}/messages`. Supports
+      `$search` and `$filter=mentions/...` query parameters.
+    parameters:
+      teamId:
+        $ref: '#/components/parameters/teamId'
+      channelId:
+        $ref: '#/components/parameters/channelId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveChannelMessages
+      summary: Messages and replies in a specific channel
+      tags:
+        - name: chatMessage
+        - name: channel-scope
+      message:
+        $ref: '#/components/messages/ChatMessageNotification'
+
+  graph/chats/{chatId}/messages:
+    description: |
+      Subscribe to messages in a specific chat. Resource path:
+      `/chats/{chat-id}/messages`.
+    parameters:
+      chatId:
+        $ref: '#/components/parameters/chatId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveChatMessages
+      summary: Messages in a specific chat
+      tags:
+        - name: chatMessage
+        - name: chat-scope
+      message:
+        $ref: '#/components/messages/ChatMessageNotification'
+
+  graph/users/{userId}/chats/getAllMessages:
+    description: |
+      Subscribe to chat messages across all chats a particular user is part
+      of. Resource path: `/users/{user-id}/chats/getAllMessages`.
+    parameters:
+      userId:
+        $ref: '#/components/parameters/userId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveUserChatMessages
+      summary: All chat messages for a specific user
+      tags:
+        - name: chatMessage
+        - name: user-scope
+      message:
+        $ref: '#/components/messages/ChatMessageNotification'
+
+  graph/appCatalogs/teamsApps/{teamsAppId}/installedToChats/getAllMessages:
+    description: |
+      Subscribe to chat messages across all chats in the tenant where a
+      specific Teams app is installed. Resource path:
+      `/appCatalogs/teamsApps/{teams-app-id}/installedToChats/getAllMessages`.
+    parameters:
+      teamsAppId:
+        $ref: '#/components/parameters/teamsAppId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveAppInstalledChatMessages
+      summary: Chat messages in chats where a Teams app is installed
+      tags:
+        - name: chatMessage
+        - name: app-scope
+      message:
+        $ref: '#/components/messages/ChatMessageNotification'
+
+  graph/teams/getAllChannels:
+    description: |
+      Subscribe to changes to channels across all teams. Resource path:
+      `/teams/getAllChannels`.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveTenantChannelChanges
+      summary: Channel resource changes across the tenant
+      tags:
+        - name: channel
+        - name: tenant-scope
+      message:
+        $ref: '#/components/messages/ChannelNotification'
+
+  graph/teams/{teamId}/channels:
+    description: |
+      Subscribe to channel changes within a specific team. Resource path:
+      `/teams/{id}/channels`.
+    parameters:
+      teamId:
+        $ref: '#/components/parameters/teamId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveTeamChannelChanges
+      summary: Channel resource changes within a specific team
+      tags:
+        - name: channel
+        - name: team-scope
+      message:
+        $ref: '#/components/messages/ChannelNotification'
+
+  graph/chats:
+    description: |
+      Subscribe to changes to any chat in the tenant. Resource path:
+      `/chats`.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveTenantChatChanges
+      summary: Chat resource changes across the tenant
+      tags:
+        - name: chat
+        - name: tenant-scope
+      message:
+        $ref: '#/components/messages/ChatNotification'
+
+  graph/chats/{chatId}:
+    description: |
+      Subscribe to changes to a specific chat. Resource path: `/chats/{id}`.
+    parameters:
+      chatId:
+        $ref: '#/components/parameters/chatId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveChatChanges
+      summary: Changes to a specific chat resource
+      tags:
+        - name: chat
+      message:
+        $ref: '#/components/messages/ChatNotification'
+
+  graph/appCatalogs/teamsApps/{teamsAppId}/installedToChats:
+    description: |
+      Subscribe to chat changes for chats in which a specific Teams app is
+      installed. Resource path:
+      `/appCatalogs/teamsApps/{id}/installedToChats`.
+    parameters:
+      teamsAppId:
+        $ref: '#/components/parameters/teamsAppId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveAppInstalledChatChanges
+      summary: Chat changes for chats where a Teams app is installed
+      tags:
+        - name: chat
+        - name: app-scope
+      message:
+        $ref: '#/components/messages/ChatNotification'
+
+  graph/teams:
+    description: |
+      Subscribe to changes to any team in the tenant. Resource path: `/teams`.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveTenantTeamChanges
+      summary: Team resource changes across the tenant
+      tags:
+        - name: team
+        - name: tenant-scope
+      message:
+        $ref: '#/components/messages/TeamNotification'
+
+  graph/teams/{teamId}:
+    description: |
+      Subscribe to changes to a specific team. Resource path: `/teams/{id}`.
+    parameters:
+      teamId:
+        $ref: '#/components/parameters/teamId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveTeamChanges
+      summary: Changes to a specific team resource
+      tags:
+        - name: team
+      message:
+        $ref: '#/components/messages/TeamNotification'
+
+  graph/teams/{teamId}/members:
+    description: |
+      Subscribe to membership changes in a specific team. Resource path:
+      `/teams/{id}/members`.
+    parameters:
+      teamId:
+        $ref: '#/components/parameters/teamId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveTeamMemberChanges
+      summary: Conversation member changes in a specific team
+      tags:
+        - name: conversationMember
+        - name: team-scope
+      message:
+        $ref: '#/components/messages/ConversationMemberNotification'
+
+  graph/chats/{chatId}/members:
+    description: |
+      Subscribe to membership changes in a specific chat. Resource path:
+      `/chats/{id}/members`.
+    parameters:
+      chatId:
+        $ref: '#/components/parameters/chatId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveChatMemberChanges
+      summary: Conversation member changes in a specific chat
+      tags:
+        - name: conversationMember
+        - name: chat-scope
+      message:
+        $ref: '#/components/messages/ConversationMemberNotification'
+
+  graph/chats/getAllMembers:
+    description: |
+      Subscribe to membership changes in all chats. Resource path:
+      `/chats/getAllMembers`.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveAllChatMemberChanges
+      summary: Conversation member changes across all chats
+      tags:
+        - name: conversationMember
+        - name: tenant-scope
+      message:
+        $ref: '#/components/messages/ConversationMemberNotification'
+
+  graph/teams/{teamId}/channels/getAllMembers:
+    description: |
+      Subscribe to membership changes in all channels under a specific team.
+      Resource path: `teams/{id}/channels/getAllMembers`.
+    parameters:
+      teamId:
+        $ref: '#/components/parameters/teamId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveTeamChannelMemberChanges
+      summary: Conversation member changes across all channels in a team
+      tags:
+        - name: conversationMember
+        - name: team-scope
+      message:
+        $ref: '#/components/messages/ConversationMemberNotification'
+
+  graph/teams/getAllChannels/getAllMembers:
+    description: |
+      Subscribe to membership changes in all channels across the tenant.
+      Resource path: `teams/getAllChannels/getAllMembers`.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveTenantChannelMemberChanges
+      summary: Conversation member changes across all channels in the tenant
+      tags:
+        - name: conversationMember
+        - name: tenant-scope
+      message:
+        $ref: '#/components/messages/ConversationMemberNotification'
+
+  graph/appCatalogs/teamsApps/{teamsAppId}/installedToChats/getAllMembers:
+    description: |
+      Subscribe to membership changes for chats in the tenant where a specific
+      Teams app is installed. Resource path:
+      `/appCatalogs/teamsApps/{id}/installedToChats/getAllMembers`.
+    parameters:
+      teamsAppId:
+        $ref: '#/components/parameters/teamsAppId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveAppInstalledChatMemberChanges
+      summary: Member changes for chats where a Teams app is installed
+      tags:
+        - name: conversationMember
+        - name: app-scope
+      message:
+        $ref: '#/components/messages/ConversationMemberNotification'
+
+  graph/appCatalogs/teamsApps/{teamsAppId}/installations:
+    description: |
+      Subscribe to install, upgrade, and delete events for a specific Teams
+      app. Resource path:
+      `/appCatalogs/teamsApps/{teams-app-id}/installations`.
+    parameters:
+      teamsAppId:
+        $ref: '#/components/parameters/teamsAppId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveTeamsAppInstallations
+      summary: Teams app installation lifecycle events
+      tags:
+        - name: teamsAppInstallation
+      message:
+        $ref: '#/components/messages/TeamsAppInstallationNotification'
+
+  graph/communications/onlineMeetings/getAllRecordings:
+    description: |
+      Subscribe to call recordings becoming available across all online
+      meetings in the organization. Resource path:
+      `communications/onlineMeetings/getAllRecordings`.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveTenantOnlineMeetingRecordings
+      summary: Online meeting recordings across the organization
+      tags:
+        - name: callRecording
+        - name: tenant-scope
+      message:
+        $ref: '#/components/messages/CallRecordingNotification'
+
+  graph/communications/onlineMeetings/{onlineMeetingId}/recordings:
+    description: |
+      Subscribe to recordings for a specific online meeting. Resource path:
+      `communications/onlineMeetings/{onlineMeetingId}/recordings`.
+    parameters:
+      onlineMeetingId:
+        $ref: '#/components/parameters/onlineMeetingId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveOnlineMeetingRecordings
+      summary: Recordings for a specific online meeting
+      tags:
+        - name: callRecording
+      message:
+        $ref: '#/components/messages/CallRecordingNotification'
+
+  graph/users/{userId}/onlineMeetings/getAllRecordings:
+    description: |
+      Subscribe to call recordings for meetings organized by a specific user.
+      Resource path: `users/{userId}/onlineMeetings/getAllRecordings`.
+    parameters:
+      userId:
+        $ref: '#/components/parameters/userId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveUserOnlineMeetingRecordings
+      summary: Online meeting recordings for a specific organizer
+      tags:
+        - name: callRecording
+        - name: user-scope
+      message:
+        $ref: '#/components/messages/CallRecordingNotification'
+
+  graph/appCatalogs/teamsApps/{teamsAppId}/installedToOnlineMeetings/getAllRecordings:
+    description: |
+      Subscribe to recordings in meetings where a specific Teams app is
+      installed. Resource path:
+      `appCatalogs/teamsApps/{id}/installedToOnlineMeetings/getAllRecordings`.
+    parameters:
+      teamsAppId:
+        $ref: '#/components/parameters/teamsAppId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveAppInstalledOnlineMeetingRecordings
+      summary: Meeting recordings where a Teams app is installed
+      tags:
+        - name: callRecording
+        - name: app-scope
+      message:
+        $ref: '#/components/messages/CallRecordingNotification'
+
+  graph/communications/adhocCalls/getAllRecordings:
+    description: |
+      Subscribe to recordings for all ad hoc calls (PSTN, 1:1, group calls)
+      in the organization. Resource path:
+      `communications/adhocCalls/getAllRecordings`.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveTenantAdhocCallRecordings
+      summary: Recordings for ad hoc calls across the organization
+      tags:
+        - name: callRecording
+        - name: tenant-scope
+      message:
+        $ref: '#/components/messages/CallRecordingNotification'
+
+  graph/communications/adhocCalls/{adhocCallId}/recordings:
+    description: |
+      Subscribe to recordings for a specific ad hoc call. Resource path:
+      `communications/adhocCalls/{adhocCallId}/recordings`.
+    parameters:
+      adhocCallId:
+        $ref: '#/components/parameters/adhocCallId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveAdhocCallRecordings
+      summary: Recordings for a specific ad hoc call
+      tags:
+        - name: callRecording
+      message:
+        $ref: '#/components/messages/CallRecordingNotification'
+
+  graph/users/{userId}/adhocCalls/getAllRecordings:
+    description: |
+      Subscribe to recordings for ad hoc calls initiated by a specific user.
+      Resource path: `users/{userId}/adhocCalls/getAllRecordings`.
+    parameters:
+      userId:
+        $ref: '#/components/parameters/userId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveUserAdhocCallRecordings
+      summary: Recordings for ad hoc calls initiated by a user
+      tags:
+        - name: callRecording
+        - name: user-scope
+      message:
+        $ref: '#/components/messages/CallRecordingNotification'
+
+  graph/communications/onlineMeetings/getAllTranscripts:
+    description: |
+      Subscribe to call transcripts for all online meetings in the
+      organization. Resource path:
+      `communications/onlineMeetings/getAllTranscripts`.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveTenantOnlineMeetingTranscripts
+      summary: Online meeting transcripts across the organization
+      tags:
+        - name: callTranscript
+        - name: tenant-scope
+      message:
+        $ref: '#/components/messages/CallTranscriptNotification'
+
+  graph/communications/onlineMeetings/{onlineMeetingId}/transcripts:
+    description: |
+      Subscribe to transcripts for a specific online meeting. Resource path:
+      `communications/onlineMeetings/{onlineMeetingId}/transcripts`.
+    parameters:
+      onlineMeetingId:
+        $ref: '#/components/parameters/onlineMeetingId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveOnlineMeetingTranscripts
+      summary: Transcripts for a specific online meeting
+      tags:
+        - name: callTranscript
+      message:
+        $ref: '#/components/messages/CallTranscriptNotification'
+
+  graph/users/{userId}/onlineMeetings/getAllTranscripts:
+    description: |
+      Subscribe to transcripts for meetings organized by a specific user.
+      Resource path: `users/{userId}/onlineMeetings/getAllTranscripts`.
+    parameters:
+      userId:
+        $ref: '#/components/parameters/userId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveUserOnlineMeetingTranscripts
+      summary: Online meeting transcripts for a specific organizer
+      tags:
+        - name: callTranscript
+        - name: user-scope
+      message:
+        $ref: '#/components/messages/CallTranscriptNotification'
+
+  graph/appCatalogs/teamsApps/{teamsAppId}/installedToOnlineMeetings/getAllTrancripts:
+    description: |
+      Subscribe to transcripts in meetings where a specific Teams app is
+      installed. Resource path:
+      `appCatalogs/teamsApps/{id}/installedToOnlineMeetings/getAllTrancripts`
+      (note the spelling used by the documentation).
+    parameters:
+      teamsAppId:
+        $ref: '#/components/parameters/teamsAppId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveAppInstalledOnlineMeetingTranscripts
+      summary: Meeting transcripts where a Teams app is installed
+      tags:
+        - name: callTranscript
+        - name: app-scope
+      message:
+        $ref: '#/components/messages/CallTranscriptNotification'
+
+  graph/communications/adhocCalls/getAllTranscripts:
+    description: |
+      Subscribe to transcripts for all ad hoc calls in the organization.
+      Resource path: `communications/adhocCalls/getAllTranscripts`.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveTenantAdhocCallTranscripts
+      summary: Transcripts for ad hoc calls across the organization
+      tags:
+        - name: callTranscript
+        - name: tenant-scope
+      message:
+        $ref: '#/components/messages/CallTranscriptNotification'
+
+  graph/communications/adhocCalls/{adhocCallId}/transcripts:
+    description: |
+      Subscribe to transcripts for a specific ad hoc call. Resource path:
+      `communications/adhocCalls/{adhocCallId}/transcripts`.
+    parameters:
+      adhocCallId:
+        $ref: '#/components/parameters/adhocCallId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveAdhocCallTranscripts
+      summary: Transcripts for a specific ad hoc call
+      tags:
+        - name: callTranscript
+      message:
+        $ref: '#/components/messages/CallTranscriptNotification'
+
+  graph/users/{userId}/adhocCalls/getAllTranscripts:
+    description: |
+      Subscribe to transcripts for ad hoc calls initiated by a specific user.
+      Resource path: `users/{userId}/adhocCalls/getAllTranscripts`.
+    parameters:
+      userId:
+        $ref: '#/components/parameters/userId'
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveUserAdhocCallTranscripts
+      summary: Transcripts for ad hoc calls initiated by a user
+      tags:
+        - name: callTranscript
+        - name: user-scope
+      message:
+        $ref: '#/components/messages/CallTranscriptNotification'
+
+  graph/lifecycle:
+    description: |
+      Deliveries to the `lifecycleNotificationUrl` for any Teams subscription.
+      Lifecycle notifications signal subscription state changes
+      (`reauthorizationRequired`, `subscriptionRemoved`, `missed`) and contain
+      no resource data.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveLifecycleNotifications
+      summary: Subscription lifecycle notifications
+      tags:
+        - name: lifecycle
+      message:
+        $ref: '#/components/messages/LifecycleNotification'
+
+  graph/validation:
+    description: |
+      Graph validation handshake. When a subscription is created or updated,
+      Microsoft Graph sends a `POST` with `validationToken` query parameter
+      that the endpoint must echo back as text/plain within 10 seconds.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveValidationRequest
+      summary: Subscription endpoint validation handshake
+      tags:
+        - name: validation
+      message:
+        $ref: '#/components/messages/ValidationRequest'
+
+  # ------------------------------------------------------------------
+  # Bot Framework activity channels
+  # ------------------------------------------------------------------
+  bot/activities:
+    description: |
+      The Teams channel of the Azure Bot Service POSTs Bot Framework Activity
+      objects to the bot's messaging endpoint. The `type` discriminator
+      identifies the kind of activity; for `conversationUpdate` and `event`
+      activities, the `channelData.eventType` discriminator further
+      identifies Teams-specific sub-events.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: receiveBotActivity
+      summary: Bot Framework Activity delivered to the bot endpoint
+      tags:
+        - name: bot-framework
+      message:
+        oneOf:
+          - $ref: '#/components/messages/MessageActivity'
+          - $ref: '#/components/messages/MessageUpdateActivity'
+          - $ref: '#/components/messages/MessageDeleteActivity'
+          - $ref: '#/components/messages/ConversationUpdateActivity'
+          - $ref: '#/components/messages/MessageReactionActivity'
+          - $ref: '#/components/messages/InstallationUpdateActivity'
+          - $ref: '#/components/messages/TypingActivity'
+          - $ref: '#/components/messages/InvokeActivity'
+          - $ref: '#/components/messages/EventActivity'
+
+components:
+  parameters:
+    teamId:
+      description: Microsoft Graph identifier of a team.
+      schema:
+        type: string
+    channelId:
+      description: Microsoft Graph identifier of a channel.
+      schema:
+        type: string
+    chatId:
+      description: Microsoft Graph identifier of a chat.
+      schema:
+        type: string
+    userId:
+      description: Microsoft Graph identifier of a user.
+      schema:
+        type: string
+    teamsAppId:
+      description: Microsoft Graph identifier of a Teams app in the app catalog.
+      schema:
+        type: string
+    onlineMeetingId:
+      description: Identifier of an online meeting.
+      schema:
+        type: string
+    adhocCallId:
+      description: Identifier of an ad hoc call.
+      schema:
+        type: string
+
+  messages:
+    ChatMessageNotification:
+      name: chatMessageChangeNotification
+      title: chatMessage change notification
+      summary: |
+        Notification payload for changes on the chatMessage resource. The
+        resource may be in a channel or chat context. When
+        `includeResourceData` is true on the subscription, `encryptedContent`
+        carries the AES-encrypted chatMessage payload.
+      contentType: application/json
+      tags:
+        - name: chatMessage
+      payload:
+        $ref: '#/components/schemas/ChangeNotificationCollection'
+      examples:
+        - name: channelMessageCreatedWithoutResourceData
+          summary: Channel message created (no resource data)
+          payload:
+            value:
+              - subscriptionId: 9f9d1ed0-c9cc-42e7-8d80-a7fc4b0cda3c
+                changeType: created
+                tenantId: 72f988bf-86f1-41af-91ab-2d7cd011db47
+                clientState: secretClientState
+                subscriptionExpirationDateTime: '2021-02-02T11:26:41.0537895-08:00'
+                resource: teams('fbe2bf47-16c8-47cf-b4a5-4b9b187c508b')/channels('19:4a95f7d8db4c4e7fae857bcebe0623e6@thread.tacv2')/messages('1612293113399')
+                resourceData:
+                  id: '1612293113399'
+                  '@odata.type': '#Microsoft.Graph.chatMessage'
+                  '@odata.id': teams('fbe2bf47-16c8-47cf-b4a5-4b9b187c508b')/channels('19:4a95f7d8db4c4e7fae857bcebe0623e6@thread.tacv2')/messages('1612293113399')
+
+    ChannelNotification:
+      name: channelChangeNotification
+      title: channel change notification
+      contentType: application/json
+      tags:
+        - name: channel
+      payload:
+        $ref: '#/components/schemas/ChangeNotificationCollection'
+
+    ChatNotification:
+      name: chatChangeNotification
+      title: chat change notification
+      contentType: application/json
+      tags:
+        - name: chat
+      payload:
+        $ref: '#/components/schemas/ChangeNotificationCollection'
+
+    TeamNotification:
+      name: teamChangeNotification
+      title: team change notification
+      contentType: application/json
+      tags:
+        - name: team
+      payload:
+        $ref: '#/components/schemas/ChangeNotificationCollection'
+
+    ConversationMemberNotification:
+      name: conversationMemberChangeNotification
+      title: conversationMember change notification
+      contentType: application/json
+      tags:
+        - name: conversationMember
+      payload:
+        $ref: '#/components/schemas/ChangeNotificationCollection'
+
+    TeamsAppInstallationNotification:
+      name: teamsAppInstallationChangeNotification
+      title: teamsAppInstallation change notification
+      contentType: application/json
+      tags:
+        - name: teamsAppInstallation
+      payload:
+        $ref: '#/components/schemas/ChangeNotificationCollection'
+
+    CallRecordingNotification:
+      name: callRecordingChangeNotification
+      title: callRecording change notification
+      contentType: application/json
+      tags:
+        - name: callRecording
+      payload:
+        $ref: '#/components/schemas/ChangeNotificationCollection'
+
+    CallTranscriptNotification:
+      name: callTranscriptChangeNotification
+      title: callTranscript change notification
+      contentType: application/json
+      tags:
+        - name: callTranscript
+      payload:
+        $ref: '#/components/schemas/ChangeNotificationCollection'
+
+    LifecycleNotification:
+      name: lifecycleNotification
+      title: Subscription lifecycle notification
+      summary: |
+        Subscription lifecycle event. The `lifecycleEvent` value is one of
+        `reauthorizationRequired`, `subscriptionRemoved`, or `missed`.
+        Subscribers must respond with HTTP 202 within 30 seconds.
+      contentType: application/json
+      tags:
+        - name: lifecycle
+      payload:
+        $ref: '#/components/schemas/LifecycleNotificationCollection'
+      examples:
+        - name: reauthorizationRequired
+          summary: Reauthorization required
+          payload:
+            value:
+              - subscriptionId: 7c0d4e7f-1234-4abc-9def-1122334455aa
+                subscriptionExpirationDateTime: '2019-03-20T11:00:00.0000000Z'
+                tenantId: 72f988bf-86f1-41af-91ab-2d7cd011db47
+                clientState: secretClientState
+                lifecycleEvent: reauthorizationRequired
+
+    ValidationRequest:
+      name: validationRequest
+      title: Subscription endpoint validation request
+      summary: |
+        Sent by Microsoft Graph with the `validationToken` query parameter
+        when a subscription is created or updated. The endpoint must respond
+        within 10 seconds with HTTP 200 and `text/plain` body equal to the
+        URL-decoded `validationToken`.
+      contentType: text/plain
+      headers:
+        type: object
+        properties:
+          Content-Type:
+            type: string
+            enum: [text/plain]
+      payload:
+        type: object
+        properties:
+          validationToken:
+            type: string
+            description: Token (passed as query parameter) that must be echoed back.
+
+    MessageActivity:
+      name: messageActivity
+      title: Bot Framework message activity
+      contentType: application/json
+      tags:
+        - name: bot-framework
+        - name: message
+      payload:
+        $ref: '#/components/schemas/MessageActivity'
+
+    MessageUpdateActivity:
+      name: messageUpdateActivity
+      title: Bot Framework messageUpdate activity
+      summary: |
+        Sent when a previously sent message is edited or restored from
+        soft-delete. `channelData.eventType` is `editMessage` or
+        `undeleteMessage`.
+      contentType: application/json
+      tags:
+        - name: bot-framework
+        - name: messageUpdate
+      payload:
+        $ref: '#/components/schemas/MessageUpdateActivity'
+
+    MessageDeleteActivity:
+      name: messageDeleteActivity
+      title: Bot Framework messageDelete activity
+      summary: |
+        Sent when a message is soft-deleted. `channelData.eventType` is
+        `softDeleteMessage`.
+      contentType: application/json
+      tags:
+        - name: bot-framework
+        - name: messageDelete
+      payload:
+        $ref: '#/components/schemas/MessageDeleteActivity'
+
+    ConversationUpdateActivity:
+      name: conversationUpdateActivity
+      title: Bot Framework conversationUpdate activity
+      summary: |
+        Sent for membership and team/channel lifecycle changes. The
+        `channelData.eventType` discriminator identifies the Teams-specific
+        sub-event:
+        `teamMemberAdded`, `teamMemberRemoved`, `teamRenamed`,
+        `channelCreated`, `channelRenamed`, `channelDeleted`,
+        `channelRestored`, `teamArchived`, `teamUnarchived`, `teamDeleted`,
+        `teamHardDeleted`, `teamRestored`.
+      contentType: application/json
+      tags:
+        - name: bot-framework
+        - name: conversationUpdate
+      payload:
+        $ref: '#/components/schemas/ConversationUpdateActivity'
+      examples:
+        - name: teamMemberAdded
+          summary: Bot added to a team
+          payload:
+            type: conversationUpdate
+            membersAdded:
+              - id: '28:f5d48856-5b42-41a0-8c3a-c5f944b679b0'
+            timestamp: '2017-02-23T19:38:35.312Z'
+            id: 'f:5f85c2ad'
+            channelId: msteams
+            serviceUrl: https://smba.trafficmanager.net/amer-client-ss.msg/
+            from:
+              id: '29:1I9Is_Sx0OIy2rQ7Xz1lcaPKlO9eqmBRTBuW6XzkFtcjqxTjPaCMij8BVMdBcL9L_RwWNJyAHFQb0TRzXgyQvA'
+            conversation:
+              isGroup: true
+              conversationType: channel
+              id: '19:efa9296d959346209fea44151c742e73@thread.skype'
+            recipient:
+              id: '28:f5d48856-5b42-41a0-8c3a-c5f944b679b0'
+              name: SongsuggesterBot
+            channelData:
+              team:
+                id: '19:efa9296d959346209fea44151c742e73@thread.skype'
+              eventType: teamMemberAdded
+              tenant:
+                id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+
+    MessageReactionActivity:
+      name: messageReactionActivity
+      title: Bot Framework messageReaction activity
+      summary: |
+        Sent when a user adds or removes a reaction (like, heart, laugh,
+        surprised, sad, angry, and other supported emoji reactions) to a
+        message previously sent by the bot.
+      contentType: application/json
+      tags:
+        - name: bot-framework
+        - name: messageReaction
+      payload:
+        $ref: '#/components/schemas/MessageReactionActivity'
+
+    InstallationUpdateActivity:
+      name: installationUpdateActivity
+      title: Bot Framework installationUpdate activity
+      summary: |
+        Sent when the bot is installed, uninstalled, or upgraded in a
+        conversation thread. The `action` field is one of `add`, `remove`,
+        `add-upgrade`, or `remove-upgrade`.
+      contentType: application/json
+      tags:
+        - name: bot-framework
+        - name: installationUpdate
+      payload:
+        $ref: '#/components/schemas/InstallationUpdateActivity'
+
+    TypingActivity:
+      name: typingActivity
+      title: Bot Framework typing activity
+      contentType: application/json
+      tags:
+        - name: bot-framework
+        - name: typing
+      payload:
+        $ref: '#/components/schemas/TypingActivity'
+
+    InvokeActivity:
+      name: invokeActivity
+      title: Bot Framework invoke activity
+      summary: |
+        Synchronous request from Teams that expects a response payload. The
+        `name` discriminator identifies the invoke kind. Documented Teams
+        invoke names include `composeExtension/query`,
+        `composeExtension/queryLink`, `composeExtension/selectItem`,
+        `composeExtension/submitAction`, `composeExtension/fetchTask`,
+        `composeExtension/setting`, `composeExtension/onCardButtonClicked`,
+        `composeExtension/anonymousQueryLink`, `task/fetch`, `task/submit`,
+        `tab/fetch`, `tab/submit`, `adaptiveCard/action`, `message/submitAction`,
+        `messageBack`, `signin/verifyState`, `signin/tokenExchange`,
+        `fileConsent/invoke`, `actionableMessage/executeAction`,
+        `handoff/action`, and `config/fetch`, `config/submit`.
+      contentType: application/json
+      tags:
+        - name: bot-framework
+        - name: invoke
+      payload:
+        $ref: '#/components/schemas/InvokeActivity'
+
+    EventActivity:
+      name: eventActivity
+      title: Bot Framework event activity
+      summary: |
+        Asynchronous notification from Teams. Documented Teams event names
+        include `application/vnd.microsoft.readReceipt`,
+        `application/vnd.microsoft.meetingStart`,
+        `application/vnd.microsoft.meetingEnd`,
+        `application/vnd.microsoft.meetingParticipantJoin`,
+        `application/vnd.microsoft.meetingParticipantLeave`, and
+        `application/vnd.microsoft.botMessagePreview`.
+      contentType: application/json
+      tags:
+        - name: bot-framework
+        - name: event
+      payload:
+        $ref: '#/components/schemas/EventActivity'
+
+  schemas:
+    # -------- Graph change notification envelope --------
+    ChangeNotificationCollection:
+      type: object
+      description: |
+        Top-level payload delivered by Microsoft Graph to a `notificationUrl`.
+        Contains a batch of `changeNotification` items and optional
+        `validationTokens` used to verify authenticity when resource data is
+        included.
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChangeNotification'
+        validationTokens:
+          type: array
+          description: JWT tokens used to validate the notification when resource data is included.
+          items:
+            type: string
+      required:
+        - value
+
+    ChangeNotification:
+      type: object
+      description: A single change notification item.
+      properties:
+        subscriptionId:
+          type: string
+          format: uuid
+          description: ID of the subscription that generated the notification.
+        subscriptionExpirationDateTime:
+          type: string
+          format: date-time
+        changeType:
+          type: string
+          description: |
+            Type of change. For Teams resources this is one of `created`,
+            `updated`, or `deleted` (subscriptions may comma-combine values).
+          enum:
+            - created
+            - updated
+            - deleted
+        clientState:
+          type: string
+          description: Client-supplied secret echoed back so the receiver can verify the notification.
+        resource:
+          type: string
+          description: OData path of the resource that changed.
+        resourceData:
+          $ref: '#/components/schemas/ResourceData'
+        encryptedContent:
+          $ref: '#/components/schemas/EncryptedContent'
+        tenantId:
+          type: string
+          format: uuid
+      required:
+        - subscriptionId
+        - changeType
+        - resource
+
+    ResourceData:
+      type: object
+      properties:
+        id:
+          type: string
+        '@odata.type':
+          type: string
+        '@odata.id':
+          type: string
+        '@odata.etag':
+          type: string
+
+    EncryptedContent:
+      type: object
+      description: |
+        Present when `includeResourceData: true` is set on the subscription.
+        The receiver decrypts `dataKey` with its private key, then uses the
+        symmetric key to decrypt `data`.
+      properties:
+        data:
+          type: string
+          description: Base64-encoded AES-encrypted resource data.
+        dataKey:
+          type: string
+          description: Base64-encoded RSA-encrypted symmetric AES key.
+        encryptionCertificateId:
+          type: string
+        encryptionCertificateThumbprint:
+          type: string
+
+    LifecycleNotificationCollection:
+      type: object
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/LifecycleNotification'
+        validationTokens:
+          type: array
+          items:
+            type: string
+      required:
+        - value
+
+    LifecycleNotification:
+      type: object
+      properties:
+        subscriptionId:
+          type: string
+          format: uuid
+        subscriptionExpirationDateTime:
+          type: string
+          format: date-time
+        tenantId:
+          type: string
+          format: uuid
+        clientState:
+          type: string
+        lifecycleEvent:
+          type: string
+          enum:
+            - reauthorizationRequired
+            - subscriptionRemoved
+            - missed
+      required:
+        - subscriptionId
+        - lifecycleEvent
+
+    # -------- Bot Framework Activity base + variants --------
+    ActivityBase:
+      type: object
+      description: Bot Framework Activity base properties.
+      properties:
+        type:
+          type: string
+          description: |
+            Bot Framework activity type. For Teams the documented values
+            include `message`, `messageUpdate`, `messageDelete`,
+            `conversationUpdate`, `messageReaction`, `installationUpdate`,
+            `typing`, `invoke`, `event`, `endOfConversation`, and
+            `handoff`.
+          enum:
+            - message
+            - messageUpdate
+            - messageDelete
+            - conversationUpdate
+            - messageReaction
+            - installationUpdate
+            - typing
+            - invoke
+            - event
+            - endOfConversation
+            - handoff
+        id:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        localTimestamp:
+          type: string
+          format: date-time
+        localTimezone:
+          type: string
+        channelId:
+          type: string
+          description: Always `msteams` for Teams-originated activities.
+        serviceUrl:
+          type: string
+          description: |
+            Region-specific Bot Connector service URL. Examples include
+            `https://smba.trafficmanager.net/amer/`,
+            `https://smba.trafficmanager.net/emea/`, and
+            `https://smba.trafficmanager.net/apac/`.
+        from:
+          $ref: '#/components/schemas/ChannelAccount'
+        recipient:
+          $ref: '#/components/schemas/ChannelAccount'
+        conversation:
+          $ref: '#/components/schemas/ConversationAccount'
+        replyToId:
+          type: string
+        locale:
+          type: string
+        entities:
+          type: array
+          items:
+            type: object
+        channelData:
+          $ref: '#/components/schemas/TeamsChannelData'
+
+    MessageActivity:
+      allOf:
+        - $ref: '#/components/schemas/ActivityBase'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [message]
+            text:
+              type: string
+            textFormat:
+              type: string
+              enum: [plain, markdown, xml]
+            attachmentLayout:
+              type: string
+              enum: [list, carousel]
+            attachments:
+              type: array
+              items:
+                type: object
+            suggestedActions:
+              type: object
+            value:
+              description: Arbitrary value (e.g. card action payload).
+          required:
+            - type
+
+    MessageUpdateActivity:
+      allOf:
+        - $ref: '#/components/schemas/ActivityBase'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [messageUpdate]
+            text:
+              type: string
+          required:
+            - type
+
+    MessageDeleteActivity:
+      allOf:
+        - $ref: '#/components/schemas/ActivityBase'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [messageDelete]
+          required:
+            - type
+
+    ConversationUpdateActivity:
+      allOf:
+        - $ref: '#/components/schemas/ActivityBase'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [conversationUpdate]
+            membersAdded:
+              type: array
+              items:
+                $ref: '#/components/schemas/ChannelAccount'
+            membersRemoved:
+              type: array
+              items:
+                $ref: '#/components/schemas/ChannelAccount'
+            topicName:
+              type: string
+            historyDisclosed:
+              type: boolean
+          required:
+            - type
+
+    MessageReactionActivity:
+      allOf:
+        - $ref: '#/components/schemas/ActivityBase'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [messageReaction]
+            reactionsAdded:
+              type: array
+              items:
+                $ref: '#/components/schemas/MessageReaction'
+            reactionsRemoved:
+              type: array
+              items:
+                $ref: '#/components/schemas/MessageReaction'
+          required:
+            - type
+
+    InstallationUpdateActivity:
+      allOf:
+        - $ref: '#/components/schemas/ActivityBase'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [installationUpdate]
+            action:
+              type: string
+              enum:
+                - add
+                - remove
+                - add-upgrade
+                - remove-upgrade
+          required:
+            - type
+            - action
+
+    TypingActivity:
+      allOf:
+        - $ref: '#/components/schemas/ActivityBase'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [typing]
+          required:
+            - type
+
+    InvokeActivity:
+      allOf:
+        - $ref: '#/components/schemas/ActivityBase'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [invoke]
+            name:
+              type: string
+              description: |
+                Invoke name (Teams documented values, non-exhaustive):
+                `composeExtension/query`, `composeExtension/queryLink`,
+                `composeExtension/anonymousQueryLink`,
+                `composeExtension/selectItem`,
+                `composeExtension/submitAction`,
+                `composeExtension/fetchTask`,
+                `composeExtension/querySettingUrl`,
+                `composeExtension/setting`,
+                `composeExtension/onCardButtonClicked`,
+                `task/fetch`, `task/submit`,
+                `tab/fetch`, `tab/submit`,
+                `adaptiveCard/action`,
+                `message/submitAction`,
+                `messageBack`,
+                `signin/verifyState`, `signin/tokenExchange`,
+                `fileConsent/invoke`,
+                `actionableMessage/executeAction`,
+                `handoff/action`,
+                `config/fetch`, `config/submit`.
+            value:
+              description: Invoke-specific payload (varies by `name`).
+          required:
+            - type
+            - name
+
+    EventActivity:
+      allOf:
+        - $ref: '#/components/schemas/ActivityBase'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [event]
+            name:
+              type: string
+              description: |
+                Event name. Documented Teams event names include
+                `application/vnd.microsoft.readReceipt`,
+                `application/vnd.microsoft.meetingStart`,
+                `application/vnd.microsoft.meetingEnd`,
+                `application/vnd.microsoft.meetingParticipantJoin`,
+                `application/vnd.microsoft.meetingParticipantLeave`,
+                `application/vnd.microsoft.botMessagePreview`.
+            value:
+              description: Event-specific payload.
+          required:
+            - type
+            - name
+
+    # -------- Supporting types --------
+    ChannelAccount:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        aadObjectId:
+          type: string
+        role:
+          type: string
+          enum: [user, bot, skill]
+
+    ConversationAccount:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        conversationType:
+          type: string
+          enum:
+            - personal
+            - groupChat
+            - channel
+        tenantId:
+          type: string
+        isGroup:
+          type: boolean
+
+    MessageReaction:
+      type: object
+      properties:
+        type:
+          type: string
+          description: |
+            Reaction type. Documented Teams reactions include `like`, `heart`,
+            `laugh`, `surprised`, `sad`, and `angry`. Custom emoji reactions
+            may also appear.
+
+    TeamsChannelData:
+      type: object
+      description: |
+        Teams-specific `channelData` payload appended to most Bot Framework
+        activities. The `eventType` discriminator identifies Teams
+        sub-events on `conversationUpdate` and similar activities.
+      properties:
+        eventType:
+          type: string
+          description: Teams sub-event identifier.
+          enum:
+            - teamMemberAdded
+            - teamMemberRemoved
+            - teamRenamed
+            - channelCreated
+            - channelRenamed
+            - channelDeleted
+            - channelRestored
+            - teamArchived
+            - teamUnarchived
+            - teamDeleted
+            - teamHardDeleted
+            - teamRestored
+            - editMessage
+            - undeleteMessage
+            - softDeleteMessage
+        team:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            aadGroupId:
+              type: string
+        channel:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+        tenant:
+          type: object
+          properties:
+            id:
+              type: string
+        meeting:
+          type: object
+          properties:
+            id:
+              type: string
+        notification:
+          type: object
+          properties:
+            alert:
+              type: boolean
+            alertInMeeting:
+              type: boolean
+            externalResourceUrl:
+              type: string
+        source:
+          type:
+            - object
+            - 'null'
+        settings:
+          type: object
+        onBehalfOf:
+          type: array
+          items:
+            type: object

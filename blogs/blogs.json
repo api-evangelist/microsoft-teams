@@ -2,13 +2,10 @@
   "repo": "microsoft-teams",
   "feeds": [
     {
-      "source": "https://techcommunity.microsoft.com/t5/microsoft-teams-blog/bg-p/MicrosoftTeamsBlog",
-      "feed_url": "",
-      "title": "",
-      "saved": 0,
-      "error": "no_feed"
+      "source": "https://learn.microsoft.com/en-us/microsoftteams/platform/toolkit/teams-toolkit-fundamentals",
+      "error": "HTTPError"
     }
   ],
-  "fetched": "2026-05-17T20:48:52Z",
+  "fetched": "2026-06-01T23:35:02Z",
   "post_count": 0
 }
