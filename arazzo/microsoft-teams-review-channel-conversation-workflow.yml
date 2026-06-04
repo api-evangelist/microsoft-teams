@@ -1,0 +1,96 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Teams Review Channel Conversation
+  summary: List a team's channels and read the recent messages in a chosen channel.
+  description: >-
+    Reviewing a conversation requires resolving the channel first and then
+    reading its messages. This workflow lists the channels in a team, branches on
+    whether any channel exists, and reads the most recent messages from the
+    chosen channel. Every step spells out its request inline so the flow can be
+    read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: teamsApi
+  url: ../openapi/microsoft-teams-graph-api.yaml
+  type: openapi
+workflows:
+- workflowId: review-channel-conversation
+  summary: Resolve channels and read recent messages from a chosen channel.
+  description: >-
+    Lists the team's channels and, when at least one exists, reads the most
+    recent messages from the supplied channel.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - teamId
+    - channelId
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with Channel.ReadBasic.All and ChannelMessage.Read.All scopes.
+      teamId:
+        type: string
+        description: The unique identifier of the team.
+      channelId:
+        type: string
+        description: The channel id to read messages from.
+      top:
+        type: integer
+        description: Maximum number of messages to return.
+        default: 20
+  steps:
+  - stepId: listChannels
+    description: >-
+      List the channels in the team to confirm the target channel is present
+      before reading messages.
+    operationId: listChannels
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      channels: $response.body#/value
+    onSuccess:
+    - name: channelsFound
+      type: goto
+      stepId: readMessages
+      criteria:
+      - context: $response.body
+        condition: $.value.length > 0
+        type: jsonpath
+    - name: noChannels
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.value.length == 0
+        type: jsonpath
+  - stepId: readMessages
+    description: >-
+      Read the most recent messages from the chosen channel, limited by the top
+      parameter.
+    operationId: listChannelMessages
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    - name: channel-id
+      in: path
+      value: $inputs.channelId
+    - name: $top
+      in: query
+      value: $inputs.top
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      messages: $response.body#/value
+  outputs:
+    messages: $steps.readMessages.outputs.messages

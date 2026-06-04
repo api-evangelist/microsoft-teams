@@ -1,0 +1,67 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Teams Audit Team Channels
+  summary: Resolve a team and enumerate its channels for an inventory snapshot.
+  description: >-
+    A lightweight audit pattern that confirms a team exists and then lists every
+    channel within it, producing a snapshot of the team's collaboration surface.
+    Every step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: teamsApi
+  url: ../openapi/microsoft-teams-graph-api.yaml
+  type: openapi
+workflows:
+- workflowId: audit-team-channels
+  summary: Confirm a team and list all of its channels.
+  description: >-
+    Reads the team to confirm it exists, then enumerates its channels for an
+    inventory snapshot.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - teamId
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with Channel.ReadBasic.All scope.
+      teamId:
+        type: string
+        description: The unique identifier of the team to audit.
+  steps:
+  - stepId: getTeam
+    description: >-
+      Read the team to confirm it exists and capture its display name for the
+      audit record.
+    operationId: getTeam
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      teamName: $response.body#/displayName
+  - stepId: listChannels
+    description: >-
+      List every channel in the confirmed team for the inventory snapshot.
+    operationId: listChannels
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      channels: $response.body#/value
+  outputs:
+    teamName: $steps.getTeam.outputs.teamName
+    channels: $steps.listChannels.outputs.channels

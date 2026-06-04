@@ -1,0 +1,84 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Teams Inventory Team Collaboration
+  summary: Snapshot a team's members, channels, and installed apps in one pass.
+  description: >-
+    Governance and compliance reviews often need a full picture of who is in a
+    team, where they collaborate, and which apps are installed. This workflow
+    enumerates the team's members, channels, and installed apps to produce a
+    single collaboration inventory. Every step spells out its request inline so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: teamsApi
+  url: ../openapi/microsoft-teams-graph-api.yaml
+  type: openapi
+workflows:
+- workflowId: inventory-team-collaboration
+  summary: List a team's members, channels, and installed apps.
+  description: >-
+    Reads the team's members, then its channels, then its installed apps, to
+    produce a complete collaboration inventory snapshot.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - teamId
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with TeamMember.Read.All, Channel.ReadBasic.All, and TeamsAppInstallation.ReadForTeam.All scopes.
+      teamId:
+        type: string
+        description: The unique identifier of the team to inventory.
+  steps:
+  - stepId: listMembers
+    description: >-
+      List the team's members for the collaboration inventory.
+    operationId: listTeamMembers
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      members: $response.body#/value
+  - stepId: listChannels
+    description: >-
+      List the team's channels for the collaboration inventory.
+    operationId: listChannels
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      channels: $response.body#/value
+  - stepId: listApps
+    description: >-
+      List the apps installed in the team for the collaboration inventory.
+    operationId: listInstalledApps
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      installedApps: $response.body#/value
+  outputs:
+    members: $steps.listMembers.outputs.members
+    channels: $steps.listChannels.outputs.channels
+    installedApps: $steps.listApps.outputs.installedApps

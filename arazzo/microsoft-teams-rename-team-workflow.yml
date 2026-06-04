@@ -1,0 +1,78 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Teams Rename Team
+  summary: Read a team and update its display name and description.
+  description: >-
+    Renaming a team should preserve its existing identity while changing only the
+    presentation fields. This workflow reads the current team to confirm it
+    exists and capture its prior name, then patches the team with the new display
+    name and description. Every step spells out its request inline so the flow can
+    be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: teamsApi
+  url: ../openapi/microsoft-teams-graph-api.yaml
+  type: openapi
+workflows:
+- workflowId: rename-team
+  summary: Confirm a team and patch its display name and description.
+  description: >-
+    Reads the team to capture its prior display name, then updates the team with
+    the new display name and description.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - teamId
+    - newDisplayName
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with TeamSettings.ReadWrite.All scope.
+      teamId:
+        type: string
+        description: The unique identifier of the team to rename.
+      newDisplayName:
+        type: string
+        description: The new display name for the team.
+      newDescription:
+        type: string
+        description: The new description for the team.
+  steps:
+  - stepId: getTeam
+    description: >-
+      Read the team to confirm it exists and capture its current display name
+      before renaming.
+    operationId: getTeam
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      previousName: $response.body#/displayName
+  - stepId: updateTeam
+    description: >-
+      Patch the team with the new display name and description. Microsoft Graph
+      returns 204 No Content on success.
+    operationId: updateTeam
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.newDisplayName
+        description: $inputs.newDescription
+    successCriteria:
+    - condition: $statusCode == 204
+  outputs:
+    previousName: $steps.getTeam.outputs.previousName

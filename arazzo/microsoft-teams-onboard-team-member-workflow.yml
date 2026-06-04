@@ -1,0 +1,86 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Teams Onboard Team Member
+  summary: Add a user to a team and then promote them to owner.
+  description: >-
+    Onboarding a team lead usually means adding the user first and then granting
+    them owner privileges. This workflow adds a new member to a team, captures the
+    resulting membership id, and patches the membership to promote the user to
+    owner. Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: teamsApi
+  url: ../openapi/microsoft-teams-graph-api.yaml
+  type: openapi
+workflows:
+- workflowId: onboard-team-member
+  summary: Add a member to a team and promote them to owner.
+  description: >-
+    Adds a user to the team as a member, then updates the new membership to grant
+    the owner role.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - teamId
+    - userId
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with TeamMember.ReadWrite.All scope.
+      teamId:
+        type: string
+        description: The unique identifier of the team.
+      userId:
+        type: string
+        description: The id of the user to add to the team.
+  steps:
+  - stepId: addMember
+    description: >-
+      Add the user to the team with the member role and capture the membership id
+      returned by Microsoft Graph.
+    operationId: addTeamMember
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    requestBody:
+      contentType: application/json
+      payload:
+        roles:
+        - member
+        userId: $inputs.userId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      membershipId: $response.body#/id
+  - stepId: promoteToOwner
+    description: >-
+      Patch the new membership to grant the owner role to the user just added.
+    operationId: updateTeamMember
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    - name: membership-id
+      in: path
+      value: $steps.addMember.outputs.membershipId
+    requestBody:
+      contentType: application/json
+      payload:
+        roles:
+        - owner
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      roles: $response.body#/roles
+  outputs:
+    membershipId: $steps.addMember.outputs.membershipId
+    roles: $steps.promoteToOwner.outputs.roles

@@ -1,0 +1,111 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Teams Provision Channel
+  summary: Confirm a team, create a channel in it, and post an opening message.
+  description: >-
+    A common onboarding pattern when standing up a new collaboration space. The
+    workflow first confirms the target team exists, then creates a new channel
+    inside it, and finally posts an opening message into the freshly created
+    channel. Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: teamsApi
+  url: ../openapi/microsoft-teams-graph-api.yaml
+  type: openapi
+workflows:
+- workflowId: provision-channel
+  summary: Create a channel in an existing team and seed it with a first message.
+  description: >-
+    Resolves the team, creates a standard channel, and immediately posts an
+    opening message so the channel is not empty when members arrive.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - teamId
+    - channelName
+    - messageContent
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with Channel.Create and ChatMessage.Send scopes.
+      teamId:
+        type: string
+        description: The unique identifier of the team to create the channel in.
+      channelName:
+        type: string
+        description: The display name of the new channel.
+      channelDescription:
+        type: string
+        description: A description for the new channel.
+      messageContent:
+        type: string
+        description: The HTML body of the opening message to post.
+  steps:
+  - stepId: confirmTeam
+    description: >-
+      Read the target team to confirm it exists and is reachable before creating
+      a channel inside it.
+    operationId: getTeam
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      teamId: $response.body#/id
+  - stepId: createChannel
+    description: >-
+      Create a new standard channel in the confirmed team using the supplied
+      name and description.
+    operationId: createChannel
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.channelName
+        description: $inputs.channelDescription
+        membershipType: standard
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      channelId: $response.body#/id
+  - stepId: postOpeningMessage
+    description: >-
+      Post an opening HTML message into the newly created channel so it has
+      initial content.
+    operationId: sendChannelMessage
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    - name: channel-id
+      in: path
+      value: $steps.createChannel.outputs.channelId
+    requestBody:
+      contentType: application/json
+      payload:
+        body:
+          contentType: html
+          content: $inputs.messageContent
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      messageId: $response.body#/id
+  outputs:
+    channelId: $steps.createChannel.outputs.channelId
+    messageId: $steps.postOpeningMessage.outputs.messageId

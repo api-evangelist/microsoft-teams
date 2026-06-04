@@ -130,6 +130,51 @@ apis:
   - type: APIReference
     url: https://learn.microsoft.com/en-us/graph/api/resources/call
 common:
+- type: ArazzoWorkflows
+  url: arazzo/
+  workflows:
+  - url: arazzo/microsoft-teams-add-member-and-welcome-workflow.yml
+    name: Microsoft Teams Add Member and Welcome
+    summary: Add a member to a team and post a welcome message to a chosen channel.
+  - url: arazzo/microsoft-teams-archive-team-workflow.yml
+    name: Microsoft Teams Archive Team
+    summary: Confirm a team is active and then archive it, making it read-only.
+  - url: arazzo/microsoft-teams-audit-team-channels-workflow.yml
+    name: Microsoft Teams Audit Team Channels
+    summary: Resolve a team and enumerate its channels for an inventory snapshot.
+  - url: arazzo/microsoft-teams-broadcast-to-joined-team-channel-workflow.yml
+    name: Microsoft Teams Broadcast to Joined Team Channel
+    summary: Pick one of the current user's joined teams, find a channel, and post to it.
+  - url: arazzo/microsoft-teams-create-team-workflow.yml
+    name: Microsoft Teams Create Team
+    summary: Create a new Microsoft Teams team and capture the provisioning operation location.
+  - url: arazzo/microsoft-teams-discover-channel-tabs-workflow.yml
+    name: Microsoft Teams Discover Channel Tabs
+    summary: List a team's channels and enumerate the tabs in a chosen channel.
+  - url: arazzo/microsoft-teams-inventory-team-collaboration-workflow.yml
+    name: Microsoft Teams Inventory Team Collaboration
+    summary: Snapshot a team's members, channels, and installed apps in one pass.
+  - url: arazzo/microsoft-teams-offboard-team-member-workflow.yml
+    name: Microsoft Teams Offboard Team Member
+    summary: Find a member by user id in a team and remove their membership.
+  - url: arazzo/microsoft-teams-onboard-team-member-workflow.yml
+    name: Microsoft Teams Onboard Team Member
+    summary: Add a user to a team and then promote them to owner.
+  - url: arazzo/microsoft-teams-post-channel-announcement-workflow.yml
+    name: Microsoft Teams Post Channel Announcement
+    summary: Find a channel by name in a team and post an announcement message to it.
+  - url: arazzo/microsoft-teams-promote-team-member-workflow.yml
+    name: Microsoft Teams Promote Team Member
+    summary: List a team's members and promote an existing membership to owner.
+  - url: arazzo/microsoft-teams-provision-channel-workflow.yml
+    name: Microsoft Teams Provision Channel
+    summary: Confirm a team, create a channel in it, and post an opening message.
+  - url: arazzo/microsoft-teams-rename-team-workflow.yml
+    name: Microsoft Teams Rename Team
+    summary: Read a team and update its display name and description.
+  - url: arazzo/microsoft-teams-review-channel-conversation-workflow.yml
+    name: Microsoft Teams Review Channel Conversation
+    summary: List a team's channels and read the recent messages in a chosen channel.
 - type: LinkedIn
   url: https://www.linkedin.com/showcase/microsoft_teams
 - type: DeveloperPortal

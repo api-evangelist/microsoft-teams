@@ -1,0 +1,113 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Teams Broadcast to Joined Team Channel
+  summary: Pick one of the current user's joined teams, find a channel, and post to it.
+  description: >-
+    A self-service broadcast pattern that starts from the signed-in user's own
+    teams. The workflow lists the teams the current user has joined, branches on
+    whether any teams exist, lists the channels in the chosen team, and posts a
+    broadcast message into the chosen channel. Every step spells out its request
+    inline so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: teamsApi
+  url: ../openapi/microsoft-teams-graph-api.yaml
+  type: openapi
+workflows:
+- workflowId: broadcast-to-joined-team-channel
+  summary: From the user's joined teams, resolve a channel and post a broadcast.
+  description: >-
+    Lists the current user's joined teams, and when at least one exists, lists
+    the channels in the supplied team and posts a broadcast message into the
+    supplied channel.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - teamId
+    - channelId
+    - broadcastMessage
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with Team.ReadBasic.All, Channel.ReadBasic.All, and ChatMessage.Send scopes.
+      teamId:
+        type: string
+        description: The id of one of the user's joined teams to broadcast into.
+      channelId:
+        type: string
+        description: The channel id to post the broadcast message to.
+      broadcastMessage:
+        type: string
+        description: The HTML body of the broadcast message.
+  steps:
+  - stepId: listJoinedTeams
+    description: >-
+      List the teams the current user has joined so the caller can confirm the
+      target team is reachable.
+    operationId: listJoinedTeams
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      joinedTeams: $response.body#/value
+    onSuccess:
+    - name: teamsFound
+      type: goto
+      stepId: listChannels
+      criteria:
+      - context: $response.body
+        condition: $.value.length > 0
+        type: jsonpath
+    - name: noTeams
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.value.length == 0
+        type: jsonpath
+  - stepId: listChannels
+    description: >-
+      List the channels in the chosen joined team to confirm the target channel
+      exists before posting.
+    operationId: listChannels
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      channels: $response.body#/value
+  - stepId: postBroadcast
+    description: >-
+      Post the broadcast message into the chosen channel.
+    operationId: sendChannelMessage
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    - name: channel-id
+      in: path
+      value: $inputs.channelId
+    requestBody:
+      contentType: application/json
+      payload:
+        body:
+          contentType: html
+          content: $inputs.broadcastMessage
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      messageId: $response.body#/id
+  outputs:
+    messageId: $steps.postBroadcast.outputs.messageId

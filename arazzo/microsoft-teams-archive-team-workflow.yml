@@ -1,0 +1,88 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Teams Archive Team
+  summary: Confirm a team is active and then archive it, making it read-only.
+  description: >-
+    Decommissioning a team should be deliberate. This workflow confirms the team
+    exists and is not already archived, then submits an archive request that
+    Microsoft Graph accepts as an asynchronous operation. Every step spells out
+    its request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: teamsApi
+  url: ../openapi/microsoft-teams-graph-api.yaml
+  type: openapi
+workflows:
+- workflowId: archive-team
+  summary: Confirm a team and archive it, branching when already archived.
+  description: >-
+    Reads the team to confirm it exists, and when it is not already archived,
+    submits the archive request. When the team is already archived the flow ends
+    without re-archiving.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - teamId
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with TeamSettings.ReadWrite.All scope.
+      teamId:
+        type: string
+        description: The unique identifier of the team to archive.
+      setSpoSiteReadOnly:
+        type: boolean
+        description: Whether the SharePoint site should be set to read-only for members.
+        default: false
+  steps:
+  - stepId: getTeam
+    description: >-
+      Read the team to confirm it exists and inspect its archive state.
+    operationId: getTeam
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      isArchived: $response.body#/isArchived
+    onSuccess:
+    - name: notArchived
+      type: goto
+      stepId: archiveTeam
+      criteria:
+      - context: $response.body
+        condition: $.isArchived == false
+        type: jsonpath
+    - name: alreadyArchived
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.isArchived == true
+        type: jsonpath
+  - stepId: archiveTeam
+    description: >-
+      Submit the archive request. Microsoft Graph accepts archiving as an
+      asynchronous operation and returns 202 Accepted.
+    operationId: archiveTeam
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: team-id
+      in: path
+      value: $inputs.teamId
+    requestBody:
+      contentType: application/json
+      payload:
+        shouldSetSpoSiteReadOnlyForMembers: $inputs.setSpoSiteReadOnly
+    successCriteria:
+    - condition: $statusCode == 202
+  outputs:
+    wasArchived: $steps.getTeam.outputs.isArchived

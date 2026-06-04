@@ -1,0 +1,65 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Teams Create Team
+  summary: Create a new Microsoft Teams team and capture the provisioning operation location.
+  description: >-
+    Provisioning a team in Microsoft Graph is an asynchronous operation. This
+    workflow submits a create-team request with a display name, description, and
+    visibility, then captures the Location header that Graph returns so the
+    caller can poll the long-running operation to completion. The single step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: teamsApi
+  url: ../openapi/microsoft-teams-graph-api.yaml
+  type: openapi
+workflows:
+- workflowId: create-team
+  summary: Create a new team and return the async operation location.
+  description: >-
+    Submits a new team definition to Microsoft Graph. Because team creation is
+    accepted as an asynchronous operation, the workflow confirms the 202 Accepted
+    response and exposes the Location header for subsequent polling.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - displayName
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with the Team.Create scope.
+      displayName:
+        type: string
+        description: The display name of the new team.
+      description:
+        type: string
+        description: A description for the new team.
+      visibility:
+        type: string
+        description: Team visibility, either private or public.
+        default: private
+  steps:
+  - stepId: createTeam
+    description: >-
+      Submit the new team definition. Microsoft Graph accepts the request as an
+      asynchronous operation and returns 202 with a Location header pointing at
+      the operation to poll.
+    operationId: createTeam
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.displayName
+        description: $inputs.description
+        visibility: $inputs.visibility
+    successCriteria:
+    - condition: $statusCode == 202
+    outputs:
+      operationLocation: $response.header.Location
+  outputs:
+    operationLocation: $steps.createTeam.outputs.operationLocation
