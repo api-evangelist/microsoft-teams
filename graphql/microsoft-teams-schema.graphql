@@ -1,0 +1,942 @@
+"""
+Microsoft Teams GraphQL Schema
+Conceptual schema derived from the Microsoft Graph Teams API.
+Source: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
+"""
+
+# ---------------------------------------------------------------------------
+# Scalars
+# ---------------------------------------------------------------------------
+
+scalar DateTime
+scalar JSON
+scalar URL
+
+# ---------------------------------------------------------------------------
+# Enums
+# ---------------------------------------------------------------------------
+
+enum TeamVisibilityType {
+  PRIVATE
+  PUBLIC
+  HIDDEN_MEMBERSHIP
+}
+
+enum ChannelMembershipType {
+  STANDARD
+  PRIVATE
+  SHARED
+  UNKNOWN_FUTURE_VALUE
+}
+
+enum ChannelMessageType {
+  MESSAGE
+  CHAT_EVENT
+  TYPING
+  UNKNOWN_FUTURE_VALUE
+  SYSTEM_EVENT_MESSAGE
+}
+
+enum ChannelMessageImportance {
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum OnlineMeetingRole {
+  ATTENDEE
+  PRESENTER
+  PRODUCER
+  UNKNOWN_FUTURE_VALUE
+}
+
+enum MeetingChatMode {
+  ENABLED
+  DISABLED
+  LIMITED
+  UNKNOWN_FUTURE_VALUE
+}
+
+enum CallDirection {
+  INCOMING
+  OUTGOING
+}
+
+enum CallType {
+  UNKNOWN
+  GROUP_CALL
+  PEER_TO_PEER
+  UNKNOWN_FUTURE_VALUE
+}
+
+enum Modality {
+  AUDIO
+  VIDEO
+  VIDEO_BASED_SCREEN_SHARING
+  DATA
+  SCREEN_SHARING
+  UNKNOWN_FUTURE_VALUE
+}
+
+enum MediaDirection {
+  INACTIVE
+  SEND_ONLY
+  RECEIVE_ONLY
+  SEND_RECEIVE
+}
+
+enum TeamsAsyncOperationStatus {
+  INVALID
+  NOT_STARTED
+  IN_PROGRESS
+  SUCCEEDED
+  FAILED
+  UNKNOWN_FUTURE_VALUE
+}
+
+enum TeamsAsyncOperationType {
+  INVALID
+  CLONE_TEAM
+  ARCHIVE_TEAM
+  UNARCHIVE_TEAM
+  CREATE_TEAM
+  UNKNOWN_FUTURE_VALUE
+}
+
+enum TeamworkTagType {
+  STANDARD
+  UNKNOWN_FUTURE_VALUE
+}
+
+# ---------------------------------------------------------------------------
+# Team and Channel Management
+# ---------------------------------------------------------------------------
+
+"""A Microsoft Teams team."""
+type Team {
+  id: ID!
+  displayName: String
+  description: String
+  internalId: String
+  classification: String
+  specialization: String
+  visibility: TeamVisibilityType
+  webUrl: URL
+  isArchived: Boolean
+  isMembershipLimitedToOwners: Boolean
+  createdDateTime: DateTime
+  tenantId: String
+  summary: TeamSummary
+  settings: TeamSettings
+  funSettings: FunSettings
+  guestSettings: GuestSettings
+  messagingSettings: MessagingSettings
+  discoverySettings: DiscoverySettings
+  channels: [Channel!]
+  primaryChannel: PrimaryChannel
+  members: [TeamMember!]
+  installedApps: [TeamsAppInstallation!]
+  operations: [TeamsAsyncOperation!]
+  tags: [TeamworkTag!]
+  assignedLabels: [AssignedLabel!]
+  incomingChannels: [IncomingChannel!]
+}
+
+"""Summary counts for a team."""
+type TeamSummary {
+  guestsCount: Int
+  membersCount: Int
+  ownersCount: Int
+}
+
+"""Top-level settings container for a team."""
+type TeamSettings {
+  allowAddRemoveApps: Boolean
+  allowCreateUpdateChannels: Boolean
+  allowDeleteChannels: Boolean
+  allowCreateUpdateRemoveTabs: Boolean
+  allowCreateUpdateRemoveConnectors: Boolean
+  allowTeamMentions: Boolean
+  allowChannelMentions: Boolean
+  showInTeamsSearchAndSuggestions: Boolean
+}
+
+"""Controls for GIFs, stickers, and memes in a team."""
+type FunSettings {
+  allowGiphy: Boolean
+  giphyContentRating: String
+  allowStickersAndMemes: Boolean
+  allowCustomMemes: Boolean
+}
+
+"""Controls for what guests can do in a team."""
+type GuestSettings {
+  allowCreateUpdateChannels: Boolean
+  allowDeleteChannels: Boolean
+}
+
+"""Controls for messaging permissions in a team."""
+type MessagingSettings {
+  allowUserEditMessages: Boolean
+  allowUserDeleteMessages: Boolean
+  allowOwnerDeleteMessages: Boolean
+  allowTeamMentions: Boolean
+  allowChannelMentions: Boolean
+}
+
+"""Controls for team discoverability."""
+type DiscoverySettings {
+  showInTeamsSearchAndSuggestions: Boolean
+}
+
+"""A channel within a Microsoft Teams team."""
+type Channel {
+  id: ID!
+  displayName: String
+  description: String
+  email: String
+  webUrl: URL
+  membershipType: ChannelMembershipType
+  createdDateTime: DateTime
+  tenantId: String
+  isArchived: Boolean
+  isFavoriteByDefault: Boolean
+  messages: [ChannelMessage!]
+  tabs: [TeamsTab!]
+  members: [ChannelMembership!]
+  installedApps: [TeamsAppInstallation!]
+  filesFolder: DriveItem
+  sharedWithTeams: [SharedChannelTeamInfo!]
+}
+
+"""The default primary (General) channel of a team."""
+type PrimaryChannel {
+  id: ID!
+  displayName: String
+  description: String
+  email: String
+  webUrl: URL
+  membershipType: ChannelMembershipType
+  createdDateTime: DateTime
+  messages: [ChannelMessage!]
+  tabs: [TeamsTab!]
+}
+
+"""A channel shared with external tenants."""
+type SharedChannel {
+  id: ID!
+  displayName: String
+  description: String
+  webUrl: URL
+  membershipType: ChannelMembershipType
+  createdDateTime: DateTime
+  tenantId: String
+  messages: [ChannelMessage!]
+  members: [ConversationMember!]
+  sharedWithTeams: [SharedChannelTeamInfo!]
+  invitations: [SharedChannelInvitation!]
+}
+
+"""Metadata about a team that hosts or participates in a shared channel."""
+type SharedChannelTeamInfo {
+  id: ID!
+  tenantId: String
+  displayName: String
+  isHostTeam: Boolean
+  allowedMembers: [ConversationMember!]
+}
+
+"""An invitation sent for a shared channel to an external tenant."""
+type SharedChannelInvitation {
+  id: ID!
+  createdDateTime: DateTime
+  expiresDateTime: DateTime
+  invitedTeam: SharedChannelTeamInfo
+  invitedBy: ParticipantInfo
+  status: String
+}
+
+"""A shared channel incoming to a team from another tenant."""
+type IncomingChannel {
+  id: ID!
+  displayName: String
+  membershipType: ChannelMembershipType
+  tenantId: String
+  webUrl: URL
+}
+
+# ---------------------------------------------------------------------------
+# Messaging
+# ---------------------------------------------------------------------------
+
+"""A message posted in a Teams channel."""
+type ChannelMessage {
+  id: ID!
+  messageType: ChannelMessageType
+  importance: ChannelMessageImportance
+  subject: String
+  summary: String
+  body: MessageContent
+  from: ConversationMember
+  createdDateTime: DateTime
+  lastModifiedDateTime: DateTime
+  deletedDateTime: DateTime
+  etag: String
+  channelIdentity: ChannelIdentity
+  webUrl: URL
+  policyViolation: PolicyViolation
+  reactions: [Reaction!]
+  mentions: [Mention!]
+  attachments: [MessageAttachment!]
+  replies: [Reply!]
+  hostedContents: [ChatMessageHostedContent!]
+}
+
+"""The body content of a message."""
+type MessageContent {
+  contentType: String
+  content: String
+}
+
+"""A file, card, link, or reference attached to a message."""
+type MessageAttachment {
+  id: ID!
+  contentType: String
+  contentUrl: URL
+  content: JSON
+  name: String
+  thumbnailUrl: URL
+  teamsAppId: String
+}
+
+"""An @mention of a user, team, channel, application, or tag."""
+type Mention {
+  id: Int!
+  mentionText: String
+  mentioned: IdentitySet
+}
+
+"""An emoji reaction on a message."""
+type Reaction {
+  reactionType: String
+  createdDateTime: DateTime
+  user: IdentitySet
+}
+
+"""A reply to a channel message."""
+type Reply {
+  id: ID!
+  messageType: ChannelMessageType
+  importance: ChannelMessageImportance
+  body: MessageContent
+  from: ConversationMember
+  createdDateTime: DateTime
+  lastModifiedDateTime: DateTime
+  deletedDateTime: DateTime
+  reactions: [Reaction!]
+  mentions: [Mention!]
+  attachments: [MessageAttachment!]
+}
+
+"""Identifies the team and channel a message belongs to."""
+type ChannelIdentity {
+  teamId: String
+  channelId: String
+}
+
+"""A policy violation record on a message."""
+type PolicyViolation {
+  dlpAction: String
+  justificationText: String
+  policyTip: PolicyTip
+  userAction: String
+  verdicts: [String!]
+}
+
+"""A tip surfaced to users about a policy violation."""
+type PolicyTip {
+  complianceUrl: URL
+  generalText: String
+  matchedConditionDescriptions: [String!]
+}
+
+"""Hosted content (inline images) embedded in a chat message."""
+type ChatMessageHostedContent {
+  id: ID!
+  contentBytes: String
+  contentType: String
+}
+
+# ---------------------------------------------------------------------------
+# Membership
+# ---------------------------------------------------------------------------
+
+"""Base type for a member of a chat or channel."""
+type ConversationMember {
+  id: ID!
+  displayName: String
+  roles: [String!]
+  visibleHistoryStartDateTime: DateTime
+}
+
+"""A member of a team."""
+type TeamMember {
+  id: ID!
+  displayName: String
+  userId: String
+  email: String
+  tenantId: String
+  roles: [String!]
+  visibleHistoryStartDateTime: DateTime
+}
+
+"""Membership record for a private or shared channel."""
+type ChannelMembership {
+  id: ID!
+  displayName: String
+  userId: String
+  email: String
+  tenantId: String
+  roles: [String!]
+  visibleHistoryStartDateTime: DateTime
+}
+
+"""A sensitivity label assigned to a team."""
+type AssignedLabel {
+  labelId: String
+  displayName: String
+}
+
+"""An identity set (user, application, or device)."""
+type IdentitySet {
+  application: Identity
+  device: Identity
+  user: Identity
+}
+
+"""An individual identity."""
+type Identity {
+  id: String
+  displayName: String
+  tenantId: String
+}
+
+# ---------------------------------------------------------------------------
+# Apps and Tabs
+# ---------------------------------------------------------------------------
+
+"""An application published in the Teams app catalog."""
+type TeamsApp {
+  id: ID!
+  externalId: String
+  displayName: String
+  distributionMethod: String
+  appDefinitions: [TeamsAppDefinition!]
+}
+
+"""A specific version definition of a Teams app."""
+type TeamsAppDefinition {
+  id: ID!
+  teamsAppId: String
+  displayName: String
+  version: String
+  publishingState: String
+  shortDescription: String
+  description: String
+  lastModifiedDateTime: DateTime
+  createdBy: IdentitySet
+  colorIcon: TeamsAppIcon
+  outlineIcon: TeamsAppIcon
+  authorization: TeamsAppAuthorization
+}
+
+"""An icon for a Teams app."""
+type TeamsAppIcon {
+  id: ID!
+  webUrl: URL
+}
+
+"""Authorization info for a Teams app (resource-specific consent)."""
+type TeamsAppAuthorization {
+  requiredPermissionSet: ResourceSpecificPermissionSet
+}
+
+"""A set of resource-specific permissions."""
+type ResourceSpecificPermissionSet {
+  resourceSpecificPermissions: [ResourceSpecificPermission!]
+}
+
+"""A resource-specific consent permission."""
+type ResourceSpecificPermission {
+  permissionValue: String
+  permissionType: String
+}
+
+"""An app installed in a team or chat scope."""
+type TeamsAppInstallation {
+  id: ID!
+  teamsApp: TeamsApp
+  teamsAppDefinition: TeamsAppDefinition
+  consentedPermissionSet: ResourceSpecificPermissionSet
+}
+
+"""A tab pinned in a Teams channel or chat."""
+type TeamsTab {
+  id: ID!
+  displayName: String
+  webUrl: URL
+  sortOrderIndex: String
+  messageId: String
+  teamsApp: TeamsApp
+  configuration: TeamsTabConfiguration
+}
+
+"""Configuration for a Teams tab."""
+type TeamsTabConfiguration {
+  entityId: String
+  contentUrl: URL
+  websiteUrl: URL
+  removeUrl: URL
+  hasContent: Boolean
+}
+
+# ---------------------------------------------------------------------------
+# Meetings and Communications
+# ---------------------------------------------------------------------------
+
+"""A scheduled Microsoft Teams meeting."""
+type Meeting {
+  id: ID!
+  subject: String
+  startDateTime: DateTime
+  endDateTime: DateTime
+  joinUrl: URL
+  organizer: ParticipantInfo
+  participants: [ParticipantInfo!]
+  onlineMeeting: OnlineMeeting
+}
+
+"""An online meeting resource with full join details."""
+type OnlineMeeting {
+  id: ID!
+  subject: String
+  startDateTime: DateTime
+  endDateTime: DateTime
+  joinUrl: URL
+  joinWebUrl: URL
+  videoTeleconferenceId: String
+  externalId: String
+  isBroadcast: Boolean
+  autoAdmittedUsers: String
+  allowedPresenters: OnlineMeetingRole
+  isEntryExitAnnounced: Boolean
+  lobbyBypassSettings: LobbyBypassSettings
+  audioConferencing: AudioConferencing
+  chatInfo: ChatInfo
+  participants: MeetingParticipants
+  creationDateTime: DateTime
+  endDateTime: DateTime
+  startDateTime: DateTime
+  chatRestrictions: MeetingChatMode
+  transcripts: [MeetingTranscript!]
+  attendanceReports: [MeetingAttendance!]
+}
+
+"""Lobby bypass settings for an online meeting."""
+type LobbyBypassSettings {
+  scope: String
+  isDialInBypassEnabled: Boolean
+}
+
+"""Audio conferencing details for a meeting."""
+type AudioConferencing {
+  conferenceId: String
+  tollNumber: String
+  tollFreeNumber: String
+  dialinUrl: URL
+}
+
+"""Chat thread info linked to a meeting."""
+type ChatInfo {
+  threadId: String
+  messageId: String
+  replyChainMessageId: String
+}
+
+"""Participants (organizer + attendees) in a meeting."""
+type MeetingParticipants {
+  organizer: MeetingParticipantInfo
+  attendees: [MeetingParticipantInfo!]
+}
+
+"""An individual participant's info within a meeting."""
+type MeetingParticipantInfo {
+  identity: IdentitySet
+  upn: String
+  role: OnlineMeetingRole
+}
+
+"""Policy settings governing meeting capabilities for a user or tenant."""
+type MeetingPolicy {
+  id: ID!
+  displayName: String
+  allowMeetNow: Boolean
+  allowPrivateMeetNow: Boolean
+  allowChannelMeetingScheduling: Boolean
+  allowPrivateMeetingScheduling: Boolean
+  allowOutlookAddIn: Boolean
+  allowCloudRecording: Boolean
+  allowTranscription: Boolean
+  allowIPVideo: Boolean
+  allowAnonymousUsersToStartMeeting: Boolean
+  allowExternalParticipantGiveRequestControl: Boolean
+  autoAdmittedUsers: String
+  allowedStreamingMediaInput: String
+}
+
+"""A transcript resource for a completed Teams meeting."""
+type MeetingTranscript {
+  id: ID!
+  createdDateTime: DateTime
+  transcriptContentUrl: URL
+  meetingId: String
+  callId: String
+}
+
+"""An attendance report for a Teams meeting."""
+type MeetingAttendance {
+  id: ID!
+  meetingStartDateTime: DateTime
+  meetingEndDateTime: DateTime
+  totalParticipantCount: Int
+  attendanceRecords: [AttendanceRecord!]
+}
+
+"""A single attendee's attendance record for a meeting."""
+type AttendanceRecord {
+  id: ID!
+  emailAddress: String
+  identity: IdentitySet
+  role: String
+  totalAttendanceInSeconds: Int
+  attendanceIntervals: [AttendanceInterval!]
+}
+
+"""A contiguous time interval during which an attendee was present."""
+type AttendanceInterval {
+  joinDateTime: DateTime
+  leaveDateTime: DateTime
+  durationInSeconds: Int
+}
+
+# ---------------------------------------------------------------------------
+# Call Records
+# ---------------------------------------------------------------------------
+
+"""A record of a completed Teams call."""
+type CallRecord {
+  id: ID!
+  version: Int
+  type: CallType
+  modalities: [Modality!]
+  lastModifiedDateTime: DateTime
+  startDateTime: DateTime
+  endDateTime: DateTime
+  joinWebUrl: URL
+  organizer: IdentitySet
+  participants: [IdentitySet!]
+  sessions: [Session!]
+}
+
+"""A peer-to-peer or multiparty session within a call record."""
+type Session {
+  id: ID!
+  modalities: [Modality!]
+  startDateTime: DateTime
+  endDateTime: DateTime
+  isTest: Boolean
+  caller: Endpoint
+  callee: Endpoint
+  failureInfo: FailureInfo
+  segments: [Segment!]
+}
+
+"""A media segment within a call session."""
+type Segment {
+  id: ID!
+  startDateTime: DateTime
+  endDateTime: DateTime
+  caller: Endpoint
+  callee: Endpoint
+  failureInfo: FailureInfo
+  media: [MediaStream!]
+}
+
+"""A participant endpoint (device or user) in a call."""
+type Endpoint {
+  userAgent: UserAgent
+  feedbackToken: String
+  identity: IdentitySet
+}
+
+"""The caller in a call record."""
+type CallerInfo {
+  identity: IdentitySet
+  endpointType: String
+  region: String
+  associatedIdentity: IdentitySet
+}
+
+"""Identity and role information for a call participant."""
+type ParticipantInfo {
+  identity: IdentitySet
+  participantId: String
+  endpointType: String
+  region: String
+}
+
+"""Failure details for a call session or segment."""
+type FailureInfo {
+  stage: String
+  reason: String
+}
+
+"""User agent information for a call endpoint."""
+type UserAgent {
+  headerValue: String
+  applicationVersion: String
+  clientAppId: String
+  platform: String
+  productFamily: String
+}
+
+"""A media stream within a call segment."""
+type MediaStream {
+  mediaType: Modality
+  label: String
+  sourceId: String
+  direction: MediaDirection
+  wasMediaBypassed: Boolean
+  averageAudioNetworkJitter: String
+  averageJitter: String
+  maxJitter: String
+  averagePacketLossRate: Float
+  maxPacketLossRate: Float
+  averageRoundTripTime: String
+  maxRoundTripTime: String
+  averageBandwidthEstimate: Int
+}
+
+"""A placeholder type for OneDrive DriveItem references."""
+type DriveItem {
+  id: ID!
+  name: String
+  webUrl: URL
+}
+
+# ---------------------------------------------------------------------------
+# Tags
+# ---------------------------------------------------------------------------
+
+"""A tag that can be applied to members within a team."""
+type TeamworkTag {
+  id: ID!
+  displayName: String
+  description: String
+  memberCount: Int
+  tagType: TeamworkTagType
+  teamId: String
+  members: [TeamworkTagMember!]
+}
+
+"""A member associated with a teamwork tag."""
+type TeamworkTagMember {
+  id: ID!
+  displayName: String
+  tenantId: String
+  userId: String
+}
+
+# ---------------------------------------------------------------------------
+# Operations and Notifications
+# ---------------------------------------------------------------------------
+
+"""A long-running asynchronous operation on a Teams resource."""
+type TeamsAsyncOperation {
+  id: ID!
+  operationType: TeamsAsyncOperationType
+  status: TeamsAsyncOperationStatus
+  createdDateTime: DateTime
+  lastActionDateTime: DateTime
+  attemptsCount: Int
+  targetResourceId: String
+  targetResourceLocation: URL
+  error: OperationError
+}
+
+"""An error detail on an async operation."""
+type OperationError {
+  code: String
+  message: String
+}
+
+"""Input for sending an activity notification to a Teams user."""
+type SendActivityNotification {
+  topic: ActivityTopic
+  activityType: String
+  chainId: String
+  previewText: MessageContent
+  templateParameters: [KeyValuePair!]
+  recipient: ActivityNotificationRecipient
+}
+
+"""The topic context for an activity notification."""
+type ActivityTopic {
+  source: String
+  value: String
+  webUrl: URL
+}
+
+"""A recipient for a Teams activity notification."""
+type ActivityNotificationRecipient {
+  userId: String
+  teamId: String
+  channelId: String
+  chatId: String
+}
+
+"""A notification delivered to a user's Teams activity feed."""
+type ActivityNotification {
+  id: ID!
+  activityType: String
+  chainId: String
+  previewText: MessageContent
+  topic: ActivityTopic
+  createdDateTime: DateTime
+  recipient: ActivityNotificationRecipient
+}
+
+"""Template describing a type of activity notification."""
+type ActivityTemplate {
+  activityType: String!
+  description: String
+}
+
+"""A key-value pair used in notification template parameters."""
+type KeyValuePair {
+  name: String!
+  value: String!
+}
+
+"""An invitation sent to a user to join a team."""
+type Invitation {
+  id: ID!
+  invitedUserDisplayName: String
+  invitedUserEmailAddress: String
+  inviteRedeemUrl: URL
+  invitedUserType: String
+  status: String
+  sendInvitationMessage: Boolean
+  invitedTeamId: String
+  createdDateTime: DateTime
+}
+
+"""A change notification subscription (webhook) for Teams resources."""
+type Webhook {
+  id: ID!
+  resource: String
+  changeType: String
+  clientState: String
+  notificationUrl: URL
+  expirationDateTime: DateTime
+  applicationId: String
+  creatorId: String
+  latestSupportedTlsVersion: String
+  lifecycleNotificationUrl: URL
+  encryptionCertificate: String
+  encryptionCertificateId: String
+  includeResourceData: Boolean
+}
+
+# ---------------------------------------------------------------------------
+# Root Types
+# ---------------------------------------------------------------------------
+
+type Query {
+  """Get a team by ID."""
+  team(id: ID!): Team
+
+  """List all teams accessible to the current user."""
+  teams: [Team!]
+
+  """Get a channel by team ID and channel ID."""
+  channel(teamId: ID!, channelId: ID!): Channel
+
+  """List channels for a team."""
+  channels(teamId: ID!): [Channel!]
+
+  """Get a channel message."""
+  channelMessage(teamId: ID!, channelId: ID!, messageId: ID!): ChannelMessage
+
+  """List messages in a channel."""
+  channelMessages(teamId: ID!, channelId: ID!): [ChannelMessage!]
+
+  """Get an online meeting by ID."""
+  onlineMeeting(id: ID!): OnlineMeeting
+
+  """Get a call record by ID."""
+  callRecord(id: ID!): CallRecord
+
+  """List call records."""
+  callRecords: [CallRecord!]
+
+  """Get a teamwork tag by team ID and tag ID."""
+  teamworkTag(teamId: ID!, tagId: ID!): TeamworkTag
+
+  """List tags for a team."""
+  teamworkTags(teamId: ID!): [TeamworkTag!]
+
+  """Get an async operation by team ID and operation ID."""
+  teamsAsyncOperation(teamId: ID!, operationId: ID!): TeamsAsyncOperation
+
+  """Get a webhook subscription by ID."""
+  webhook(id: ID!): Webhook
+
+  """List all webhook subscriptions."""
+  webhooks: [Webhook!]
+}
+
+type Mutation {
+  """Create a new team."""
+  createTeam(displayName: String!, description: String, visibility: TeamVisibilityType): TeamsAsyncOperation
+
+  """Archive a team."""
+  archiveTeam(teamId: ID!): TeamsAsyncOperation
+
+  """Unarchive a team."""
+  unarchiveTeam(teamId: ID!): TeamsAsyncOperation
+
+  """Create a channel in a team."""
+  createChannel(teamId: ID!, displayName: String!, description: String, membershipType: ChannelMembershipType): Channel
+
+  """Post a message to a channel."""
+  sendChannelMessage(teamId: ID!, channelId: ID!, content: String!, contentType: String): ChannelMessage
+
+  """Add a member to a team."""
+  addTeamMember(teamId: ID!, userId: String!, roles: [String!]): TeamMember
+
+  """Remove a member from a team."""
+  removeTeamMember(teamId: ID!, membershipId: ID!): Boolean
+
+  """Create an online meeting."""
+  createOnlineMeeting(subject: String!, startDateTime: DateTime!, endDateTime: DateTime!): OnlineMeeting
+
+  """Send an activity notification to a Teams user."""
+  sendActivityNotification(userId: ID!, notification: String!): Boolean
+
+  """Create a webhook subscription for Teams resources."""
+  createWebhook(resource: String!, changeType: String!, notificationUrl: URL!, expirationDateTime: DateTime!): Webhook
+
+  """Delete a webhook subscription."""
+  deleteWebhook(id: ID!): Boolean
+}

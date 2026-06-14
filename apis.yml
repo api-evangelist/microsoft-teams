@@ -80,6 +80,8 @@ apis:
     url: capabilities/graph-tabs.yaml
   - type: NaftikoCapability
     url: capabilities/graph-teams.yaml
+  - type: GraphQL
+    url: graphql/microsoft-teams-graphql.md
 - name: Microsoft Teams Bot Framework API
   description: API for building conversational bots that interact with users in Microsoft Teams through the Bot Framework.
   humanURL: https://learn.microsoft.com/en-us/microsoftteams/platform/bots/what-are-bots
@@ -130,6 +132,8 @@ apis:
   - type: APIReference
     url: https://learn.microsoft.com/en-us/graph/api/resources/call
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/microsoft-teams/overview
 - type: ArazzoWorkflows
   url: arazzo/
   workflows:
