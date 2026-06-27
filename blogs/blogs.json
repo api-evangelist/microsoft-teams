@@ -2,20 +2,17 @@
   "repo": "microsoft-teams",
   "feeds": [
     {
-      "source": "https://techcommunity.microsoft.com/t5/microsoft-teams-blog/bg-p/MicrosoftTeamsBlog",
-      "feed_url": "https://techcommunity.microsoft.com/t5/microsoft-teams-blog/bg-p/MicrosoftTeamsBlog",
+      "source": "https://techcommunity.microsoft.com/t5/s/gxcuf89792/rss/board?board.id=MicrosoftTeamsBlog",
+      "feed_url": "https://techcommunity.microsoft.com/t5/s/gxcuf89792/rss/board?board.id=MicrosoftTeamsBlog",
       "title": "",
       "saved": 0,
-      "method": "none"
+      "method": "feed"
     },
     {
       "source": "https://learn.microsoft.com/en-us/microsoftteams/platform/toolkit/teams-toolkit-fundamentals",
-      "feed_url": "https://learn.microsoft.com/en-us/microsoftteams/platform/toolkit/teams-toolkit-fundamentals",
-      "title": "",
-      "saved": 0,
-      "method": "none"
+      "error": "HTTPError"
     }
   ],
-  "post_count": 1,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 2,
+  "fetched": "2026-06-27T12:03:07Z"
 }
