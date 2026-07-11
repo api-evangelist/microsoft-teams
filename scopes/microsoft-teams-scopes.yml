@@ -1,0 +1,72 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/microsoft-teams-graph-api.yaml
+schemes:
+- name: oauth2
+  source: openapi/microsoft-teams-graph-api.yaml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+    tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+  description: OAuth 2.0 authorization using Microsoft Identity Platform
+scopes:
+- scope: Calls.Initiate.All
+  description: Initiate calls
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-teams-graph-api.yaml
+- scope: Calls.JoinGroupCall.All
+  description: Join group calls
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-teams-graph-api.yaml
+- scope: Channel.Create
+  description: Create channels
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-teams-graph-api.yaml
+- scope: Channel.ReadBasic.All
+  description: Read channel basic info
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-teams-graph-api.yaml
+- scope: ChannelMessage.Read.All
+  description: Read channel messages
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-teams-graph-api.yaml
+- scope: ChatMessage.Read
+  description: Read chat messages
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-teams-graph-api.yaml
+- scope: ChatMessage.Send
+  description: Send chat messages
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-teams-graph-api.yaml
+- scope: OnlineMeetings.ReadWrite.All
+  description: Create and manage online meetings
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-teams-graph-api.yaml
+- scope: Team.Create
+  description: Create teams
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-teams-graph-api.yaml
+- scope: Team.ReadBasic.All
+  description: Read teams basic info
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-teams-graph-api.yaml

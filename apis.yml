@@ -132,6 +132,8 @@ apis:
   - type: APIReference
     url: https://learn.microsoft.com/en-us/graph/api/resources/call
 common:
+  - type: OAuthScopes
+    url: scopes/microsoft-teams-scopes.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/microsoft-teams/overview
   - type: Arazzo
