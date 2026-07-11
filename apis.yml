@@ -132,6 +132,12 @@ apis:
   - type: APIReference
     url: https://learn.microsoft.com/en-us/graph/api/resources/call
 common:
+  - type: VulnerabilityDisclosure
+    url: security/microsoft-teams-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/microsoft-teams-domain-security.yml
+  - type: Authentication
+    url: authentication/microsoft-teams-authentication.yml
   - type: OAuthScopes
     url: scopes/microsoft-teams-scopes.yml
   - type: PostmanWorkspace

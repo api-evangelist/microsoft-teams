@@ -1,0 +1,19 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/microsoft-teams-graph-api.yaml
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
+schemes:
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+    tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+    scopes: 10
+  description: OAuth 2.0 authorization using Microsoft Identity Platform
+  sources:
+  - openapi/microsoft-teams-graph-api.yaml
