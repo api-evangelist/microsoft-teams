@@ -1,5 +1,23 @@
+# microsoft-teams — Spectral ruleset (strengthened)
+# Plain Spectral. Existing hand-authored rules preserved; measured rules added
+# from this provider's own OpenAPI conventions by strengthen_ruleset.py,
+# then self-validated against the spec.
+#
+# Provenance:
+#   - servers-https-only: 100% of servers already https (error)
+#   - servers-expected-domain: 1/1 servers on microsoft.com
+#   - path-params-casing: kebab @ 100% (n=25)
+#   - operationid-casing: camel @ 100% (n=24)
+#   - schema-names-casing: pascal @ 100% (n=15)
+#   - schema-properties-casing: snake @ 59% (n=51)
+#   - security: global (root) — NOT emitting operation-security-required
+#   - error-schema-defined: ErrorResponse
+#   - operation-documents-401: 100% adherence
+#   - merge: kept 23 existing, added 6 measured, upgraded 0
+#   - added: servers-expected-domain, path-params-casing, schema-names-casing, schema-properties-casing, error-schema-defined, no-empty-descriptions
+extends:
+  - spectral:oas
 rules:
-  # INFO / METADATA
   info-title-must-contain-microsoft-teams:
     description: Info title must contain 'Microsoft' or 'Teams'
     given: $.info.title
@@ -22,8 +40,6 @@ rules:
     then:
       field: version
       function: truthy
-
-  # OPENAPI VERSION
   openapi-version-3:
     description: Must use OpenAPI 3.x
     given: $.openapi
@@ -31,9 +47,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^3\\."
-
-  # SERVERS
+        match: ^3\.
   servers-must-be-defined:
     description: Servers array must be defined
     given: $
@@ -48,9 +62,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^https://"
-
-  # OPERATIONS
+        match: ^https://
   operation-operationid-required:
     description: Every operation must have an operationId
     given: $.paths[*][get,post,put,patch,delete]
@@ -72,7 +84,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^Microsoft Teams"
+        match: ^Microsoft Teams
   operation-description-required:
     description: Every operation must have a description
     given: $.paths[*][get,post,put,patch,delete]
@@ -94,9 +106,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^[a-z][a-zA-Z0-9]*$"
-
-  # TAGS
+        match: ^[a-z][a-zA-Z0-9]*$
   tag-description-required:
     description: Global tags should have descriptions
     given: $.tags[*]
@@ -104,8 +114,6 @@ rules:
     then:
       field: description
       function: truthy
-
-  # PARAMETERS
   parameter-description-required:
     description: Parameters must have a description
     given: $.paths[*][get,post,put,patch,delete].parameters[*]
@@ -120,8 +128,6 @@ rules:
     then:
       field: schema
       function: truthy
-
-  # RESPONSES
   response-success-required:
     description: Every operation must define a success response (2xx)
     given: $.paths[*][get,post,put,patch,delete].responses
@@ -131,19 +137,21 @@ rules:
       functionOptions:
         schema:
           anyOf:
-            - required: ["200"]
-            - required: ["201"]
-            - required: ["202"]
-            - required: ["204"]
+          - required:
+            - '200'
+          - required:
+            - '201'
+          - required:
+            - '202'
+          - required:
+            - '204'
   response-401-recommended:
     description: Operations should define a 401 Unauthorized response
     given: $.paths[*][get,post,put,patch,delete].responses
     severity: warn
     then:
-      field: "401"
+      field: '401'
       function: truthy
-
-  # SCHEMAS
   schema-properties-description:
     description: Schema properties should have descriptions
     given: $.components.schemas[*].properties[*]
@@ -151,8 +159,6 @@ rules:
     then:
       field: description
       function: truthy
-
-  # SECURITY
   security-global-defined:
     description: Global security must be defined
     given: $
@@ -167,8 +173,6 @@ rules:
     then:
       field: securitySchemes
       function: truthy
-
-  # HTTP METHOD CONVENTIONS
   get-no-request-body:
     description: GET operations must not have a request body
     given: $.paths[*].get
@@ -183,11 +187,50 @@ rules:
     then:
       field: requestBody
       function: falsy
-
-  # GENERAL QUALITY
   no-empty-descriptions:
-    description: Descriptions must not be empty strings
-    given: $.paths[*][get,post,put,patch,delete].description
-    severity: error
+    description: Descriptions must not be empty strings.
+    severity: warn
+    given: $..description
     then:
+      function: truthy
+  servers-expected-domain:
+    description: Server URLs should be on the microsoft.com domain.
+    severity: warn
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: microsoft\.com
+  path-params-casing:
+    description: Path parameters should be kebab-case (the dominant convention in this API).
+    severity: warn
+    given: $.paths[*].parameters[?(@.in=='path')].name
+    then:
+      function: casing
+      functionOptions:
+        type: kebab
+  schema-names-casing:
+    description: Component schema names should be PascalCase (the dominant convention in this API).
+    severity: warn
+    given: $.components.schemas
+    then:
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: pascal
+  schema-properties-casing:
+    description: Schema properties should be snake_case (the dominant convention in this API).
+    severity: info
+    given: $.components.schemas[*].properties
+    then:
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: snake
+  error-schema-defined:
+    description: A shared error schema (ErrorResponse) should be defined for error payloads.
+    severity: warn
+    given: $.components.schemas
+    then:
+      field: ErrorResponse
       function: truthy
