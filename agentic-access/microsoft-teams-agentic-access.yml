@@ -1,0 +1,451 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/microsoft-teams-graph-api.yaml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 24
+  by_action_class:
+    connected: 9
+    acting: 15
+  by_consequence:
+    read: 9
+    write: 11
+    physical: 4
+  human_in_the_loop_required: 0
+operations:
+- path: /me/joinedTeams
+  method: get
+  operationId: listJoinedTeams
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /teams
+  method: post
+  operationId: createTeam
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /teams/{team-id}
+  method: get
+  operationId: getTeam
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /teams/{team-id}
+  method: patch
+  operationId: updateTeam
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /teams/{team-id}
+  method: delete
+  operationId: deleteTeam
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /teams/{team-id}/archive
+  method: post
+  operationId: archiveTeam
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /teams/{team-id}/channels
+  method: get
+  operationId: listChannels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /teams/{team-id}/channels
+  method: post
+  operationId: createChannel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /teams/{team-id}/channels/{channel-id}/messages
+  method: get
+  operationId: listChannelMessages
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /teams/{team-id}/channels/{channel-id}/messages
+  method: post
+  operationId: sendChannelMessage
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /teams/{team-id}/channels/{channel-id}/tabs
+  method: get
+  operationId: listChannelTabs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /teams/{team-id}/installedApps
+  method: get
+  operationId: listInstalledApps
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /teams/{team-id}/members
+  method: get
+  operationId: listTeamMembers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /teams/{team-id}/members
+  method: post
+  operationId: addTeamMember
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /teams/{team-id}/members/{membership-id}
+  method: delete
+  operationId: removeTeamMember
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /teams/{team-id}/members/{membership-id}
+  method: patch
+  operationId: updateTeamMember
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /communications/onlineMeetings
+  method: post
+  operationId: createOnlineMeeting
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /communications/onlineMeetings/{meeting-id}
+  method: get
+  operationId: getOnlineMeeting
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /communications/calls
+  method: post
+  operationId: createCall
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /communications/calls/{call-id}
+  method: get
+  operationId: getCall
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /communications/calls/{call-id}
+  method: delete
+  operationId: hangUpCall
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /communications/calls/{call-id}/answer
+  method: post
+  operationId: answerCall
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /communications/calls/{call-id}/reject
+  method: post
+  operationId: rejectCall
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
+- path: /communications/calls/{call-id}/transfer
+  method: post
+  operationId: transferCall
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - Channel.ReadBasic.All
+    - ChatMessage.Read
+    - Team.ReadBasic.All
