@@ -1,0 +1,30 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Microsoft Graph Teams API
+  version: 1.0.0
+extends: openapi/microsoft-teams-graph-api.yaml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: microsoft-teams
+      x-apievangelist-artifacts:
+        authentication: authentication/microsoft-teams-authentication.yml
+        scopes: scopes/microsoft-teams-scopes.yml
+        errors: errors/microsoft-teams-problem-types.yml
+        conventions: conventions/microsoft-teams-conventions.yml
+        lifecycle: lifecycle/microsoft-teams-lifecycle.yml
+        data_model: data-model/microsoft-teams-data-model.yml
+        agentic_access: agentic-access/microsoft-teams-agentic-access.yml
+  - target: $.info
+    update:
+      x-apievangelist-conformance:
+        - oauth2
+        - oidc
+        - odata
+  - target: $.servers[0]
+    update:
+      x-throttling-docs: https://learn.microsoft.com/en-us/graph/throttling
+      x-error-format: microsoft-graph-odata-error
+  - target: $.components.securitySchemes.oauth2
+    update:
+      x-scopes-docs: https://learn.microsoft.com/en-us/graph/permissions-reference

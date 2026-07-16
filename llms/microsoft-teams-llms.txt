@@ -1,0 +1,43 @@
+# Microsoft Teams
+
+> Microsoft Teams is a collaboration platform that combines workplace chat, meetings, file storage, and application integration. Teams is programmed primarily through Microsoft Graph (teams, channels, messages, tabs, apps, members, online meetings, and calls), the Bot Framework for conversational bots, incoming webhooks/connectors, and the real-time communications (calling/meeting) APIs. Authentication is OAuth 2.0 via the Microsoft Identity Platform (Entra ID) using Microsoft Graph permissions/scopes.
+
+## APIs
+
+- [Microsoft Graph Teams API](https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview): Core REST API for teams, channels, messages, tabs, apps, members, meetings, and calls. Base URL https://graph.microsoft.com/v1.0
+- [Microsoft Teams Bot Framework API](https://learn.microsoft.com/en-us/microsoftteams/platform/bots/what-are-bots): Conversational bots in Teams via the Bot Framework.
+- [Microsoft Teams Webhook and Connector API](https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/what-are-webhooks-and-connectors): Incoming webhooks and Office 365 connectors to post messages/notifications.
+- [Microsoft Teams Real-Time Communication APIs](https://learn.microsoft.com/en-us/graph/api/resources/communications-api-overview): VoIP calls, group calls, IVR flows, and online meetings.
+
+## Specs
+
+- [OpenAPI (Microsoft Graph Teams API)](https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/openapi/microsoft-teams-graph-api.yaml)
+- [AsyncAPI](https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/asyncapi/microsoft-teams-asyncapi.yaml)
+- [GraphQL schema](https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/graphql/microsoft-teams-schema.graphql)
+- [Postman collection](https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/postman/microsoft-teams-graph-api.postman_collection.json)
+
+## Authentication
+
+- [Authentication overview](https://learn.microsoft.com/en-us/graph/auth/): OAuth 2.0 (Microsoft Identity Platform). Authorize https://login.microsoftonline.com/common/oauth2/v2.0/authorize, token https://login.microsoftonline.com/common/oauth2/v2.0/token
+- [Permissions (scopes) reference](https://learn.microsoft.com/en-us/graph/permissions-reference): e.g. Team.ReadBasic.All, Channel.Create, ChannelMessage.Read.All, ChatMessage.Send, OnlineMeetings.ReadWrite.All, Calls.Initiate.All.
+
+## Docs
+
+- [Getting started](https://learn.microsoft.com/en-us/microsoftteams/platform/get-started/get-started-overview)
+- [Developer portal](https://developer.microsoft.com/en-us/microsoft-teams)
+- [SDKs overview](https://learn.microsoft.com/en-us/graph/sdks/sdks-overview)
+- [Rate limits / throttling](https://learn.microsoft.com/en-us/graph/throttling)
+- [Changelog](https://developer.microsoft.com/en-us/graph/changelog)
+- [Status page](https://status.teams.microsoft.com/)
+- [Blog](https://techcommunity.microsoft.com/t5/microsoft-teams-blog/bg-p/MicrosoftTeamsBlog)
+
+## Repo artifacts
+
+- [Packages / SDKs](https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/packages/microsoft-teams-packages.yml)
+- [Authentication profile](https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/authentication/microsoft-teams-authentication.yml)
+- [OAuth scopes](https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/scopes/microsoft-teams-scopes.yml)
+- [Error catalog](https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/errors/microsoft-teams-problem-types.yml)
+- [API conventions](https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/conventions/microsoft-teams-conventions.yml)
+- [Lifecycle](https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/lifecycle/microsoft-teams-lifecycle.yml)
+- [Data model](https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/data-model/microsoft-teams-data-model.yml)
+- [Arazzo workflows](https://github.com/api-evangelist/microsoft-teams/tree/main/arazzo)

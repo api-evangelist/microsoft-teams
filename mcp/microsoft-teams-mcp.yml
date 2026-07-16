@@ -1,0 +1,86 @@
+generated: '2026-06-20'
+method: derived
+status: candidate
+source: openapi/microsoft-teams-graph-api.yaml
+description: >-
+  Candidate MCP server surface derived one-tool-per-operation from the Microsoft
+  Graph Teams OpenAPI. Microsoft does not publish an official first-party hosted
+  MCP server dedicated to Teams; this is a governance/design starting point, not
+  a shipped server. Tools requiring writes (create/send/call/transfer) should be
+  gated per the agentic-access contract before any real deployment.
+server:
+  name: microsoft-teams
+  transport: http
+tools:
+  - name: list_joined_teams
+    description: List the teams the signed-in user has joined.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#listJoinedTeams
+  - name: create_team
+    description: Create a new team (asynchronous operation).
+    source_operation: openapi/microsoft-teams-graph-api.yaml#createTeam
+  - name: get_team
+    description: Get a team by id.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#getTeam
+  - name: update_team
+    description: Update a team's properties.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#updateTeam
+  - name: delete_team
+    description: Delete a team.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#deleteTeam
+  - name: archive_team
+    description: Archive a team, putting it into read-only mode.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#archiveTeam
+  - name: list_channels
+    description: List channels in a team.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#listChannels
+  - name: create_channel
+    description: Create a channel in a team.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#createChannel
+  - name: list_channel_messages
+    description: List messages in a channel.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#listChannelMessages
+  - name: send_channel_message
+    description: Send a message to a channel.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#sendChannelMessage
+  - name: list_channel_tabs
+    description: List tabs pinned in a channel.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#listChannelTabs
+  - name: list_installed_apps
+    description: List apps installed in a team.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#listInstalledApps
+  - name: list_team_members
+    description: List members of a team.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#listTeamMembers
+  - name: add_team_member
+    description: Add a member to a team.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#addTeamMember
+  - name: remove_team_member
+    description: Remove a member from a team.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#removeTeamMember
+  - name: update_team_member
+    description: Update a team member's role.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#updateTeamMember
+  - name: create_online_meeting
+    description: Create an online meeting.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#createOnlineMeeting
+  - name: get_online_meeting
+    description: Get an online meeting by id.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#getOnlineMeeting
+  - name: create_call
+    description: Initiate a call.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#createCall
+  - name: get_call
+    description: Get a call by id.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#getCall
+  - name: hang_up_call
+    description: Hang up (delete) a call.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#hangUpCall
+  - name: answer_call
+    description: Answer an incoming call.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#answerCall
+  - name: reject_call
+    description: Reject an incoming call.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#rejectCall
+  - name: transfer_call
+    description: Transfer an active call.
+    source_operation: openapi/microsoft-teams-graph-api.yaml#transferCall

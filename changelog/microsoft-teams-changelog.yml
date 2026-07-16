@@ -1,0 +1,37 @@
+generated: '2026-06-20'
+method: searched
+source: https://developer.microsoft.com/en-us/graph/changelog
+description: >-
+  Microsoft Graph publishes a dated changelog covering all workloads including
+  Teams. Entries are tagged by version (v1.0 / beta), workload, and change type
+  (addition, change, deprecation). The live changelog is the source of truth;
+  this captures the recent Teams-relevant window.
+changelog_url: https://developer.microsoft.com/en-us/graph/changelog
+whats_new_url: https://learn.microsoft.com/en-us/graph/whats-new-overview
+scheme: dated-entries-per-workload
+current_version: v1.0
+entries:
+  - date: '2026-06-30'
+    version: v1.0
+    workload: Teams / Online meetings
+    type: deprecation
+    breaking: true
+    highlight: "onlineMeeting.isBroadcast (Teams Live Events) removed from v1.0; migrate to Virtual Events / Town Halls."
+  - date: '2026-03-31'
+    version: beta
+    workload: Teams / Online meetings
+    type: deprecation
+    breaking: true
+    highlight: "onlineMeeting.isBroadcast removed from the beta endpoint."
+  - version: v1.0
+    workload: Teams / Online meetings
+    type: addition
+    breaking: false
+    highlight: "meetingType property added on onlineMeeting and virtualEventSession (adHoc / scheduled / recurring / broadcast / meetNow)."
+  - version: v1.0
+    workload: Teams / Online meetings
+    type: addition
+    breaking: false
+    highlight: "cloudVideoInteropInfo property added on onlineMeeting for Cloud Video Interop device settings."
+notes:
+  - Full history including per-workload additions is at the changelog URL with an RSS feed.

@@ -1,0 +1,34 @@
+generated: '2026-06-20'
+method: searched
+source: live probes of API + OAuth authorization-server hosts
+description: >-
+  Well-known discovery surface. The Teams API is protected by the Microsoft
+  Identity Platform (Entra ID); its OpenID Connect discovery document lives on
+  the login.microsoftonline.com authorization server referenced by the OpenAPI
+  oauth2 flows. graph.microsoft.com itself requires a bearer token for every
+  path (including /.well-known/*), so those endpoints return 401 rather than a
+  public document.
+hosts:
+  - host: https://login.microsoftonline.com/common
+    documents:
+      - path: /v2.0/.well-known/openid-configuration
+        status: 200
+        file: microsoft-teams-openid-configuration.json
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+  - host: https://graph.microsoft.com
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 401
+      - path: /.well-known/oauth-authorization-server
+        status: 401
+      - path: /.well-known/security.txt
+        status: 401
+      - path: /.well-known/ai-plugin.json
+        status: 401
+      - path: /.well-known/api-catalog
+        status: 401
+  - host: https://outlook.office.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404

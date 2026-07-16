@@ -1,0 +1,30 @@
+generated: '2026-06-20'
+method: searched
+source: https://learn.microsoft.com/en-us/microsoftteams/platform/ + https://adaptivecards.io/
+description: >-
+  Client-side / embeddable UI surfaces for building inside and around Microsoft
+  Teams. Distinct from the server-side SDKs in packages/ — these render UI in the
+  Teams client (tabs, dialogs, cards) or embed Teams-style UI in a web app.
+families:
+  - name: Adaptive Cards
+    kind: declarative-card-ui
+    description: JSON-authored interactive cards rendered in Teams messages, bots, and connectors.
+    loader: "@microsoft/adaptivecards (adaptivecards npm)"
+    docs: https://adaptivecards.io/
+  - name: Teams JavaScript client library
+    kind: in-client-app-sdk
+    description: Runtime library for tabs, task modules/dialogs, and app context/theme inside the Teams client.
+    loader: "@microsoft/teams-js"
+    docs: https://learn.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/using-teams-client-library
+  - name: Fluent UI React (Teams theming)
+    kind: component-library
+    description: React component library used to build Teams tabs/apps that match Teams look-and-feel and theming.
+    loader: "@fluentui/react-components (@fluentui/react-northstar for Teams v8)"
+    docs: https://react.fluentui.dev/
+  - name: Teams Toolkit UI components / TeamsFx React
+    kind: scaffolded-ui
+    description: Prebuilt React components and hooks (auth, Graph data) shipped with the Teams Toolkit for Teams tab apps.
+    loader: "@microsoft/teamsfx-react"
+    docs: https://learn.microsoft.com/en-us/microsoftteams/platform/toolkit/teams-toolkit-fundamentals
+notes:
+  - Adaptive Cards are the cross-cutting embeddable UI unit shared by bots, messaging extensions, and connectors.

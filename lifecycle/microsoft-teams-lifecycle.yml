@@ -1,0 +1,37 @@
+generated: '2026-06-20'
+method: searched
+source: https://learn.microsoft.com/en-us/graph/versioning-and-support
+description: >-
+  Versioning, deprecation, and operational lifecycle for the Microsoft Graph
+  Teams API, captured from Microsoft Graph documentation and corroborated by the
+  provider's changelog and status page.
+versioning:
+  scheme: named-version-segment
+  current: v1.0
+  channels:
+    - name: v1.0
+      status: general-availability
+      base_url: https://graph.microsoft.com/v1.0
+    - name: beta
+      status: preview
+      base_url: https://graph.microsoft.com/beta
+      note: Beta APIs may change and are not supported for production use.
+  docs: https://learn.microsoft.com/en-us/graph/versioning-and-support
+deprecation:
+  policy_url: https://learn.microsoft.com/en-us/graph/versioning-and-support#deprecation
+  minimum_notice: "24 months for deprecated v1.0 APIs/members before removal"
+  headers:
+    deprecation: true
+    sunset: true
+    note: Deprecated members return a Deprecation warning and Sunset date via the deprecation HTTP header.
+support:
+  sla_url: https://www.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-enterprise-service-level-agreement
+  status_page: https://status.teams.microsoft.com/
+  admin_center_health: https://admin.microsoft.com (Service health dashboard)
+notable_deprecations:
+  - item: onlineMeeting.isBroadcast property (Teams Live Events)
+    sunset: '2026-06-30'
+    scope: v1.0 endpoint (beta 2026-03-31)
+    replacement: Virtual Events / Teams Town Halls
+    source: https://developer.microsoft.com/en-us/graph/changelog
+deprecated_operations: []

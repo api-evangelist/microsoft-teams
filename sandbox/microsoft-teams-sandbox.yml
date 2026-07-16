@@ -1,0 +1,35 @@
+generated: '2026-06-20'
+method: searched
+source: https://developer.microsoft.com/en-us/microsoft-365/dev-program + https://developer.microsoft.com/en-us/graph/graph-explorer
+description: >-
+  Microsoft Graph / Teams does not use test card numbers or magic identifiers.
+  Its sandbox model is a real but disposable Microsoft 365 developer tenant plus
+  a hosted request runner (Graph Explorer) with a shared sample tenant. Never
+  invent tenant ids, tokens, or object ids — provision your own.
+environments:
+  - name: Microsoft 365 Developer Program
+    type: sandbox-tenant
+    url: https://developer.microsoft.com/en-us/microsoft-365/dev-program
+    description: >-
+      A free, renewable Microsoft 365 E5 developer tenant, optionally
+      pre-provisioned with sample users, teams, channels, and content. Gives you
+      a real Entra ID tenant to register apps against and exercise Teams Graph
+      APIs without touching production.
+    notes:
+      - Separate tenant id / admin account issued per developer; no shared secrets published.
+      - Sample data pack seeds users, groups, teams, and SharePoint content.
+  - name: Graph Explorer
+    type: hosted-request-runner
+    url: https://developer.microsoft.com/en-us/graph/graph-explorer
+    description: >-
+      Browser-based tool to issue authenticated Microsoft Graph requests. Signed
+      out, it runs against a shared demo tenant with sample Teams data; signed
+      in, it runs against your own tenant with consented scopes.
+    notes:
+      - Demo-tenant sample data is Microsoft-hosted and read-oriented.
+test_vs_live:
+  separation: tenant-scoped
+  note: >-
+    There is no test/live key prefix. Isolation is by tenant: a developer
+    (sandbox) tenant vs. a production tenant. Same endpoints and OAuth flows for
+    both; the token's tenant determines the environment.

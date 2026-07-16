@@ -1,6 +1,9 @@
-generated: '2026-07-11'
-method: derived
+generated: '2026-06-20'
+method: searched
 source: openapi/microsoft-teams-graph-api.yaml
+docs: https://learn.microsoft.com/en-us/graph/auth/
+identity_platform: Microsoft Identity Platform (Entra ID)
+consent_model: delegated and application permissions; admin consent required for high-privilege scopes
 summary:
   types:
   - oauth2

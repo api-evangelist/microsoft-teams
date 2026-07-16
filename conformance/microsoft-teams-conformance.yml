@@ -1,0 +1,34 @@
+generated: '2026-06-20'
+method: derived
+source: openapi/microsoft-teams-graph-api.yaml + https://learn.microsoft.com/en-us/graph/
+description: >-
+  Cross-cutting standards conformance for the Microsoft Graph Teams API,
+  derived from the OpenAPI security schemes and endpoint shapes and corroborated
+  by Microsoft Graph documentation.
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: securitySchemes declares type oauth2 (authorizationCode flow, Microsoft Identity Platform)
+  - id: oidc
+    conforms: true
+    evidence: OpenID Connect discovery published at login.microsoftonline.com/common/v2.0/.well-known/openid-configuration (well-known/microsoft-teams-openid-configuration.json)
+  - id: odata
+    conforms: true
+    evidence: Microsoft Graph is an OData 4.0 service; supports $select/$filter/$top/$expand and @odata.nextLink paging
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: errors use the Microsoft Graph OData error envelope ({error:{code,message}}), not application/problem+json
+  - id: pagination
+    conforms: true
+    evidence: collection responses use OData @odata.nextLink cursor paging
+  - id: rfc6585-throttling
+    conforms: true
+    evidence: 429 responses with Retry-After documented at https://learn.microsoft.com/en-us/graph/throttling
+  - id: fhir-r4
+    conforms: false
+  - id: scim2
+    conforms: false
+  - id: fapi
+    conforms: false
+  - id: json-api
+    conforms: false

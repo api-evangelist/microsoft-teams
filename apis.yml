@@ -7,7 +7,7 @@ image: https://learn.microsoft.com/en-us/graph/images/teams-logo.png
 url: https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/apis.yml
 humanURL: https://www.microsoft.com/en-us/microsoft-teams
 created: '2024'
-modified: '2026-05-29'
+modified: '2026-06-20'
 specificationVersion: '0.19'
 type: Index
 tags:
@@ -64,24 +64,14 @@ apis:
     url: examples/teams-graph-api-channel-example.json
   - type: Examples
     url: examples/teams-graph-api-chat-message-example.json
-  - type: X-NaftikoCapability
-    url: capabilities/graph-apps.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/graph-calls.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/graph-channels.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/graph-members.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/graph-messages.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/graph-online-meetings.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/graph-tabs.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/graph-teams.yaml
   - type: GraphQL
     url: graphql/microsoft-teams-graphql.md
+  - type: Overlay
+    url: overlays/microsoft-teams-graph-api-overlay.yaml
+  - type: MCPServer
+    url: mcp/microsoft-teams-mcp.yml
+  - type: ErrorCatalog
+    url: errors/microsoft-teams-problem-types.yml
 - name: Microsoft Teams Bot Framework API
   description: API for building conversational bots that interact with users in Microsoft Teams through the Bot Framework.
   humanURL: https://learn.microsoft.com/en-us/microsoftteams/platform/bots/what-are-bots
@@ -142,6 +132,30 @@ common:
     url: authentication/microsoft-teams-authentication.yml
   - type: OAuthScopes
     url: scopes/microsoft-teams-scopes.yml
+  - type: TrustCenter
+    url: security/microsoft-teams-trust-center.yml
+  - type: Packages
+    url: packages/microsoft-teams-packages.yml
+  - type: WellKnown
+    url: well-known/microsoft-teams-well-known.yml
+  - type: LLMsTxt
+    url: llms/microsoft-teams-llms.txt
+  - type: Conformance
+    url: conformance/microsoft-teams-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/microsoft-teams-lifecycle.yml
+  - type: Conventions
+    url: conventions/microsoft-teams-conventions.yml
+  - type: DataModel
+    url: data-model/microsoft-teams-data-model.yml
+  - type: ChangeLog
+    url: changelog/microsoft-teams-changelog.yml
+  - type: CLI
+    url: cli/microsoft-teams-cli.yml
+  - type: Components
+    url: components/microsoft-teams-components.yml
+  - type: Sandbox
+    url: sandbox/microsoft-teams-sandbox.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/microsoft-teams/overview
   - type: Arazzo

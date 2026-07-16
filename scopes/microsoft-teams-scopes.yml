@@ -1,6 +1,12 @@
-generated: '2026-07-11'
-method: derived
+generated: '2026-06-20'
+method: searched
 source: openapi/microsoft-teams-graph-api.yaml
+docs: https://learn.microsoft.com/en-us/graph/permissions-reference
+note: >-
+  Microsoft Graph scopes are named permissions (resource.operation.constraint).
+  Delegated and application variants exist per permission; ".All" scopes and
+  application permissions typically require tenant admin consent. The full
+  reference documents many more Teams permissions than the OpenAPI declares.
 schemes:
 - name: oauth2
   source: openapi/microsoft-teams-graph-api.yaml

@@ -1,0 +1,54 @@
+generated: '2026-06-20'
+method: derived
+format: microsoft-graph-odata-error
+source: openapi/microsoft-teams-graph-api.yaml + https://learn.microsoft.com/en-us/graph/errors
+description: >-
+  Error catalog derived from the 4xx responses declared across the Microsoft
+  Graph Teams OpenAPI, enriched with the Microsoft Graph error reference.
+  Microsoft Graph does not use RFC 9457 application/problem+json; every error is
+  the OData error envelope below. The `code` string (not the HTTP status alone)
+  is the machine-readable discriminator.
+envelope:
+  media_type: application/json
+  shape: "{ \"error\": { \"code\": \"string\", \"message\": \"string\", \"innerError\": { \"request-id\": \"...\", \"date\": \"...\" } } }"
+  schema_ref: openapi/microsoft-teams-graph-api.yaml#/components/schemas/ErrorResponse
+problems:
+  - status: 400
+    code: badRequest / invalidRequest
+    title: Bad request
+    remediation: The request was malformed or a required property/parameter is missing or invalid. Fix the request body or query.
+    seen_on:
+      - createTeam
+      - createChannel
+      - sendChannelMessage
+      - addTeamMember
+  - status: 401
+    code: InvalidAuthenticationToken / unauthenticated
+    title: Unauthorized
+    remediation: Access token is missing, expired, or invalid. Acquire a fresh bearer token from the Microsoft Identity Platform.
+    seen_on:
+      - all operations
+  - status: 403
+    code: Forbidden / accessDenied / authorizationRequestDenied
+    title: Forbidden
+    remediation: The token lacks the required Microsoft Graph permission (scope) or admin consent. Grant the scope listed for the operation.
+    seen_on:
+      - createTeam
+  - status: 404
+    code: itemNotFound / notFound
+    title: Not found
+    remediation: The referenced team, channel, member, meeting, or call id does not exist or is not visible to the caller.
+    seen_on:
+      - getTeam
+      - updateTeam
+      - deleteTeam
+      - archiveTeam
+      - listChannelMessages
+      - listChannelTabs
+      - listInstalledApps
+      - listTeamMembers
+      - getOnlineMeeting
+      - getCall
+notes:
+  - Microsoft Graph also commonly returns 429 (Too Many Requests) with a Retry-After header under throttling; see lifecycle/ and conventions/ artifacts.
+  - The innerError.request-id is the support correlation id for a failed call.

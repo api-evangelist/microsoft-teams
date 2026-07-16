@@ -1,0 +1,31 @@
+generated: '2026-06-20'
+method: searched
+probe: true
+url: https://www.microsoft.com/en-us/trust-center
+description: >-
+  Microsoft operates a central Trust Center and a Service Trust Portal that
+  publish independent audit reports and certifications for Microsoft 365
+  (which includes Microsoft Teams). Certifications below are the named standards
+  Microsoft 365 online services are audited against.
+service_trust_portal: https://servicetrust.microsoft.com/
+compliance_offerings: https://learn.microsoft.com/en-us/compliance/regulatory/offering-home
+certifications:
+  - SOC 1
+  - SOC 2
+  - SOC 3
+  - ISO 27001
+  - ISO 27017
+  - ISO 27018
+  - ISO 27701
+  - FedRAMP
+  - HIPAA / HITECH
+  - PCI DSS
+  - CSA STAR
+  - GDPR
+evidence:
+  - source: https://www.microsoft.com/en-us/trust-center
+    keywords: [trust center, compliance, certifications]
+  - source: https://servicetrust.microsoft.com/
+    keywords: [audit reports, soc, iso 27001, fedramp]
+notes:
+  - Teams-specific data protection and admin controls are documented under the Microsoft 365 / Teams security & compliance guidance.

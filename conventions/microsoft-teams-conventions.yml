@@ -1,0 +1,59 @@
+generated: '2026-06-20'
+method: searched
+source: https://learn.microsoft.com/en-us/graph/ + openapi/microsoft-teams-graph-api.yaml
+description: >-
+  Cross-cutting request/response semantics for the Microsoft Graph Teams API.
+  Teams inherits Microsoft Graph's OData 4.0 conventions across all resources.
+authentication:
+  style: oauth2-bearer
+  scheme: Microsoft Identity Platform (Entra ID), OAuth 2.0 authorization code / client credentials
+  header: "Authorization: Bearer <token>"
+  scopes_ref: scopes/microsoft-teams-scopes.yml
+  docs: https://learn.microsoft.com/en-us/graph/auth/
+base_protocol:
+  name: OData 4.0
+  docs: https://learn.microsoft.com/en-us/graph/query-parameters
+query_parameters:
+  - name: $select
+    purpose: project a subset of properties
+  - name: $filter
+    purpose: filter a collection
+  - name: $top
+    purpose: page size
+  - name: $skiptoken
+    purpose: opaque continuation token (server-supplied)
+  - name: $expand
+    purpose: include related resources
+  - name: $orderby
+    purpose: sort a collection
+  - name: $count
+    purpose: include a total count
+pagination:
+  style: cursor
+  mechanism: OData server-driven paging
+  next_field: "@odata.nextLink"
+  note: Follow the absolute URL in @odata.nextLink verbatim until it is absent; do not construct skiptoken by hand.
+versioning:
+  style: url-path-segment
+  values: [v1.0, beta]
+  ref: lifecycle/microsoft-teams-lifecycle.yml
+request_tracing:
+  client_request_id_header: client-request-id
+  response_id_headers: [request-id, x-ms-ags-diagnostic]
+  note: request-id (and innerError.request-id in error bodies) is the correlation id for Microsoft support.
+error_envelope:
+  format: microsoft-graph-odata-error
+  shape: "{ \"error\": { \"code\": ..., \"message\": ..., \"innerError\": ... } }"
+  ref: errors/microsoft-teams-problem-types.yml
+rate_limiting:
+  signal: HTTP 429 with Retry-After header
+  model: per-app / per-tenant / per-resource throttling limits
+  docs: https://learn.microsoft.com/en-us/graph/throttling
+  ref: rate-limits/microsoft-teams-rate-limits.yml
+async_operations:
+  note: >-
+    Some writes (e.g. createTeam) return 202 Accepted with a Location header
+    pointing at a teamsAsyncOperation resource to poll for completion.
+change_notifications:
+  note: Resource changes are delivered via Microsoft Graph change notifications (subscriptions/webhooks) rather than polling.
+  docs: https://learn.microsoft.com/en-us/graph/change-notifications-overview

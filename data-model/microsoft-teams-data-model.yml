@@ -1,0 +1,72 @@
+generated: '2026-06-20'
+method: derived
+source: openapi/microsoft-teams-graph-api.yaml
+description: >-
+  Entity-relationship model derived from the Microsoft Graph Teams OpenAPI
+  schemas and path hierarchy. Relationships are inferred from nested path
+  segments (team -> channel -> message/tab) and id-reference fields.
+entities:
+  - name: Team
+    id_field: id
+    description: A Microsoft Teams team (backed by a Microsoft 365 group).
+  - name: Channel
+    id_field: id
+    description: A channel within a team.
+  - name: ChatMessage
+    id_field: id
+    description: A message posted in a channel (or chat).
+  - name: TeamsTab
+    id_field: id
+    description: A tab pinned in a channel.
+  - name: TeamsAppInstallation
+    id_field: id
+    description: An app installed in a team.
+  - name: ConversationMember
+    id_field: id
+    description: A member of a team or channel.
+  - name: OnlineMeeting
+    id_field: id
+    description: A scheduled or ad-hoc online meeting.
+  - name: Call
+    id_field: id
+    description: A real-time VoIP/group call.
+relationships:
+  - from: Team
+    to: Channel
+    type: has_many
+    via: "/teams/{team-id}/channels"
+  - from: Team
+    to: ConversationMember
+    type: has_many
+    via: "/teams/{team-id}/members"
+  - from: Team
+    to: TeamsAppInstallation
+    type: has_many
+    via: "/teams/{team-id}/installedApps"
+  - from: Channel
+    to: ChatMessage
+    type: has_many
+    via: "/teams/{team-id}/channels/{channel-id}/messages"
+  - from: Channel
+    to: TeamsTab
+    type: has_many
+    via: "/teams/{team-id}/channels/{channel-id}/tabs"
+  - from: ChatMessage
+    to: ConversationMember
+    type: belongs_to
+    via: from.user (author)
+  - from: Channel
+    belongs_to: Team
+    type: belongs_to
+    via: team-id
+  - from: OnlineMeeting
+    to: ConversationMember
+    type: has_many
+    via: participants
+  - from: Call
+    to: ConversationMember
+    type: has_many
+    via: participants / source / targets
+notes:
+  - Team id is also the id of the underlying Microsoft 365 group.
+  - Channel messages and tabs are addressed only within their parent channel/team path.

@@ -1,0 +1,91 @@
+generated: '2026-06-20'
+method: searched
+source: registry verification (npm, PyPI, NuGet, Maven Central, pkg.go.dev, Packagist) + https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
+description: >-
+  First-party client libraries for building Microsoft Teams integrations. Teams
+  is programmed through Microsoft Graph (teams, channels, messages, meetings,
+  calls), the Bot Framework (conversational bots), the Teams client JS library
+  (in-client apps/tabs), and the Teams Toolkit (TeamsFx). All packages below are
+  published under Microsoft-owned org namespaces and verified live on their
+  registries.
+packages:
+  - language: javascript
+    registry: npm
+    name: "@microsoft/microsoft-graph-client"
+    version: 3.0.7
+    url: https://www.npmjs.com/package/@microsoft/microsoft-graph-client
+    install: npm install @microsoft/microsoft-graph-client
+    official: true
+    covers: Microsoft Graph Teams API
+  - language: javascript
+    registry: npm
+    name: "@microsoft/teams-js"
+    version: 2.54.0
+    url: https://www.npmjs.com/package/@microsoft/teams-js
+    install: npm install @microsoft/teams-js
+    official: true
+    covers: Teams client-side SDK for tabs, dialogs, and app context inside the Teams client
+  - language: javascript
+    registry: npm
+    name: "@microsoft/teamsfx"
+    url: https://www.npmjs.com/package/@microsoft/teamsfx
+    install: npm install @microsoft/teamsfx
+    official: true
+    covers: Teams Toolkit (TeamsFx) SDK for building Teams apps
+  - language: javascript
+    registry: npm
+    name: botbuilder
+    url: https://www.npmjs.com/package/botbuilder
+    install: npm install botbuilder
+    official: true
+    covers: Bot Framework SDK for Node.js (Teams bots)
+  - language: python
+    registry: pypi
+    name: msgraph-sdk
+    version: 1.59.2
+    url: https://pypi.org/project/msgraph-sdk/
+    install: pip install msgraph-sdk
+    official: true
+    covers: Microsoft Graph Teams API
+  - language: python
+    registry: pypi
+    name: botbuilder-core
+    url: https://pypi.org/project/botbuilder-core/
+    install: pip install botbuilder-core
+    official: true
+    covers: Bot Framework SDK for Python (Teams bots)
+  - language: dotnet
+    registry: nuget
+    name: Microsoft.Graph
+    url: https://www.nuget.org/packages/Microsoft.Graph
+    install: dotnet add package Microsoft.Graph
+    official: true
+    covers: Microsoft Graph Teams API
+  - language: dotnet
+    registry: nuget
+    name: Microsoft.Bot.Builder
+    url: https://www.nuget.org/packages/Microsoft.Bot.Builder
+    install: dotnet add package Microsoft.Bot.Builder
+    official: true
+    covers: Bot Framework SDK for .NET (Teams bots)
+  - language: java
+    registry: maven
+    name: "com.microsoft.graph:microsoft-graph"
+    url: https://central.sonatype.com/artifact/com.microsoft.graph/microsoft-graph
+    install: "implementation 'com.microsoft.graph:microsoft-graph'"
+    official: true
+    covers: Microsoft Graph Teams API
+  - language: go
+    registry: pkg.go.dev
+    name: github.com/microsoftgraph/msgraph-sdk-go
+    url: https://pkg.go.dev/github.com/microsoftgraph/msgraph-sdk-go
+    install: go get github.com/microsoftgraph/msgraph-sdk-go
+    official: true
+    covers: Microsoft Graph Teams API
+  - language: php
+    registry: packagist
+    name: microsoft/microsoft-graph
+    url: https://packagist.org/packages/microsoft/microsoft-graph
+    install: composer require microsoft/microsoft-graph
+    official: true
+    covers: Microsoft Graph Teams API

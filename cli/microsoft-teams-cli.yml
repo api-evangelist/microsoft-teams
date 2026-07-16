@@ -1,0 +1,43 @@
+generated: '2026-06-20'
+method: searched
+source: https://github.com/microsoftgraph/msgraph-cli + https://learn.microsoft.com/en-us/graph/cli/installation
+description: >-
+  The Microsoft Graph CLI (mgc) is Microsoft's first-party cross-platform
+  command-line interface over the Microsoft Graph API, including the Teams
+  resources (teams, channels, chats, messages, online meetings). Commands mirror
+  the Graph REST resource tree.
+name: Microsoft Graph CLI
+binary: mgc
+repo: https://github.com/microsoftgraph/msgraph-cli
+docs: https://learn.microsoft.com/en-us/graph/cli/overview
+install:
+  - method: winget
+    command: winget install --id Microsoft.Graph.CLI
+  - method: homebrew
+    command: brew install microsoftgraph/tap/msgraph-cli
+  - method: download
+    command: Download the platform binary from GitHub Releases
+authentication:
+  - mgc login --scopes "Team.ReadBasic.All Channel.ReadBasic.All ChatMessage.Send"
+command_families:
+  - group: teams
+    example: mgc teams list
+    covers: list/get/create teams
+  - group: teams channels
+    example: mgc teams channels list --team-id <id>
+    covers: channels within a team
+  - group: teams channels messages
+    example: mgc teams channels messages list --team-id <id> --channel-id <id>
+    covers: channel messages
+  - group: teams members
+    example: mgc teams members list --team-id <id>
+    covers: team members
+  - group: communications online-meetings
+    example: mgc communications online-meetings get --online-meeting-id <id>
+    covers: online meetings
+  - group: communications calls
+    example: mgc communications calls get --call-id <id>
+    covers: calls
+notes:
+  - The mgc binary is catalogued as a package/tool; this artifact is its command surface.
+  - Teams Toolkit also ships a CLI (teamsapp) for scaffolding/deploying Teams apps.
