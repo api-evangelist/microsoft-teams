@@ -1,0 +1,291 @@
+openapi: 3.0.3
+info:
+  title: Microsoft Graph Apps Teams API
+  description: Core REST API for accessing Microsoft Teams data including teams, channels, messages, tabs, apps, calls, and online meetings through Microsoft Graph.
+  version: 1.0.0
+  contact:
+    name: Microsoft Graph Support
+    url: https://developer.microsoft.com/graph/support
+  license:
+    name: Microsoft API Terms of Use
+    url: https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use
+  x-generated-from: documentation
+  x-last-validated: '2026-04-18'
+servers:
+- url: https://graph.microsoft.com/v1.0
+  description: Microsoft Graph v1.0 production endpoint
+security:
+- oauth2:
+  - Team.ReadBasic.All
+  - Channel.ReadBasic.All
+  - ChatMessage.Read
+tags:
+- name: Teams
+  description: Operations for managing teams.
+paths:
+  /me/joinedTeams:
+    get:
+      operationId: listJoinedTeams
+      summary: Microsoft Teams List Joined Teams
+      description: Retrieve a list of teams the current user has joined.
+      tags:
+      - Teams
+      responses:
+        '200':
+          description: Teams returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamCollection'
+              examples:
+                ListJoinedTeams200Example:
+                  summary: Default listJoinedTeams 200 response
+                  x-microcks-default: true
+                  value:
+                    value:
+                    - id: team-a1b2c3d4
+                      displayName: Engineering Team
+                      description: Core engineering team
+                      visibility: private
+                      isArchived: false
+        '401':
+          description: Unauthorized.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /teams:
+    post:
+      operationId: createTeam
+      summary: Microsoft Teams Create Team
+      description: Create a new team.
+      tags:
+      - Teams
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+            examples:
+              CreateTeamRequestExample:
+                summary: Default createTeam request
+                x-microcks-default: true
+                value:
+                  displayName: New Project Team
+                  description: Team for the new project initiative
+                  visibility: private
+      responses:
+        '202':
+          description: Team creation accepted (async operation).
+          headers:
+            Location:
+              schema:
+                type: string
+              description: URL to poll for operation status.
+        '400':
+          description: Bad request.
+        '401':
+          description: Unauthorized.
+        '403':
+          description: Forbidden.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /teams/{team-id}:
+    get:
+      operationId: getTeam
+      summary: Microsoft Teams Get Team
+      description: Retrieve a specific team by ID.
+      tags:
+      - Teams
+      parameters:
+      - name: team-id
+        in: path
+        required: true
+        description: The unique identifier of the team.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Team returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+              examples:
+                GetTeam200Example:
+                  summary: Default getTeam 200 response
+                  x-microcks-default: true
+                  value:
+                    id: team-a1b2c3d4
+                    displayName: Engineering Team
+                    description: Core engineering team for product development.
+                    visibility: private
+                    isArchived: false
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Team not found.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    patch:
+      operationId: updateTeam
+      summary: Microsoft Teams Update Team
+      description: Update team properties.
+      tags:
+      - Teams
+      parameters:
+      - name: team-id
+        in: path
+        required: true
+        description: The unique identifier of the team.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+            examples:
+              UpdateTeamRequestExample:
+                summary: Default updateTeam request
+                x-microcks-default: true
+                value:
+                  displayName: Updated Team Name
+                  description: Updated description
+      responses:
+        '204':
+          description: Team updated successfully.
+        '400':
+          description: Bad request.
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Team not found.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteTeam
+      summary: Microsoft Teams Delete Team
+      description: Delete a team and its associated group.
+      tags:
+      - Teams
+      parameters:
+      - name: team-id
+        in: path
+        required: true
+        description: The unique identifier of the team.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Team deleted successfully.
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Team not found.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /teams/{team-id}/archive:
+    post:
+      operationId: archiveTeam
+      summary: Microsoft Teams Archive Team
+      description: Archive a team, making it read-only.
+      tags:
+      - Teams
+      parameters:
+      - name: team-id
+        in: path
+        required: true
+        description: The unique identifier of the team.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shouldSetSpoSiteReadOnlyForMembers:
+                  type: boolean
+                  description: Whether the SharePoint site should be set to read-only.
+      responses:
+        '202':
+          description: Archive operation accepted.
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Team not found.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    TeamCollection:
+      type: object
+      description: Collection of teams.
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Team'
+    Team:
+      type: object
+      description: Represents a Microsoft Teams team.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the team.
+          example: team-a1b2c3d4
+        displayName:
+          type: string
+          description: The display name of the team.
+          example: Engineering Team
+        description:
+          type: string
+          description: Description of the team.
+          example: Core engineering team for product development.
+        visibility:
+          type: string
+          enum:
+          - public
+          - private
+          description: Team visibility.
+          example: private
+        isArchived:
+          type: boolean
+          description: Whether the team is archived.
+          example: false
+        createdDateTime:
+          type: string
+          format: date-time
+          description: When the team was created.
+          example: '2025-06-15T08:00:00Z'
+        webUrl:
+          type: string
+          format: uri
+          description: URL to the team in Microsoft Teams.
+          example: https://teams.microsoft.com/l/team/19%3abc123/
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authorization using Microsoft Identity Platform
+      flows:
+        authorizationCode:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+          scopes:
+            Team.ReadBasic.All: Read teams basic info
+            Team.Create: Create teams
+            Channel.ReadBasic.All: Read channel basic info
+            Channel.Create: Create channels
+            ChannelMessage.Read.All: Read channel messages
+            ChatMessage.Read: Read chat messages
+            ChatMessage.Send: Send chat messages
+            Calls.Initiate.All: Initiate calls
+            Calls.JoinGroupCall.All: Join group calls
+            OnlineMeetings.ReadWrite.All: Create and manage online meetings

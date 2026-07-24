@@ -1,0 +1,244 @@
+openapi: 3.0.3
+info:
+  title: Microsoft Graph Teams Apps Members API
+  description: Core REST API for accessing Microsoft Teams data including teams, channels, messages, tabs, apps, calls, and online meetings through Microsoft Graph.
+  version: 1.0.0
+  contact:
+    name: Microsoft Graph Support
+    url: https://developer.microsoft.com/graph/support
+  license:
+    name: Microsoft API Terms of Use
+    url: https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use
+  x-generated-from: documentation
+  x-last-validated: '2026-04-18'
+servers:
+- url: https://graph.microsoft.com/v1.0
+  description: Microsoft Graph v1.0 production endpoint
+security:
+- oauth2:
+  - Team.ReadBasic.All
+  - Channel.ReadBasic.All
+  - ChatMessage.Read
+tags:
+- name: Members
+  description: Operations for managing team and channel members.
+paths:
+  /teams/{team-id}/members:
+    get:
+      operationId: listTeamMembers
+      summary: Microsoft Teams List Team Members
+      description: Retrieve a list of members in a team.
+      tags:
+      - Members
+      parameters:
+      - name: team-id
+        in: path
+        required: true
+        description: The unique identifier of the team.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Members returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberCollection'
+              examples:
+                ListTeamMembers200Example:
+                  summary: Default listTeamMembers 200 response
+                  x-microcks-default: true
+                  value:
+                    value:
+                    - id: membership-001
+                      displayName: Jane Smith
+                      roles:
+                      - owner
+                      userId: user-abc123
+                      email: jsmith@contoso.com
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Team not found.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: addTeamMember
+      summary: Microsoft Teams Add Team Member
+      description: Add a new member to a team.
+      tags:
+      - Members
+      parameters:
+      - name: team-id
+        in: path
+        required: true
+        description: The unique identifier of the team.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConversationMember'
+            examples:
+              AddTeamMemberRequestExample:
+                summary: Default addTeamMember request
+                x-microcks-default: true
+                value:
+                  roles:
+                  - member
+                  userId: user-def456
+      responses:
+        '201':
+          description: Member added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationMember'
+        '400':
+          description: Bad request.
+        '401':
+          description: Unauthorized.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /teams/{team-id}/members/{membership-id}:
+    delete:
+      operationId: removeTeamMember
+      summary: Microsoft Teams Remove Team Member
+      description: Remove a member from a team.
+      tags:
+      - Members
+      parameters:
+      - name: team-id
+        in: path
+        required: true
+        description: The unique identifier of the team.
+        schema:
+          type: string
+      - name: membership-id
+        in: path
+        required: true
+        description: The membership ID of the member.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Member removed successfully.
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Member not found.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    patch:
+      operationId: updateTeamMember
+      summary: Microsoft Teams Update Team Member
+      description: Update a member's role in a team.
+      tags:
+      - Members
+      parameters:
+      - name: team-id
+        in: path
+        required: true
+        description: The unique identifier of the team.
+        schema:
+          type: string
+      - name: membership-id
+        in: path
+        required: true
+        description: The membership ID of the member.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roles:
+                  type: array
+                  items:
+                    type: string
+            examples:
+              UpdateTeamMemberRequestExample:
+                summary: Default updateTeamMember request
+                x-microcks-default: true
+                value:
+                  roles:
+                  - owner
+      responses:
+        '200':
+          description: Member updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationMember'
+        '400':
+          description: Bad request.
+        '401':
+          description: Unauthorized.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    MemberCollection:
+      type: object
+      description: Collection of members.
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationMember'
+    ConversationMember:
+      type: object
+      description: Represents a member of a team or channel.
+      properties:
+        id:
+          type: string
+          description: Unique membership ID.
+          example: membership-001
+        displayName:
+          type: string
+          description: Display name of the member.
+          example: Jane Smith
+        roles:
+          type: array
+          items:
+            type: string
+          description: Roles of the member.
+          example:
+          - owner
+        userId:
+          type: string
+          description: The Azure AD user ID.
+          example: user-abc123
+        email:
+          type: string
+          format: email
+          description: Email address of the member.
+          example: jsmith@contoso.com
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authorization using Microsoft Identity Platform
+      flows:
+        authorizationCode:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+          scopes:
+            Team.ReadBasic.All: Read teams basic info
+            Team.Create: Create teams
+            Channel.ReadBasic.All: Read channel basic info
+            Channel.Create: Create channels
+            ChannelMessage.Read.All: Read channel messages
+            ChatMessage.Read: Read chat messages
+            ChatMessage.Send: Send chat messages
+            Calls.Initiate.All: Initiate calls
+            Calls.JoinGroupCall.All: Join group calls
+            OnlineMeetings.ReadWrite.All: Create and manage online meetings
