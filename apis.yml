@@ -3,6 +3,19 @@ name: Microsoft Teams
 description: Microsoft Teams is a collaboration platform that combines workplace chat, meetings, file storage, and application
   integration. It provides APIs for building custom integrations, managing teams and channels, sending messages, scheduling
   meetings, and initiating calls through Microsoft Graph.
+accessModel:
+  pricing: free
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Free · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 image: https://learn.microsoft.com/en-us/graph/images/teams-logo.png
 url: https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/apis.yml
 humanURL: https://www.microsoft.com/en-us/microsoft-teams
@@ -18,22 +31,75 @@ tags:
 - Productivity
 - Video Conferencing
 apis:
-- name: Microsoft Graph Teams API
-  description: Core REST API for accessing Teams data including teams, channels, messages, tabs, apps, members, online meetings,
-    and calls through Microsoft Graph.
+- name: Microsoft Teams Bot Framework API
+  description: >-
+    API for building conversational bots that interact with users in Microsoft Teams through the Bot Framework.
+  humanURL: https://learn.microsoft.com/en-us/microsoftteams/platform/bots/what-are-bots
+  baseURL: https://smba.trafficmanager.net/teams/
+  tags:
+  - Bot Framework
+  - Bots
+  - Conversational AI
+  - Messaging
+  properties:
+  - type: Documentation
+    url: >-
+      https://learn.microsoft.com/en-us/microsoftteams/platform/bots/how-to/conversations/conversation-basics
+  - type: GettingStarted
+    url: https://learn.microsoft.com/en-us/microsoftteams/platform/build-your-first-app/build-bot
+  - type: CodeExamples
+    url: https://github.com/microsoft/BotBuilder-Samples
+    title: Bot Builder Samples
+  - type: APIReference
+    url: >-
+      https://learn.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-connector-api-reference
+  - type: AsyncAPI
+    url: asyncapi/microsoft-teams-asyncapi.yaml
+- name: Microsoft Teams Webhook and Connector API
+  description: >-
+    APIs for creating incoming webhooks and Office 365 connectors to post messages and notifications to
+    Teams channels.
+  humanURL: >-
+    https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/what-are-webhooks-and-connectors
+  baseURL: https://outlook.office.com/webhook/
+  tags:
+  - Connectors
+  - Incoming Webhooks
+  - Notifications
+  - Webhooks
+  properties:
+  - type: Documentation
+    url: >-
+      https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook
+- name: Microsoft Teams Real-Time Communication APIs
+  description: >-
+    APIs for building calling and meeting experiences in Teams including VoIP calls, group calls, IVR
+    flows, and online meetings.
+  humanURL: https://learn.microsoft.com/en-us/graph/api/resources/communications-api-overview
+  baseURL: https://graph.microsoft.com/v1.0
+  tags:
+  - Audio
+  - Calling
+  - Meetings
+  - Real-Time
+  - Video
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/graph/api/resources/communications-api-overview
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/graph/api/resources/call
+- aid: microsoft-teams:microsoft-teams-apps-api
+  name: Microsoft Teams Apps API
+  description: Operations for managing app installations in teams.
   humanURL: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
-  - Channels
-  - Messages
-  - Microsoft Graph
-  - REST API
-  - Teams
+  - Apps
   properties:
+  - type: OpenAPI
+    url: openapi/microsoft-teams-apps-api-openapi.yml
   - type: Documentation
     url: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
-  - type: OpenAPI
-    url: openapi/microsoft-teams-graph-api.yaml
   - type: AsyncAPI
     url: asyncapi/microsoft-teams-asyncapi.yaml
   - type: Authentication
@@ -66,61 +132,330 @@ apis:
     url: examples/teams-graph-api-chat-message-example.json
   - type: GraphQL
     url: graphql/microsoft-teams-graphql.md
-  - type: Overlay
-    url: overlays/microsoft-teams-graph-api-overlay.yaml
-  - type: MCPServer
-    url: mcp/microsoft-teams-mcp.yml
   - type: ErrorCatalog
     url: errors/microsoft-teams-problem-types.yml
-- name: Microsoft Teams Bot Framework API
-  description: API for building conversational bots that interact with users in Microsoft Teams through the Bot Framework.
-  humanURL: https://learn.microsoft.com/en-us/microsoftteams/platform/bots/what-are-bots
-  baseURL: https://smba.trafficmanager.net/teams/
-  tags:
-  - Bot Framework
-  - Bots
-  - Conversational AI
-  - Messaging
-  properties:
-  - type: Documentation
-    url: https://learn.microsoft.com/en-us/microsoftteams/platform/bots/how-to/conversations/conversation-basics
-  - type: GettingStarted
-    url: https://learn.microsoft.com/en-us/microsoftteams/platform/build-your-first-app/build-bot
-  - type: CodeExamples
-    url: https://github.com/microsoft/BotBuilder-Samples
-    title: Bot Builder Samples
-  - type: APIReference
-    url: https://learn.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-connector-api-reference
-  - type: AsyncAPI
-    url: asyncapi/microsoft-teams-asyncapi.yaml
-- name: Microsoft Teams Webhook and Connector API
-  description: APIs for creating incoming webhooks and Office 365 connectors to post messages and notifications to Teams channels.
-  humanURL: https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/what-are-webhooks-and-connectors
-  baseURL: https://outlook.office.com/webhook/
-  tags:
-  - Connectors
-  - Incoming Webhooks
-  - Notifications
-  - Webhooks
-  properties:
-  - type: Documentation
-    url: https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook
-- name: Microsoft Teams Real-Time Communication APIs
-  description: APIs for building calling and meeting experiences in Teams including VoIP calls, group calls, IVR flows, and
-    online meetings.
-  humanURL: https://learn.microsoft.com/en-us/graph/api/resources/communications-api-overview
+- aid: microsoft-teams:microsoft-teams-calls-api
+  name: Microsoft Teams Calls API
+  description: Operations for initiating and managing calls.
+  humanURL: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
-  - Audio
-  - Calling
-  - Meetings
-  - Real-Time
-  - Video
+  - Calls
   properties:
+  - type: OpenAPI
+    url: openapi/microsoft-teams-calls-api-openapi.yml
   - type: Documentation
-    url: https://learn.microsoft.com/en-us/graph/api/resources/communications-api-overview
-  - type: APIReference
-    url: https://learn.microsoft.com/en-us/graph/api/resources/call
+    url: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
+  - type: AsyncAPI
+    url: asyncapi/microsoft-teams-asyncapi.yaml
+  - type: Authentication
+    url: https://learn.microsoft.com/en-us/graph/auth/
+  - type: SDKs
+    url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/graph/throttling
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-team-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-channel-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-chat-message-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-conversation-member-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-online-meeting-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-call-schema.json
+  - type: JSONStructure
+    url: json-structure/teams-graph-api-team-structure.json
+  - type: JSONLD
+    url: json-ld/microsoft-teams-graph-api-context.jsonld
+  - type: Examples
+    url: examples/teams-graph-api-team-example.json
+  - type: Examples
+    url: examples/teams-graph-api-channel-example.json
+  - type: Examples
+    url: examples/teams-graph-api-chat-message-example.json
+  - type: GraphQL
+    url: graphql/microsoft-teams-graphql.md
+  - type: ErrorCatalog
+    url: errors/microsoft-teams-problem-types.yml
+- aid: microsoft-teams:microsoft-teams-channels-api
+  name: Microsoft Teams Channels API
+  description: Operations for managing channels within teams.
+  humanURL: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
+  baseURL: https://graph.microsoft.com/v1.0
+  tags:
+  - Channels
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-teams-channels-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
+  - type: AsyncAPI
+    url: asyncapi/microsoft-teams-asyncapi.yaml
+  - type: Authentication
+    url: https://learn.microsoft.com/en-us/graph/auth/
+  - type: SDKs
+    url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/graph/throttling
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-team-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-channel-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-chat-message-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-conversation-member-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-online-meeting-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-call-schema.json
+  - type: JSONStructure
+    url: json-structure/teams-graph-api-team-structure.json
+  - type: JSONLD
+    url: json-ld/microsoft-teams-graph-api-context.jsonld
+  - type: Examples
+    url: examples/teams-graph-api-team-example.json
+  - type: Examples
+    url: examples/teams-graph-api-channel-example.json
+  - type: Examples
+    url: examples/teams-graph-api-chat-message-example.json
+  - type: GraphQL
+    url: graphql/microsoft-teams-graphql.md
+  - type: ErrorCatalog
+    url: errors/microsoft-teams-problem-types.yml
+- aid: microsoft-teams:microsoft-teams-members-api
+  name: Microsoft Teams Members API
+  description: Operations for managing team and channel members.
+  humanURL: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
+  baseURL: https://graph.microsoft.com/v1.0
+  tags:
+  - Members
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-teams-members-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
+  - type: AsyncAPI
+    url: asyncapi/microsoft-teams-asyncapi.yaml
+  - type: Authentication
+    url: https://learn.microsoft.com/en-us/graph/auth/
+  - type: SDKs
+    url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/graph/throttling
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-team-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-channel-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-chat-message-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-conversation-member-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-online-meeting-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-call-schema.json
+  - type: JSONStructure
+    url: json-structure/teams-graph-api-team-structure.json
+  - type: JSONLD
+    url: json-ld/microsoft-teams-graph-api-context.jsonld
+  - type: Examples
+    url: examples/teams-graph-api-team-example.json
+  - type: Examples
+    url: examples/teams-graph-api-channel-example.json
+  - type: Examples
+    url: examples/teams-graph-api-chat-message-example.json
+  - type: GraphQL
+    url: graphql/microsoft-teams-graphql.md
+  - type: ErrorCatalog
+    url: errors/microsoft-teams-problem-types.yml
+- aid: microsoft-teams:microsoft-teams-messages-api
+  name: Microsoft Teams Messages API
+  description: Operations for sending and receiving chat messages.
+  humanURL: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
+  baseURL: https://graph.microsoft.com/v1.0
+  tags:
+  - Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-teams-messages-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
+  - type: AsyncAPI
+    url: asyncapi/microsoft-teams-asyncapi.yaml
+  - type: Authentication
+    url: https://learn.microsoft.com/en-us/graph/auth/
+  - type: SDKs
+    url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/graph/throttling
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-team-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-channel-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-chat-message-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-conversation-member-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-online-meeting-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-call-schema.json
+  - type: JSONStructure
+    url: json-structure/teams-graph-api-team-structure.json
+  - type: JSONLD
+    url: json-ld/microsoft-teams-graph-api-context.jsonld
+  - type: Examples
+    url: examples/teams-graph-api-team-example.json
+  - type: Examples
+    url: examples/teams-graph-api-channel-example.json
+  - type: Examples
+    url: examples/teams-graph-api-chat-message-example.json
+  - type: GraphQL
+    url: graphql/microsoft-teams-graphql.md
+  - type: ErrorCatalog
+    url: errors/microsoft-teams-problem-types.yml
+- aid: microsoft-teams:microsoft-teams-online-meetings-api
+  name: Microsoft Teams Online Meetings API
+  description: Operations for creating and managing online meetings.
+  humanURL: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
+  baseURL: https://graph.microsoft.com/v1.0
+  tags:
+  - Online Meetings
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-teams-online-meetings-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
+  - type: AsyncAPI
+    url: asyncapi/microsoft-teams-asyncapi.yaml
+  - type: Authentication
+    url: https://learn.microsoft.com/en-us/graph/auth/
+  - type: SDKs
+    url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/graph/throttling
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-team-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-channel-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-chat-message-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-conversation-member-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-online-meeting-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-call-schema.json
+  - type: JSONStructure
+    url: json-structure/teams-graph-api-team-structure.json
+  - type: JSONLD
+    url: json-ld/microsoft-teams-graph-api-context.jsonld
+  - type: Examples
+    url: examples/teams-graph-api-team-example.json
+  - type: Examples
+    url: examples/teams-graph-api-channel-example.json
+  - type: Examples
+    url: examples/teams-graph-api-chat-message-example.json
+  - type: GraphQL
+    url: graphql/microsoft-teams-graphql.md
+  - type: ErrorCatalog
+    url: errors/microsoft-teams-problem-types.yml
+- aid: microsoft-teams:microsoft-teams-tabs-api
+  name: Microsoft Teams Tabs API
+  description: Operations for managing tabs in channels.
+  humanURL: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
+  baseURL: https://graph.microsoft.com/v1.0
+  tags:
+  - Tabs
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-teams-tabs-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
+  - type: AsyncAPI
+    url: asyncapi/microsoft-teams-asyncapi.yaml
+  - type: Authentication
+    url: https://learn.microsoft.com/en-us/graph/auth/
+  - type: SDKs
+    url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/graph/throttling
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-team-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-channel-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-chat-message-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-conversation-member-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-online-meeting-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-call-schema.json
+  - type: JSONStructure
+    url: json-structure/teams-graph-api-team-structure.json
+  - type: JSONLD
+    url: json-ld/microsoft-teams-graph-api-context.jsonld
+  - type: Examples
+    url: examples/teams-graph-api-team-example.json
+  - type: Examples
+    url: examples/teams-graph-api-channel-example.json
+  - type: Examples
+    url: examples/teams-graph-api-chat-message-example.json
+  - type: GraphQL
+    url: graphql/microsoft-teams-graphql.md
+  - type: ErrorCatalog
+    url: errors/microsoft-teams-problem-types.yml
+- aid: microsoft-teams:microsoft-teams-teams-api
+  name: Microsoft Teams Teams API
+  description: Operations for managing teams.
+  humanURL: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
+  baseURL: https://graph.microsoft.com/v1.0
+  tags:
+  - Teams
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-teams-teams-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
+  - type: AsyncAPI
+    url: asyncapi/microsoft-teams-asyncapi.yaml
+  - type: Authentication
+    url: https://learn.microsoft.com/en-us/graph/auth/
+  - type: SDKs
+    url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/graph/throttling
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-team-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-channel-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-chat-message-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-conversation-member-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-online-meeting-schema.json
+  - type: JSONSchema
+    url: json-schema/teams-graph-api-call-schema.json
+  - type: JSONStructure
+    url: json-structure/teams-graph-api-team-structure.json
+  - type: JSONLD
+    url: json-ld/microsoft-teams-graph-api-context.jsonld
+  - type: Examples
+    url: examples/teams-graph-api-team-example.json
+  - type: Examples
+    url: examples/teams-graph-api-channel-example.json
+  - type: Examples
+    url: examples/teams-graph-api-chat-message-example.json
+  - type: GraphQL
+    url: graphql/microsoft-teams-graphql.md
+  - type: ErrorCatalog
+    url: errors/microsoft-teams-problem-types.yml
 common:
   - type: AgenticAccess
     url: agentic-access/microsoft-teams-agentic-access.yml
