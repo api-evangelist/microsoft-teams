@@ -1,0 +1,28 @@
+{
+  "provider": "microsoft-teams",
+  "sources": [
+    "microsoft-teams-apps-api-openapi.yml",
+    "microsoft-teams-calls-api-openapi.yml",
+    "microsoft-teams-channels-api-openapi.yml",
+    "microsoft-teams-members-api-openapi.yml",
+    "microsoft-teams-messages-api-openapi.yml",
+    "microsoft-teams-online-meetings-api-openapi.yml",
+    "microsoft-teams-tabs-api-openapi.yml",
+    "microsoft-teams-teams-api-openapi.yml"
+  ],
+  "outputs": [
+    "microsoft-teams-apps-api-openapi.yml",
+    "microsoft-teams-calls-api-openapi.yml",
+    "microsoft-teams-channels-api-openapi.yml",
+    "microsoft-teams-members-api-openapi.yml",
+    "microsoft-teams-messages-api-openapi.yml",
+    "microsoft-teams-online-meetings-api-openapi.yml",
+    "microsoft-teams-tabs-api-openapi.yml",
+    "microsoft-teams-teams-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
