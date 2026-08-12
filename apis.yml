@@ -457,6 +457,10 @@ apis:
   - type: ErrorCatalog
     url: errors/microsoft-teams-problem-types.yml
 common:
+  - type: MCPServer
+    url: mcp/microsoft-teams-mcp.yml
+  - type: Overlay
+    url: overlays/microsoft-teams-graph-api-overlay.yaml
   - type: AgenticAccess
     url: agentic-access/microsoft-teams-agentic-access.yml
   - type: VulnerabilityDisclosure
