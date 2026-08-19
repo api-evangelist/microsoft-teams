@@ -21,7 +21,7 @@ url: https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads
 humanURL: https://www.microsoft.com/en-us/microsoft-teams
 created: '2024'
 modified: '2026-06-20'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 type: Index
 tags:
 - Chat
