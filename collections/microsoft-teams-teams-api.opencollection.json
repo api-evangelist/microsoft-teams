@@ -1,0 +1,140 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Microsoft Graph Apps Teams API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+      "accessTokenUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Teams",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Microsoft Teams List Joined Teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/me/joinedTeams"
+          },
+          "docs": "Retrieve a list of teams the current user has joined."
+        },
+        {
+          "info": {
+            "name": "Microsoft Teams Create Team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/teams",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new team."
+        },
+        {
+          "info": {
+            "name": "Microsoft Teams Get Team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/teams/:team-id",
+            "params": [
+              {
+                "name": "team-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the team."
+              }
+            ]
+          },
+          "docs": "Retrieve a specific team by ID."
+        },
+        {
+          "info": {
+            "name": "Microsoft Teams Update Team",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://graph.microsoft.com/v1.0/teams/:team-id",
+            "params": [
+              {
+                "name": "team-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the team."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update team properties."
+        },
+        {
+          "info": {
+            "name": "Microsoft Teams Delete Team",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://graph.microsoft.com/v1.0/teams/:team-id",
+            "params": [
+              {
+                "name": "team-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the team."
+              }
+            ]
+          },
+          "docs": "Delete a team and its associated group."
+        },
+        {
+          "info": {
+            "name": "Microsoft Teams Archive Team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/teams/:team-id/archive",
+            "params": [
+              {
+                "name": "team-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the team."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Archive a team, making it read-only."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

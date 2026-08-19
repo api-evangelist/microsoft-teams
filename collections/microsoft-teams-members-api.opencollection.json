@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Microsoft Graph Teams Apps Members API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+      "accessTokenUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Members",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Microsoft Teams List Team Members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/teams/:team-id/members",
+            "params": [
+              {
+                "name": "team-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the team."
+              }
+            ]
+          },
+          "docs": "Retrieve a list of members in a team."
+        },
+        {
+          "info": {
+            "name": "Microsoft Teams Add Team Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/teams/:team-id/members",
+            "params": [
+              {
+                "name": "team-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the team."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new member to a team."
+        },
+        {
+          "info": {
+            "name": "Microsoft Teams Update Team Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://graph.microsoft.com/v1.0/teams/:team-id/members/:membership-id",
+            "params": [
+              {
+                "name": "team-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the team."
+              },
+              {
+                "name": "membership-id",
+                "value": "",
+                "type": "path",
+                "description": "The membership ID of the member."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a member's role in a team."
+        },
+        {
+          "info": {
+            "name": "Microsoft Teams Remove Team Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://graph.microsoft.com/v1.0/teams/:team-id/members/:membership-id",
+            "params": [
+              {
+                "name": "team-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the team."
+              },
+              {
+                "name": "membership-id",
+                "value": "",
+                "type": "path",
+                "description": "The membership ID of the member."
+              }
+            ]
+          },
+          "docs": "Remove a member from a team."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

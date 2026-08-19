@@ -1,0 +1,446 @@
+{
+  "item": [
+    {
+      "id": "f375c5f4-f387-4b6e-8b50-b7e22cd53fc9",
+      "name": "Online Meetings",
+      "description": {
+        "content": "Operations for creating and managing online meetings.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "65ec333e-7c06-4935-bc72-6234ceb9990b",
+          "name": "Microsoft Teams Create Online Meeting",
+          "request": {
+            "name": "Microsoft Teams Create Online Meeting",
+            "description": {
+              "content": "Create a new online meeting.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "communications",
+                "onlineMeetings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"startDateTime\": \"<dateTime>\",\n  \"endDateTime\": \"<dateTime>\",\n  \"joinWebUrl\": \"<uri>\",\n  \"participants\": {\n    \"organizer\": {\n      \"identity\": {\n        \"user\": {\n          \"id\": \"<string>\",\n          \"displayName\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eaa19325-31e0-4fe1-9919-4bd2059a6eb6",
+              "name": "Online meeting created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "communications",
+                    "onlineMeetings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"Weekly Standup\",\n  \"startDateTime\": \"2026-04-19T09:00:00Z\",\n  \"endDateTime\": \"2026-04-19T09:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"meeting-abc123\",\n  \"subject\": \"Weekly Standup\",\n  \"startDateTime\": \"2026-04-19T09:00:00Z\",\n  \"endDateTime\": \"2026-04-19T09:30:00Z\",\n  \"joinWebUrl\": \"https://teams.microsoft.com/l/meetup-join/19:meeting_abc123/\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3798f9af-f396-4028-bb53-45ce3ff0fb77",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "communications",
+                    "onlineMeetings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"Weekly Standup\",\n  \"startDateTime\": \"2026-04-19T09:00:00Z\",\n  \"endDateTime\": \"2026-04-19T09:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b7979454-54b3-44bb-9aaa-7de65fa633f6",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "communications",
+                    "onlineMeetings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"Weekly Standup\",\n  \"startDateTime\": \"2026-04-19T09:00:00Z\",\n  \"endDateTime\": \"2026-04-19T09:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "659b725c-bfdf-4a7f-872a-7157b99ba930",
+          "name": "Microsoft Teams Get Online Meeting",
+          "request": {
+            "name": "Microsoft Teams Get Online Meeting",
+            "description": {
+              "content": "Retrieve details of an online meeting.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "communications",
+                "onlineMeetings",
+                ":meeting-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "meeting-id",
+                  "description": "(Required) The unique identifier of the meeting."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1e001268-37f7-4670-b492-56e42b404ad9",
+              "name": "Meeting returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "communications",
+                    "onlineMeetings",
+                    ":meeting-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "meeting-id",
+                      "description": "(Required) The unique identifier of the meeting."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"meeting-abc123\",\n  \"subject\": \"Weekly Standup\",\n  \"startDateTime\": \"2026-04-19T09:00:00Z\",\n  \"endDateTime\": \"2026-04-19T09:30:00Z\",\n  \"joinWebUrl\": \"https://teams.microsoft.com/l/meetup-join/19:meeting_abc123/\",\n  \"participants\": {\n    \"organizer\": {\n      \"identity\": {\n        \"user\": {\n          \"id\": \"<string>\",\n          \"displayName\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f398dec0-4bd2-4913-afb3-2ff0274eb344",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "communications",
+                    "onlineMeetings",
+                    ":meeting-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "meeting-id",
+                      "description": "(Required) The unique identifier of the meeting."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1af51e6a-5845-4b55-a9d6-f941927a6bef",
+              "name": "Meeting not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "communications",
+                    "onlineMeetings",
+                    ":meeting-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "meeting-id",
+                      "description": "(Required) The unique identifier of the meeting."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://graph.microsoft.com/v1.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "Team.ReadBasic.All Team.Create Channel.ReadBasic.All Channel.Create ChannelMessage.Read.All ChatMessage.Read ChatMessage.Send Calls.Initiate.All Calls.JoinGroupCall.All OnlineMeetings.ReadWrite.All"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://login.microsoftonline.com/common/oauth2/v2.0/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8c606225-5d90-456e-9165-66c754c7b1bc",
+    "name": "Microsoft Graph Teams Apps Online Meetings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Core REST API for accessing Microsoft Teams data including teams, channels, messages, tabs, apps, calls, and online meetings through Microsoft Graph.\n\nContact Support:\n Name: Microsoft Graph Support",
+      "type": "text/plain"
+    }
+  }
+}

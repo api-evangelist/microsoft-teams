@@ -1,0 +1,152 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Microsoft Graph Teams Apps Calls API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+      "accessTokenUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Calls",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Microsoft Teams Create Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/communications/calls",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new outgoing call or join a meeting."
+        },
+        {
+          "info": {
+            "name": "Microsoft Teams Get Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/communications/calls/:call-id",
+            "params": [
+              {
+                "name": "call-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the call."
+              }
+            ]
+          },
+          "docs": "Retrieve the current state of a call."
+        },
+        {
+          "info": {
+            "name": "Microsoft Teams Hang Up Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://graph.microsoft.com/v1.0/communications/calls/:call-id",
+            "params": [
+              {
+                "name": "call-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the call."
+              }
+            ]
+          },
+          "docs": "Hang up or terminate an active call."
+        },
+        {
+          "info": {
+            "name": "Microsoft Teams Answer Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/communications/calls/:call-id/answer",
+            "params": [
+              {
+                "name": "call-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the call."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Answer an incoming call."
+        },
+        {
+          "info": {
+            "name": "Microsoft Teams Reject Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/communications/calls/:call-id/reject",
+            "params": [
+              {
+                "name": "call-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the call."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reject an incoming call."
+        },
+        {
+          "info": {
+            "name": "Microsoft Teams Transfer Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/communications/calls/:call-id/transfer",
+            "params": [
+              {
+                "name": "call-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the call."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Transfer an active call to another participant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
