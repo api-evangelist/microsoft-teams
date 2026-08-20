@@ -26,6 +26,13 @@ type: Index
 tags:
 - Chat
 - Collaboration
+- Communications
+- Microsoft-365
+- Productivity
+- Video Conferencing
+tags_raw:
+- Chat
+- Collaboration
 - Communication
 - Microsoft 365
 - Productivity
@@ -65,6 +72,11 @@ apis:
   tags:
   - Connectors
   - Incoming Webhooks
+  - Notification
+  - Webhook
+  tags_raw:
+  - Connectors
+  - Incoming Webhooks
   - Notifications
   - Webhooks
   properties:
@@ -94,6 +106,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
+  - Application
+  tags_raw:
   - Apps
   properties:
   - type: OpenAPI
@@ -278,6 +292,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
+  - Message
+  tags_raw:
   - Messages
   properties:
   - type: OpenAPI
@@ -416,6 +432,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
+  - Team
+  tags_raw:
   - Teams
   properties:
   - type: OpenAPI
