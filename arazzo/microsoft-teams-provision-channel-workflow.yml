@@ -10,8 +10,14 @@ info:
     executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
+- name: channelsApi
+  url: ../openapi/microsoft-teams-channels-api-openapi.yml
+  type: openapi
+- name: messagesApi
+  url: ../openapi/microsoft-teams-messages-api-openapi.yml
+  type: openapi
 - name: teamsApi
-  url: ../openapi/microsoft-teams-graph-api.yaml
+  url: ../openapi/microsoft-teams-teams-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: provision-channel

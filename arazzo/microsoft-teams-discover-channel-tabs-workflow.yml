@@ -10,8 +10,11 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: teamsApi
-  url: ../openapi/microsoft-teams-graph-api.yaml
+- name: channelsApi
+  url: ../openapi/microsoft-teams-channels-api-openapi.yml
+  type: openapi
+- name: tabsApi
+  url: ../openapi/microsoft-teams-tabs-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: discover-channel-tabs

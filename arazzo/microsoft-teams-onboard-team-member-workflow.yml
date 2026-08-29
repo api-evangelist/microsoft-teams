@@ -10,8 +10,8 @@ info:
     executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: teamsApi
-  url: ../openapi/microsoft-teams-graph-api.yaml
+- name: membersApi
+  url: ../openapi/microsoft-teams-members-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: onboard-team-member

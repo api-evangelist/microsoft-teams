@@ -12,7 +12,7 @@ info:
   version: 1.0.0
 sourceDescriptions:
 - name: teamsApi
-  url: ../openapi/microsoft-teams-graph-api.yaml
+  url: ../openapi/microsoft-teams-teams-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-team

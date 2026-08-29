@@ -11,8 +11,14 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: teamsApi
-  url: ../openapi/microsoft-teams-graph-api.yaml
+- name: appsApi
+  url: ../openapi/microsoft-teams-apps-api-openapi.yml
+  type: openapi
+- name: channelsApi
+  url: ../openapi/microsoft-teams-channels-api-openapi.yml
+  type: openapi
+- name: membersApi
+  url: ../openapi/microsoft-teams-members-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: inventory-team-collaboration

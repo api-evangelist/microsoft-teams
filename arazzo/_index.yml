@@ -1,7 +1,7 @@
-generated: '2026-06-20'
-method: derived
-source: arazzo/*.yml
-description: Catalog of native Arazzo 1.0.1 workflows stitching Microsoft Graph Teams operations.
+x-generated: '2026-06-20'
+x-method: derived
+x-source: arazzo/*.yml
+x-description: Catalog of native Arazzo 1.0.1 workflows stitching Microsoft Graph Teams operations.
 workflows:
   - file: microsoft-teams-add-member-and-welcome-workflow.yml
     workflowId: add-member-and-welcome
