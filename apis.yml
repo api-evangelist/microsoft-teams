@@ -3,6 +3,18 @@ name: Microsoft Teams
 description: Microsoft Teams is a collaboration platform that combines workplace chat, meetings, file storage, and application
   integration. It provides APIs for building custom integrations, managing teams and channels, sending messages, scheduling
   meetings, and initiating calls through Microsoft Graph.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: free
   onboarding: self-serve
