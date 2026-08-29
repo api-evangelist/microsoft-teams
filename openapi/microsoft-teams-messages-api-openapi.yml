@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Microsoft Graph Teams Apps Messages API
   description: Core REST API for accessing Microsoft Teams data including teams, channels, messages, tabs, apps, calls, and online meetings through Microsoft Graph.
@@ -131,6 +131,14 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    ChatMessageCollection:
+      type: object
+      description: Collection of chat messages.
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatMessage'
     ChatMessage:
       type: object
       description: Represents a message in a channel or chat.
@@ -195,14 +203,6 @@ components:
                 displayName:
                   type: string
                   example: Jane Smith
-    ChatMessageCollection:
-      type: object
-      description: Collection of chat messages.
-      properties:
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChatMessage'
   securitySchemes:
     oauth2:
       type: oauth2

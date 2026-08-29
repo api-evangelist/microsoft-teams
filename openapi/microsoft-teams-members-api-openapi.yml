@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Microsoft Graph Teams Apps Members API
   description: Core REST API for accessing Microsoft Teams data including teams, channels, messages, tabs, apps, calls, and online meetings through Microsoft Graph.
@@ -187,14 +187,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    MemberCollection:
-      type: object
-      description: Collection of members.
-      properties:
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConversationMember'
     ConversationMember:
       type: object
       description: Represents a member of a team or channel.
@@ -223,6 +215,14 @@ components:
           format: email
           description: Email address of the member.
           example: jsmith@contoso.com
+    MemberCollection:
+      type: object
+      description: Collection of members.
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationMember'
   securitySchemes:
     oauth2:
       type: oauth2

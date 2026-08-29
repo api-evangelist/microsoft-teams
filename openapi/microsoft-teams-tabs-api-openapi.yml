@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Microsoft Graph Teams Apps Tabs API
   description: Core REST API for accessing Microsoft Teams data including teams, channels, messages, tabs, apps, calls, and online meetings through Microsoft Graph.
@@ -67,6 +67,14 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    TabCollection:
+      type: object
+      description: Collection of tabs.
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamsTab'
     TeamsTab:
       type: object
       description: Represents a tab pinned to a channel.
@@ -97,14 +105,6 @@ components:
             websiteUrl:
               type: string
               format: uri
-    TabCollection:
-      type: object
-      description: Collection of tabs.
-      properties:
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamsTab'
   securitySchemes:
     oauth2:
       type: oauth2

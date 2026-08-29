@@ -23,6 +23,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "microsoft-teams-apps-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "microsoft-teams-calls-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "microsoft-teams-channels-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "microsoft-teams-members-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "microsoft-teams-messages-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "microsoft-teams-online-meetings-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "microsoft-teams-tabs-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "microsoft-teams-teams-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }
