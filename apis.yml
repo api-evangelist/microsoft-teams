@@ -487,6 +487,8 @@ apis:
   - type: ErrorCatalog
     url: errors/microsoft-teams-problem-types.yml
 common:
+  - type: Website
+    url: https://www.microsoft.com/
   - type: X-MCPServerCandidate
     url: mcp/microsoft-teams-mcp.yml
     note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
@@ -651,3 +653,5 @@ integrations:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-parent: microsoft
+x-relationship: product
