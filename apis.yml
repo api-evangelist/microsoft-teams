@@ -29,7 +29,7 @@ accessModel:
   generated: '2026-07-22'
   method: derived
 image: https://learn.microsoft.com/en-us/graph/images/teams-logo.png
-url: https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/apis.yml
+url: https://learn.microsoft.com/en-us/microsoftteams/platform/get-started/get-started-overview
 humanURL: https://www.microsoft.com/en-us/microsoft-teams
 created: '2024'
 modified: '2026-06-20'
@@ -653,5 +653,5 @@ integrations:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
-x-parent: microsoft
+x-parent: microsoft-365
 x-relationship: product
