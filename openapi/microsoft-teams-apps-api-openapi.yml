@@ -53,14 +53,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    AppInstallationCollection:
-      type: object
-      description: Collection of app installations.
-      properties:
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamsAppInstallation'
     TeamsAppInstallation:
       type: object
       description: Represents an app installed in a team.
@@ -84,6 +76,14 @@ components:
               - store
               - organization
               - sideloaded
+    AppInstallationCollection:
+      type: object
+      description: Collection of app installations.
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamsAppInstallation'
   securitySchemes:
     oauth2:
       type: oauth2

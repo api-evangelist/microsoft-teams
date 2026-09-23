@@ -1,14 +1,7 @@
 {
   "provider": "microsoft-teams",
   "sources": [
-    "microsoft-teams-apps-api-openapi.yml",
-    "microsoft-teams-calls-api-openapi.yml",
-    "microsoft-teams-channels-api-openapi.yml",
-    "microsoft-teams-members-api-openapi.yml",
-    "microsoft-teams-messages-api-openapi.yml",
-    "microsoft-teams-online-meetings-api-openapi.yml",
-    "microsoft-teams-tabs-api-openapi.yml",
-    "microsoft-teams-teams-api-openapi.yml"
+    "_ae-authored/microsoft-teams-graph-api.yaml"
   ],
   "outputs": [
     "microsoft-teams-apps-api-openapi.yml",
@@ -24,15 +17,18 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "microsoft-teams-apps-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "microsoft-teams-calls-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "microsoft-teams-channels-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "microsoft-teams-members-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "microsoft-teams-messages-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "microsoft-teams-online-meetings-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "microsoft-teams-tabs-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "microsoft-teams-teams-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "microsoft-teams-graph-api.yaml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "microsoft-teams-apps-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-teams-calls-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-teams-channels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-teams-members-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-teams-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-teams-online-meetings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-teams-tabs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-teams-teams-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

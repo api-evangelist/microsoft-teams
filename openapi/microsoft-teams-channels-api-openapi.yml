@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Microsoft Graph Teams Apps Channels API
+  title: Microsoft Graph Teams Channels API
   description: Core REST API for accessing Microsoft Teams data including teams, channels, messages, tabs, apps, calls, and online meetings through Microsoft Graph.
   version: 1.0.0
   contact:
