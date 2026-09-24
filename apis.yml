@@ -40,7 +40,7 @@ tags:
 - Chat
 - Collaboration
 - Communications
-- Microsoft-365
+- Microsoft 365
 - Productivity
 - Video Conferencing
 tags_raw:
@@ -51,6 +51,7 @@ tags_raw:
 - Microsoft 365
 - Productivity
 - Video Conferencing
+- Microsoft-365
 apis:
 - name: Microsoft Teams Bot Framework API
   description: API for building conversational bots that interact with users in Microsoft Teams through
@@ -152,8 +153,6 @@ apis:
     url: examples/teams-graph-api-channel-example.json
   - type: Examples
     url: examples/teams-graph-api-chat-message-example.json
-  - type: GraphQL
-    url: graphql/microsoft-teams-graphql.md
   - type: ErrorCatalog
     url: errors/microsoft-teams-problem-types.yml
 - aid: microsoft-teams:microsoft-teams-calls-api
@@ -198,8 +197,6 @@ apis:
     url: examples/teams-graph-api-channel-example.json
   - type: Examples
     url: examples/teams-graph-api-chat-message-example.json
-  - type: GraphQL
-    url: graphql/microsoft-teams-graphql.md
   - type: ErrorCatalog
     url: errors/microsoft-teams-problem-types.yml
 - aid: microsoft-teams:microsoft-teams-channels-api
@@ -244,8 +241,6 @@ apis:
     url: examples/teams-graph-api-channel-example.json
   - type: Examples
     url: examples/teams-graph-api-chat-message-example.json
-  - type: GraphQL
-    url: graphql/microsoft-teams-graphql.md
   - type: ErrorCatalog
     url: errors/microsoft-teams-problem-types.yml
 - aid: microsoft-teams:microsoft-teams-members-api
@@ -290,8 +285,6 @@ apis:
     url: examples/teams-graph-api-channel-example.json
   - type: Examples
     url: examples/teams-graph-api-chat-message-example.json
-  - type: GraphQL
-    url: graphql/microsoft-teams-graphql.md
   - type: ErrorCatalog
     url: errors/microsoft-teams-problem-types.yml
 - aid: microsoft-teams:microsoft-teams-messages-api
@@ -338,8 +331,6 @@ apis:
     url: examples/teams-graph-api-channel-example.json
   - type: Examples
     url: examples/teams-graph-api-chat-message-example.json
-  - type: GraphQL
-    url: graphql/microsoft-teams-graphql.md
   - type: ErrorCatalog
     url: errors/microsoft-teams-problem-types.yml
 - aid: microsoft-teams:microsoft-teams-online-meetings-api
@@ -384,8 +375,6 @@ apis:
     url: examples/teams-graph-api-channel-example.json
   - type: Examples
     url: examples/teams-graph-api-chat-message-example.json
-  - type: GraphQL
-    url: graphql/microsoft-teams-graphql.md
   - type: ErrorCatalog
     url: errors/microsoft-teams-problem-types.yml
 - aid: microsoft-teams:microsoft-teams-tabs-api
@@ -430,8 +419,6 @@ apis:
     url: examples/teams-graph-api-channel-example.json
   - type: Examples
     url: examples/teams-graph-api-chat-message-example.json
-  - type: GraphQL
-    url: graphql/microsoft-teams-graphql.md
   - type: ErrorCatalog
     url: errors/microsoft-teams-problem-types.yml
 - aid: microsoft-teams:microsoft-teams-teams-api
@@ -478,8 +465,6 @@ apis:
     url: examples/teams-graph-api-channel-example.json
   - type: Examples
     url: examples/teams-graph-api-chat-message-example.json
-  - type: GraphQL
-    url: graphql/microsoft-teams-graphql.md
   - type: ErrorCatalog
     url: errors/microsoft-teams-problem-types.yml
 common:
