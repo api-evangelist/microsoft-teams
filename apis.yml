@@ -468,6 +468,12 @@ apis:
   - type: ErrorCatalog
     url: errors/microsoft-teams-problem-types.yml
 common:
+- type: Plans
+  url: plans/microsoft-teams-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/microsoft-teams-rate-limits.yml
+- type: FinOps
+  url: finops/microsoft-teams-finops.yml
 - type: Website
   url: https://www.microsoft.com/
 - type: X-MCPServerCandidate
