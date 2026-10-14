@@ -4,6 +4,7 @@ source:
 - https://n8n.io/integrations/microsoft-teams/
 checked:
 - https://composio.dev/toolkits/microsoft-teams
+- https://hightouch.com/docs/destinations/microsoft-teams
 - https://monid.ai/tools/microsoft-teams
 - https://n8n.io/integrations/microsoft-teams/
 - https://zapier.com/apps/microsoft-teams/integrations
@@ -367,4 +368,22 @@ edges:
     property: schemas.IncidentTodoAnonymousAssigneeSource
     detected_by: detect-payment-method-edges.py
     detected: '2026-10-12'
+- partner_name: Hightouch
+  partner: hightouch
+  partner_match: aggregator
+  marketplace: coverage
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: connector-coverage
+  evidence: https://hightouch.com/docs/destinations/microsoft-teams
+  coverage_role:
+  - destination
+  cdp_signals:
+    destination:
+      catalog_entries:
+      - microsoft-teams
+      status: released
+  detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
 templates: []
