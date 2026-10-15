@@ -56,7 +56,7 @@
     app_slug: microsoft-teams-events
     beta: false
     builder: unknown (not in the directory record)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: microsoft-teams-n8n
   label: n8n
@@ -83,7 +83,7 @@
     builder: n8n (built-in node)
     other_nodes:
     - Microsoft/Teams/v1
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: microsoft-teams-pipedream
   label: Pipedream
@@ -109,5 +109,5 @@
     actions: true
     sources: true
     builder: Pipedream repo (component)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
