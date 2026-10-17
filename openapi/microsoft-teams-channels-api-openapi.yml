@@ -104,6 +104,14 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    ChannelCollection:
+      type: object
+      description: Collection of channels.
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Channel'
     Channel:
       type: object
       description: Represents a channel in a team.
@@ -137,14 +145,6 @@ components:
           type: string
           format: uri
           description: URL to the channel in Teams.
-    ChannelCollection:
-      type: object
-      description: Collection of channels.
-      properties:
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/Channel'
   securitySchemes:
     oauth2:
       type: oauth2
