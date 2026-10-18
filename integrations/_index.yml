@@ -139,7 +139,7 @@
     - alpha
     in_cloud: true
     builder: unknown (community connector; contributor not in the record)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: microsoft-teams-fivetran
   label: Fivetran
@@ -165,7 +165,7 @@
     - connectors/applications/microsoft-teams
     vendor_link: https://www.microsoft.com/en-in/microsoft-teams/group-chat-software
     builder: Fivetran
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: microsoft-teams-meltano
   label: Meltano
@@ -201,7 +201,7 @@
     - silver
     - unknown
     builder: 'community (Meltano Hub variant maintainers: airbyte, bytecodeio, mauricio87, singer-io)'
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: microsoft-teams-15five-inc
   label: 15Five, Inc.
