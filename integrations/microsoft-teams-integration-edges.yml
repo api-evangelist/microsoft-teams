@@ -3,10 +3,12 @@ method: searched
 source:
 - https://n8n.io/integrations/microsoft-teams/
 checked:
+- https://api.nuget.org/v3
 - https://catalogapi.azure.com/products?market=US&storefront=any
 - https://composio.dev/toolkits/microsoft-teams
 - https://connectors.airbyte.com/files/registries/v0/cloud_registry.json
 - https://connectors.airbyte.com/files/registries/v0/oss_registry.json
+- https://crates.io/api/v1
 - https://fivetran.com/docs-sitemap.xml
 - https://fivetran.com/docs/connectors/partner-built-program
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
@@ -15,6 +17,11 @@ checked:
 - https://hightouch.com/docs/destinations/microsoft-teams
 - https://monid.ai/tools/microsoft-teams
 - https://n8n.io/integrations/microsoft-teams/
+- https://proxy.golang.org
+- https://pypi.org/pypi
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
 - https://zapier.com/api/v4/apps/
 - https://zapier.com/apps/microsoft-teams/integrations
 summary: null
@@ -14228,4 +14235,34 @@ edges:
   detected: '2026-10-18'
   publisher_verified:
   - Microsoft 365 Publisher Attestation
+- partner_name: npm registry
+  partner: npm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (JavaScript/TypeScript)
+  evidence: https://www.npmjs.com/package/@microsoft/teams-js
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@microsoft/teams-js'
+      version: 2.58.0
+      released: '2026-10-16'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@microsoft/teams-js
+      repo_leg: shared-github-org:officedev
+      publisher_leg: email:microsoft.com
+      matched_by: domain+name-among-holders
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
 templates: []
