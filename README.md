@@ -1,4 +1,4 @@
-# Microsoft Teams (microsoft-teams)
+# Microsoft Teams
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,189 +66,304 @@
 
 Microsoft Teams is a collaboration platform that combines workplace chat, meetings, file storage, and application integration. It provides APIs for building custom integrations, managing teams and channels, sending messages, scheduling meetings, and initiating calls through Microsoft Graph.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/microsoft-teams/refs/heads/main/apis.yml)
+**Areas:** Microsoft Teams · Chat · Collaboration · Communications · Microsoft 365 · Productivity · Video Conferencing
 
-**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
+## Microsoft Teams on APIs.io
 
-## Tags:
+Everything profiled for Microsoft Teams is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/microsoft-teams/](https://apis.io/providers/microsoft-teams/)** — or go straight to one of the APIs or properties below.
 
- - Chat, Collaboration, Communication, Microsoft 365, Productivity, Video Conferencing
+### APIs (11)
 
-## Timestamps
+- [Microsoft Teams Bot Framework API](https://apis.io/apis/microsoft-teams/microsoft-teams-bot-framework-api/) — API for building conversational bots that interact with users in Microsoft Teams through the Bot Framework.
+- [Microsoft Teams Webhook and Connector API](https://apis.io/apis/microsoft-teams/microsoft-teams-webhook-and-connector-api/) — APIs for creating incoming webhooks and Office 365 connectors to post messages and notifications to Teams channels.
+- [Microsoft Teams Real-Time Communication APIs](https://apis.io/apis/microsoft-teams/microsoft-teams-real-time-communication-apis/) — APIs for building calling and meeting experiences in Teams including VoIP calls, group calls, IVR flows, and online meetings.
+- [Microsoft Teams Apps API](https://apis.io/apis/microsoft-teams/microsoft-teams-apps-api/) — Operations for managing app installations in teams.
+- [Microsoft Teams Calls API](https://apis.io/apis/microsoft-teams/microsoft-teams-calls-api/) — Operations for initiating and managing calls.
+- [Microsoft Teams Channels API](https://apis.io/apis/microsoft-teams/microsoft-teams-channels-api/) — Operations for managing channels within teams.
+- [Microsoft Teams Members API](https://apis.io/apis/microsoft-teams/microsoft-teams-members-api/) — Operations for managing team and channel members.
+- [Microsoft Teams Messages API](https://apis.io/apis/microsoft-teams/microsoft-teams-messages-api/) — Operations for sending and receiving chat messages.
+- [Microsoft Teams Online Meetings API](https://apis.io/apis/microsoft-teams/microsoft-teams-online-meetings-api/) — Operations for creating and managing online meetings.
+- [Microsoft Teams Tabs API](https://apis.io/apis/microsoft-teams/microsoft-teams-tabs-api/) — Operations for managing tabs in channels.
+- [Microsoft Teams API](https://apis.io/apis/microsoft-teams/microsoft-teams-teams-api/) — Operations for managing teams.
 
-- **Created:** 2024
-- **Modified:** 2026-04-18
+### Published properties
 
-## APIs
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-### Microsoft Graph Teams API
-Core REST API for accessing Teams data including teams, channels, messages, tabs, apps, members, online meetings, and calls through Microsoft Graph.
+#### Arazzo workflows (14)
 
-**Human URL:** [https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview](https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview)
+Multi-step workflows that chain operations into a business task.
 
-#### Tags:
+- [Microsoft Teams Add Member and Welcome](https://apis.io/arazzos/microsoft-teams/microsoft-teams-add-member-and-welcome-workflow/)
+- [Microsoft Teams Archive Team](https://apis.io/arazzos/microsoft-teams/microsoft-teams-archive-team-workflow/)
+- [Microsoft Teams Audit Team Channels](https://apis.io/arazzos/microsoft-teams/microsoft-teams-audit-team-channels-workflow/)
+- [Microsoft Teams Broadcast to Joined Team Channel](https://apis.io/arazzos/microsoft-teams/microsoft-teams-broadcast-to-joined-team-channel-workflow/)
+- [Microsoft Teams Create Team](https://apis.io/arazzos/microsoft-teams/microsoft-teams-create-team-workflow/)
+- [Microsoft Teams Discover Channel Tabs](https://apis.io/arazzos/microsoft-teams/microsoft-teams-discover-channel-tabs-workflow/)
+- [Microsoft Teams Inventory Team Collaboration](https://apis.io/arazzos/microsoft-teams/microsoft-teams-inventory-team-collaboration-workflow/)
+- [Microsoft Teams Offboard Team Member](https://apis.io/arazzos/microsoft-teams/microsoft-teams-offboard-team-member-workflow/)
+- [Microsoft Teams Onboard Team Member](https://apis.io/arazzos/microsoft-teams/microsoft-teams-onboard-team-member-workflow/)
+- [Microsoft Teams Post Channel Announcement](https://apis.io/arazzos/microsoft-teams/microsoft-teams-post-channel-announcement-workflow/)
+- [Microsoft Teams Promote Team Member](https://apis.io/arazzos/microsoft-teams/microsoft-teams-promote-team-member-workflow/)
+- [Microsoft Teams Provision Channel](https://apis.io/arazzos/microsoft-teams/microsoft-teams-provision-channel-workflow/)
+- [Microsoft Teams Rename Team](https://apis.io/arazzos/microsoft-teams/microsoft-teams-rename-team-workflow/)
+- [Microsoft Teams Review Channel Conversation](https://apis.io/arazzos/microsoft-teams/microsoft-teams-review-channel-conversation-workflow/)
 
- - Channels, Messages, Microsoft Graph, REST API, Teams
+#### AsyncAPI (1)
 
-#### Properties
+Event-driven and webhook contracts.
 
-- [Documentation](https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview)
-- [OpenAPI](openapi/microsoft-teams-graph-api.yaml)
-- [Authentication](https://learn.microsoft.com/en-us/graph/auth/)
-- [SDK](https://learn.microsoft.com/en-us/graph/sdks/sdks-overview)
-- [RateLimits](https://learn.microsoft.com/en-us/graph/throttling)
+- [Microsoft Teams Event Surface](https://apis.io/asyncapis/microsoft-teams/microsoft-teams-asyncapi/)
 
-### Microsoft Teams Bot Framework API
-API for building conversational bots that interact with users in Microsoft Teams through the Bot Framework.
+#### Event channels (37)
 
-**Human URL:** [https://learn.microsoft.com/en-us/microsoftteams/platform/bots/what-are-bots](https://learn.microsoft.com/en-us/microsoftteams/platform/bots/what-are-bots)
+Individual events and webhooks the provider emits.
 
-#### Tags:
+- [bot/activities](https://apis.io/channels/microsoft-teams/bot-activities/)
+- [graph/appCatalogs/teamsApps/{teamsAppId}/installations](https://apis.io/channels/microsoft-teams/graph-appcatalogs-teamsapps-teamsappid-installations/)
+- [graph/appCatalogs/teamsApps/{teamsAppId}/installedToChats](https://apis.io/channels/microsoft-teams/graph-appcatalogs-teamsapps-teamsappid-installedtochats/)
+- [graph/appCatalogs/teamsApps/{teamsAppId}/installedToChats/getAllMembers](https://apis.io/channels/microsoft-teams/graph-appcatalogs-teamsapps-teamsappid-installedtochats-getallmembers/)
+- [graph/appCatalogs/teamsApps/{teamsAppId}/installedToChats/getAllMessages](https://apis.io/channels/microsoft-teams/graph-appcatalogs-teamsapps-teamsappid-installedtochats-getallmessages/)
+- [graph/appCatalogs/teamsApps/{teamsAppId}/installedToOnlineMeetings/getAllRecordings](https://apis.io/channels/microsoft-teams/graph-appcatalogs-teamsapps-teamsappid-installedtoonlinemeetings-getallrecording/)
+- [graph/appCatalogs/teamsApps/{teamsAppId}/installedToOnlineMeetings/getAllTrancripts](https://apis.io/channels/microsoft-teams/graph-appcatalogs-teamsapps-teamsappid-installedtoonlinemeetings-getalltrancript/)
+- [graph/chats](https://apis.io/channels/microsoft-teams/graph-chats/)
+- [graph/chats/{chatId}](https://apis.io/channels/microsoft-teams/graph-chats-chatid/)
+- [graph/chats/{chatId}/members](https://apis.io/channels/microsoft-teams/graph-chats-chatid-members/)
+- [graph/chats/{chatId}/messages](https://apis.io/channels/microsoft-teams/graph-chats-chatid-messages/)
+- [graph/chats/getAllMembers](https://apis.io/channels/microsoft-teams/graph-chats-getallmembers/)
+- [graph/chats/getAllMessages](https://apis.io/channels/microsoft-teams/graph-chats-getallmessages/)
+- [graph/communications/adhocCalls/{adhocCallId}/recordings](https://apis.io/channels/microsoft-teams/graph-communications-adhoccalls-adhoccallid-recordings/)
+- [graph/communications/adhocCalls/{adhocCallId}/transcripts](https://apis.io/channels/microsoft-teams/graph-communications-adhoccalls-adhoccallid-transcripts/)
+- [graph/communications/adhocCalls/getAllRecordings](https://apis.io/channels/microsoft-teams/graph-communications-adhoccalls-getallrecordings/)
+- [graph/communications/adhocCalls/getAllTranscripts](https://apis.io/channels/microsoft-teams/graph-communications-adhoccalls-getalltranscripts/)
+- [graph/communications/onlineMeetings/getAllRecordings](https://apis.io/channels/microsoft-teams/graph-communications-onlinemeetings-getallrecordings/)
+- [graph/communications/onlineMeetings/getAllTranscripts](https://apis.io/channels/microsoft-teams/graph-communications-onlinemeetings-getalltranscripts/)
+- [graph/communications/onlineMeetings/{onlineMeetingId}/recordings](https://apis.io/channels/microsoft-teams/graph-communications-onlinemeetings-onlinemeetingid-recordings/)
+- [graph/communications/onlineMeetings/{onlineMeetingId}/transcripts](https://apis.io/channels/microsoft-teams/graph-communications-onlinemeetings-onlinemeetingid-transcripts/)
+- [graph/lifecycle](https://apis.io/channels/microsoft-teams/graph-lifecycle/)
+- [graph/teams](https://apis.io/channels/microsoft-teams/graph-teams/)
+- [graph/teams/getAllChannels](https://apis.io/channels/microsoft-teams/graph-teams-getallchannels/)
+- [graph/teams/getAllChannels/getAllMembers](https://apis.io/channels/microsoft-teams/graph-teams-getallchannels-getallmembers/)
+- …and 12 more published on APIs.io
 
- - Bot Framework, Bots, Conversational AI, Messaging
+#### GraphQL (1)
 
-#### Properties
+GraphQL schemas.
 
-- [Documentation](https://learn.microsoft.com/en-us/microsoftteams/platform/bots/how-to/conversations/conversation-basics)
-- [Quickstart](https://learn.microsoft.com/en-us/microsoftteams/platform/build-your-first-app/build-bot)
-- [CodeExamples](https://github.com/microsoft/BotBuilder-Samples)
-- [APIReference](https://learn.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-connector-api-reference)
+- [Moved to /providers/microsoft-teams/](https://apis.io/graphqls/microsoft-teams/microsoft-teams-graphql/)
 
-### Microsoft Teams Webhook and Connector API
-APIs for creating incoming webhooks and Office 365 connectors to post messages and notifications to Teams channels.
+#### MCP servers (1)
 
-**Human URL:** [https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/what-are-webhooks-and-connectors](https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/what-are-webhooks-and-connectors)
+Model Context Protocol servers that expose the API to agents.
 
-#### Tags:
+- [microsoft-teams](https://apis.io/servers/microsoft-teams/microsoft-teams/)
 
- - Connectors, Incoming Webhooks, Notifications, Webhooks
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation](https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook)
+- [Microsoft Teams Agentic Access](https://apis.io/agentic-access/microsoft-teams/microsoft-teams-agentic-access/)
 
-### Microsoft Teams Real-Time Communication APIs
-APIs for building calling and meeting experiences in Teams including VoIP calls, group calls, IVR flows, and online meetings.
+#### JSON Schema (21)
 
-**Human URL:** [https://learn.microsoft.com/en-us/graph/api/resources/communications-api-overview](https://learn.microsoft.com/en-us/graph/api/resources/communications-api-overview)
+The data models the API reads and writes.
 
-#### Tags:
+- [AppInstallationCollection](https://apis.io/schemas/microsoft-teams/microsoft-teams-appinstallationcollection/)
+- [Call](https://apis.io/schemas/microsoft-teams/microsoft-teams-call/)
+- [Channel](https://apis.io/schemas/microsoft-teams/microsoft-teams-channel/)
+- [ChannelCollection](https://apis.io/schemas/microsoft-teams/microsoft-teams-channelcollection/)
+- [ChatMessage](https://apis.io/schemas/microsoft-teams/microsoft-teams-chatmessage/)
+- [ChatMessageCollection](https://apis.io/schemas/microsoft-teams/microsoft-teams-chatmessagecollection/)
+- [ConversationMember](https://apis.io/schemas/microsoft-teams/microsoft-teams-conversationmember/)
+- [ErrorResponse](https://apis.io/schemas/microsoft-teams/microsoft-teams-errorresponse/)
+- [MemberCollection](https://apis.io/schemas/microsoft-teams/microsoft-teams-membercollection/)
+- [OnlineMeeting](https://apis.io/schemas/microsoft-teams/microsoft-teams-onlinemeeting/)
+- [TabCollection](https://apis.io/schemas/microsoft-teams/microsoft-teams-tabcollection/)
+- [Team](https://apis.io/schemas/microsoft-teams/microsoft-teams-team/)
+- [TeamCollection](https://apis.io/schemas/microsoft-teams/microsoft-teams-teamcollection/)
+- [TeamsAppInstallation](https://apis.io/schemas/microsoft-teams/microsoft-teams-teamsappinstallation/)
+- [TeamsTab](https://apis.io/schemas/microsoft-teams/microsoft-teams-teamstab/)
+- [Call](https://apis.io/schemas/microsoft-teams/teams-graph-api-call/)
+- [Channel](https://apis.io/schemas/microsoft-teams/teams-graph-api-channel/)
+- [ChatMessage](https://apis.io/schemas/microsoft-teams/teams-graph-api-chat-message/)
+- [ConversationMember](https://apis.io/schemas/microsoft-teams/teams-graph-api-conversation-member/)
+- [OnlineMeeting](https://apis.io/schemas/microsoft-teams/teams-graph-api-online-meeting/)
+- [Team](https://apis.io/schemas/microsoft-teams/teams-graph-api-team/)
 
- - Audio, Calling, Meetings, Real-Time, Video
+#### JSON Structure (7)
 
-#### Properties
+Data models expressed in JSON Structure.
 
-- [Documentation](https://learn.microsoft.com/en-us/graph/api/resources/communications-api-overview)
-- [APIReference](https://learn.microsoft.com/en-us/graph/api/resources/call)
+- [Microsoft Teams Structure](https://apis.io/json-structure/microsoft-teams/microsoft-teams-structure/)
+- [Teams Graph Api Call Structure](https://apis.io/json-structure/microsoft-teams/teams-graph-api-call-structure/)
+- [Teams Graph Api Channel Structure](https://apis.io/json-structure/microsoft-teams/teams-graph-api-channel-structure/)
+- [Teams Graph Api Chat Message Structure](https://apis.io/json-structure/microsoft-teams/teams-graph-api-chat-message-structure/)
+- [Teams Graph Api Conversation Member Structure](https://apis.io/json-structure/microsoft-teams/teams-graph-api-conversation-member-structure/)
+- [Teams Graph Api Online Meeting Structure](https://apis.io/json-structure/microsoft-teams/teams-graph-api-online-meeting-structure/)
+- [Teams Graph Api Team Structure](https://apis.io/json-structure/microsoft-teams/teams-graph-api-team-structure/)
 
-## Common Properties
+#### JSON-LD (1)
 
-- [DeveloperPortal](https://developer.microsoft.com/en-us/microsoft-teams)
-- [GettingStarted](https://learn.microsoft.com/en-us/microsoftteams/platform/get-started/get-started-overview)
-- [SDK](https://learn.microsoft.com/en-us/microsoftteams/platform/toolkit/teams-toolkit-fundamentals)
-- [Blog](https://techcommunity.microsoft.com/t5/microsoft-teams-blog/bg-p/MicrosoftTeamsBlog)
+Linked-data contexts for the provider's vocabulary.
+
+- [Microsoft Teams Graph Api Context](https://apis.io/jsonld/microsoft-teams/microsoft-teams-graph-api-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Microsoft Teams Vocabulary](https://apis.io/vocabularies/microsoft-teams/microsoft-teams-vocabulary/)
+
+#### Examples (20)
+
+Example requests and responses.
+
+- [Microsoft Teams Addteammember Example](https://apis.io/examples/microsoft-teams/microsoft-teams-addteammember-example/)
+- [Microsoft Teams Createcall Example](https://apis.io/examples/microsoft-teams/microsoft-teams-createcall-example/)
+- [Microsoft Teams Createchannel Example](https://apis.io/examples/microsoft-teams/microsoft-teams-createchannel-example/)
+- [Microsoft Teams Createonlinemeeting Example](https://apis.io/examples/microsoft-teams/microsoft-teams-createonlinemeeting-example/)
+- [Microsoft Teams Createteam Example](https://apis.io/examples/microsoft-teams/microsoft-teams-createteam-example/)
+- [Microsoft Teams Getteam Example](https://apis.io/examples/microsoft-teams/microsoft-teams-getteam-example/)
+- [Microsoft Teams Listchannelmessages Example](https://apis.io/examples/microsoft-teams/microsoft-teams-listchannelmessages-example/)
+- [Microsoft Teams Listchannels Example](https://apis.io/examples/microsoft-teams/microsoft-teams-listchannels-example/)
+- [Microsoft Teams Listchanneltabs Example](https://apis.io/examples/microsoft-teams/microsoft-teams-listchanneltabs-example/)
+- [Microsoft Teams Listjoinedteams Example](https://apis.io/examples/microsoft-teams/microsoft-teams-listjoinedteams-example/)
+- [Microsoft Teams Listteammembers Example](https://apis.io/examples/microsoft-teams/microsoft-teams-listteammembers-example/)
+- [Microsoft Teams Sendchannelmessage Example](https://apis.io/examples/microsoft-teams/microsoft-teams-sendchannelmessage-example/)
+- [Microsoft Teams Updateteam Example](https://apis.io/examples/microsoft-teams/microsoft-teams-updateteam-example/)
+- [Microsoft Teams Updateteammember Example](https://apis.io/examples/microsoft-teams/microsoft-teams-updateteammember-example/)
+- [Teams Graph Api Call Example](https://apis.io/examples/microsoft-teams/teams-graph-api-call-example/)
+- [Teams Graph Api Channel Example](https://apis.io/examples/microsoft-teams/teams-graph-api-channel-example/)
+- [Teams Graph Api Chat Message Example](https://apis.io/examples/microsoft-teams/teams-graph-api-chat-message-example/)
+- [Teams Graph Api Conversation Member Example](https://apis.io/examples/microsoft-teams/teams-graph-api-conversation-member-example/)
+- [Teams Graph Api Online Meeting Example](https://apis.io/examples/microsoft-teams/teams-graph-api-online-meeting-example/)
+- [Teams Graph Api Team Example](https://apis.io/examples/microsoft-teams/teams-graph-api-team-example/)
+
+#### Collections (9)
+
+Postman and Open Collection request collections.
+
+- [Microsoft Graph Teams Apps API](https://apis.io/collections/microsoft-teams/open-microsoft-teams-apps-api/)
+- [Microsoft Graph Teams Apps Calls API](https://apis.io/collections/microsoft-teams/open-microsoft-teams-calls-api/)
+- [Microsoft Graph Teams Apps Channels API](https://apis.io/collections/microsoft-teams/open-microsoft-teams-channels-api/)
+- [Microsoft Graph Teams Apps Members API](https://apis.io/collections/microsoft-teams/open-microsoft-teams-members-api/)
+- [Microsoft Graph Teams Apps Messages API](https://apis.io/collections/microsoft-teams/open-microsoft-teams-messages-api/)
+- [Microsoft Graph Teams Apps Online Meetings API](https://apis.io/collections/microsoft-teams/open-microsoft-teams-online-meetings-api/)
+- [Microsoft Graph Teams Apps Tabs API](https://apis.io/collections/microsoft-teams/open-microsoft-teams-tabs-api/)
+- [Microsoft Graph Apps Teams API](https://apis.io/collections/microsoft-teams/open-microsoft-teams-teams-api/)
+- [Microsoft Graph Teams API](https://apis.io/collections/microsoft-teams/postman-microsoft-teams-graph-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Microsoft Teams Graph Api Overlay](https://apis.io/overlays/microsoft-teams/microsoft-teams-graph-api-overlay/)
+
+#### Governance rules (3)
+
+Spectral rulesets for the provider's contracts.
+
+- [Microsoft Teams — asyncapi rules](https://apis.io/rules/microsoft-teams/microsoft-teams-asyncapi-spectral-rules/)
+- [Microsoft Teams — jsonschema rules](https://apis.io/rules/microsoft-teams/microsoft-teams-jsonschema-spectral-rules/)
+- [Microsoft Teams API Rules](https://apis.io/rules/microsoft-teams/microsoft-teams-spectral-rules/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Microsoft Teams Authentication](https://apis.io/security/microsoft-teams/microsoft-teams-authentication/)
+- [Microsoft Teams Domain Security](https://apis.io/security/microsoft-teams/microsoft-teams-domain-security/)
+- [Microsoft Teams Trust Center](https://apis.io/security/microsoft-teams/microsoft-teams-trust-center/)
+- [Microsoft Teams Vulnerability Disclosure](https://apis.io/security/microsoft-teams/microsoft-teams-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Microsoft Teams Scopes](https://apis.io/scopes/microsoft-teams/microsoft-teams-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Microsoft Teams Plans Pricing](https://apis.io/plans/microsoft-teams/microsoft-teams-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Microsoft Teams Rate Limits](https://apis.io/rate-limits/microsoft-teams/microsoft-teams-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Microsoft Teams Finops](https://apis.io/finops/microsoft-teams/microsoft-teams-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.microsoft.com/)
+- [Getting started](https://learn.microsoft.com/en-us/microsoftteams/platform/get-started/get-started-overview)
 - [Support](https://learn.microsoft.com/en-us/answers/products/office-teams)
-- [GitHubOrganization](https://github.com/OfficeDev/Microsoft-Teams-Samples)
-- [StatusPage](https://status.teams.microsoft.com/)
-- [TermsOfService](https://www.microsoft.com/en-us/legal/terms-of-use)
-- [PrivacyPolicy](https://privacy.microsoft.com/en-us/privacystatement)
+- [Blog](https://techcommunity.microsoft.com/t5/microsoft-teams-blog/bg-p/MicrosoftTeamsBlog)
+- [Terms of service](https://www.microsoft.com/en-us/legal/terms-of-use)
+- [Privacy policy](https://privacy.microsoft.com/en-us/privacystatement)
+- [GitHub](https://github.com/OfficeDev/Microsoft-Teams-Samples)
+- [Status](https://status.teams.microsoft.com/)
 
-## Features
+## API Evangelist rating
 
-| Name | Description |
-|------|-------------|
-| Team Lifecycle Management | Create, archive, and delete teams programmatically. |
-| Channel Management | Create and manage standard, private, and shared channels. |
-| Messaging | Send and receive chat messages in channels and chats. |
-| Member Management | Add, remove, and update team members and roles. |
-| Online Meetings | Create and manage online meetings with join URLs. |
-| Calling | Initiate calls, answer, reject, transfer, and manage IVR flows. |
-| App Installation | Install and manage apps in teams and channels. |
-| Activity Feed Notifications | Send activity feed notifications to engage users. |
+**Kin Score 56.2** — strong · rubric 0.25.0 · scored 2026-10-23
 
-## Use Cases
+| Facet | Score |
+|---|---|
+| Discoverability | 85.7 |
+| Contract quality | 45.0 |
+| Contract governance | 31.8 |
+| Operational transparency | 42.1 |
+| Developer ergonomics | 79.8 |
+| Access clarity | 36.8 |
 
-| Name | Description |
-|------|-------------|
-| Team Provisioning | Automate creation and configuration of teams for projects. |
-| Messaging Automation | Send automated notifications and updates to channels. |
-| Meeting Scheduling | Programmatically create and manage online meetings. |
-| Customer Service Bots | Build conversational bots for customer support in Teams. |
-| Workforce Management | Manage shifts and schedules for frontline workers. |
+**Agent readiness 34.2** — agent-ready
 
-## Integrations
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
 
-| Name | Description |
-|------|-------------|
-| Microsoft Power Automate | Automate Teams workflows with Power Automate connectors. |
-| SharePoint | Teams channels with SharePoint document libraries. |
-| OneDrive | Share and collaborate on files in Teams via OneDrive. |
-| Azure Bot Service | Build and deploy bots using Azure Bot Service. |
-| Adaptive Cards | Rich interactive cards for messaging and notifications. |
+**Regulatory alignment 45.1** — Horizontal (data, software, accessibility, platform)
 
-## Artifacts
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/microsoft-teams/](https://apis.io/providers/microsoft-teams/).
 
-Machine-readable API specifications organized by format.
+## How this profile is made
 
-### OpenAPI
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
 
-- [Microsoft Graph Teams API](openapi/microsoft-teams-graph-api.yaml)
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Microsoft Teams: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
 
-### JSON Schema
+## Open an issue
 
-- [Team](json-schema/teams-graph-api-team-schema.json)
-- [Channel](json-schema/teams-graph-api-channel-schema.json)
-- [ChatMessage](json-schema/teams-graph-api-chat-message-schema.json)
-- [ConversationMember](json-schema/teams-graph-api-conversation-member-schema.json)
-- [OnlineMeeting](json-schema/teams-graph-api-online-meeting-schema.json)
-- [Call](json-schema/teams-graph-api-call-schema.json)
-
-### JSON Structure
-
-- [Team](json-structure/teams-graph-api-team-structure.json)
-- [Channel](json-structure/teams-graph-api-channel-structure.json)
-- [ChatMessage](json-structure/teams-graph-api-chat-message-structure.json)
-- [ConversationMember](json-structure/teams-graph-api-conversation-member-structure.json)
-- [OnlineMeeting](json-structure/teams-graph-api-online-meeting-structure.json)
-- [Call](json-structure/teams-graph-api-call-structure.json)
-
-### JSON-LD
-
-- [Microsoft Teams Graph API Context](json-ld/microsoft-teams-graph-api-context.jsonld)
-
-### Examples
-
-- [Team](examples/teams-graph-api-team-example.json)
-- [Channel](examples/teams-graph-api-channel-example.json)
-- [ChatMessage](examples/teams-graph-api-chat-message-example.json)
-- [ConversationMember](examples/teams-graph-api-conversation-member-example.json)
-- [OnlineMeeting](examples/teams-graph-api-online-meeting-example.json)
-- [Call](examples/teams-graph-api-call-example.json)
-
-## Capabilities
-
-Naftiko capabilities organized as shared per-API definitions composed into customer-facing workflows.
-
-### Shared Per-API Definitions
-
-- [Microsoft Graph Teams API](capabilities/shared/teams-graph-api.yaml) -- 10 operations for team collaboration
-
-### Workflow Capabilities
-
-| Workflow | APIs Combined | Tools | Persona |
-|----------|--------------|-------|---------|
-| [Team Collaboration](capabilities/team-collaboration.yaml) | Teams Graph API | 10 | IT Administrator, Team Lead, Developer |
-
-## Vocabulary
-
-- [Microsoft Teams Vocabulary](vocabulary/microsoft-teams-vocabulary.yaml) -- Unified taxonomy mapping 8 resources, 12 actions, 1 workflow, and 3 personas across operational (OpenAPI) and capability (Naftiko) dimensions
-
-## Rules
-
-- [Microsoft Teams Spectral Rules](rules/microsoft-teams-spectral-rules.yml) -- 22 rules across 9 categories enforcing Microsoft Teams API conventions
-
-## Maintainers
-
-**FN:** Kin Lane
-
-**Email:** kin@apievangelist.com
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/microsoft-teams/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
